@@ -5,8 +5,13 @@
     "rootDir": "./",
     "outDir": "./build",
     "esModuleInterop": true,
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+
     "strict": true
   },
 
-  "exclude": ["client"]
+  "exclude": ["client/**/*"]
 }
