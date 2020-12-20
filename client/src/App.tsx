@@ -1,9 +1,8 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { ConnectedRouter } from 'connected-react-router'
-import Main from './pages/Main'
+import Main from './pages/Main/Main'
 import SignUp from './pages/SignUp'
-import './App.scss'
 import { history } from './redux/store'
 
 const App: React.FC = () => {
