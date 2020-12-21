@@ -18,11 +18,22 @@ const RoomTitleStyles = styled.div`
   justify-self: end;
 `
 const RoomPeopleStyles = styled.button`
-  width: 2.7rem;
-  height: 2.7rem;
+  width: 3.3rem;
+  height: 2.2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  color: rgba(0, 0, 0, 0.62);
+  button {
+    background: transparent;
+    border: 0;
+    padding: 0;
+  }
+
+  svg {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
 `
 
 const RoomHeader = () => {

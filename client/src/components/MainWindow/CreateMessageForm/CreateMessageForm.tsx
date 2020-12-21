@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { RiSendPlane2Fill } from 'react-icons/ri'
 
 const MessagesSectionLayout = styled.form`
   display: flex;
@@ -12,6 +13,7 @@ const MessagesSectionLayout = styled.form`
     width: 2rem;
     height: 2rem;
     fill: #006eff;
+    margin-right: 2rem;
   }
 
   button {
@@ -33,11 +35,9 @@ const MessagesSectionLayout = styled.form`
 const CreateMessageForm: React.FC = () => {
   return (
     <MessagesSectionLayout>
-      <input placeholder='Type a Message..' />
+      <input placeholder='Type a Message...' />
       <button type='submit'>
-        <svg>
-          <use xlinkHref='index.svg#send' />
-        </svg>
+        <RiSendPlane2Fill />
       </button>
     </MessagesSectionLayout>
   )

@@ -6,7 +6,7 @@ import UserHeader from './UserHeader/UserHeader'
 
 const SidebarLayout = styled.aside`
   flex: none;
-  width: 20rem;
+  width: 18rem;
   height: 100vh;
   display: flex;
   flex-direction: column;
