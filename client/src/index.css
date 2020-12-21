@@ -1,0 +1,36 @@
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  font-size: 100%;
+  font-family: Roboto, arial, helvetica, sans-serif;
+  font-weight: 400;
+}
+
+body {
+  height: 100%;
+  background: #f2f2f2;
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+button,
+input {
+  outline: none;
+  min-width: 0;
+}
+
+img,
+svg {
+  display: block;
+}
