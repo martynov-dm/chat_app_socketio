@@ -12,25 +12,26 @@ import {
 } from '@chakra-ui/react'
 import { userLogin } from '../api/api'
 import ErrorMessage from '../components/common/ErrorMessage'
+import { useDispatch } from 'react-redux'
+import { authActions } from '../redux/auth/auth.actions'
 
 const SignUp = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const dispatch = useDispatch()
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
     setIsLoading(true)
-    try {
-      await userLogin({ email, password })
-      setIsLoading(false)
-    } catch (error) {
-      setError('Invalid username or password')
-      setIsLoading(false)
-      setEmail('')
-      setPassword('')
-    }
+
+    dispatch(authActions.signUpStart({ email, password }))
+
+    setIsLoading(false)
+
+    setEmail('')
+    setPassword('')
   }
 
   return (
