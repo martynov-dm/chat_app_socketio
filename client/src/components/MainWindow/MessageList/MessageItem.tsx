@@ -16,7 +16,7 @@ const MessageStyles = styled.div`
     .message {
       line-height: 1.4rem;
       white-space: pre-wrap;
-      color: rgba(0, 0, 0, 0.8);
+      color: #171a2a;
       font-size: 1.1rem;
     }
 
@@ -25,7 +25,7 @@ const MessageStyles = styled.div`
       align-items: center;
       justify-content: space-between;
       margin-bottom: 0.3rem;
-      color: rgba(0, 0, 0, 0.65);
+      color: rgba(23, 26, 42, 0.7);
       .date {
         margin-left: 0.7rem;
       }

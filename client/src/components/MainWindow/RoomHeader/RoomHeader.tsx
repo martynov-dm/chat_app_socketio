@@ -14,7 +14,7 @@ const RoomHeaderStyles = styled.header`
 
 const RoomTitleStyles = styled.div`
   font-size: 1.38rem;
-  color: rgba(0, 0, 0, 0.62);
+  color: rgba(23, 26, 42, 0.7);
   justify-self: end;
 `
 const RoomPeopleStyles = styled.button`
@@ -23,14 +23,12 @@ const RoomPeopleStyles = styled.button`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: rgba(0, 0, 0, 0.62);
-  button {
-    background: transparent;
-    border: 0;
-    padding: 0;
-  }
+  color: rgba(23, 26, 42, 0.7);
+  background-color: #fff;
 
   svg {
+    fill: rgba(23, 26, 42, 0.7);
+
     width: 1.2rem;
     height: 1.2rem;
   }

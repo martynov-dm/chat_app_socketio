@@ -10,7 +10,7 @@ const CreateServerStyles = styled.div`
   align-items: center;
   padding: 1rem;
   height: 3.8rem;
-  color: rgba(0, 0, 0, 0.5);
+  color: rgba(23, 26, 42, 0.7);
   font-weight: 500;
   font-size: 1.1rem;
   svg {

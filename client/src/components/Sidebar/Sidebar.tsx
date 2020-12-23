@@ -11,7 +11,7 @@ const SidebarLayout = styled.aside`
   display: flex;
   flex-direction: column;
   border-right: 1px solid rgba(0, 0, 0, 0.1);
-  background: #fcfcfc;
+  background: #ffffff;
 `
 
 const Sidebar: React.FC = () => {

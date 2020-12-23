@@ -8,7 +8,7 @@ const UserHeaderStyled = styled.header`
   align-items: center;
   padding: 1rem;
   height: 4.8rem;
-  color: rgba(0, 0, 0, 0.5);
+  color: rgba(23, 26, 42, 0.7);
   font-weight: normal;
 
   img {
