@@ -14,7 +14,7 @@ const authReducer = (
     case 'SIGN_IN_SUCCESS':
       return {
         ...state,
-        userName: action.payload.name,
+        userName: action.payload.login,
         userImage: action.payload.image,
       }
 

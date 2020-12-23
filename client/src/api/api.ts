@@ -1,13 +1,11 @@
-import { EmailAndPassword } from '../types/types'
+import axios from 'axios'
 
-export const userLogin = async ({ email, password }: EmailAndPassword) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (email === 'test@test.com' && password === 'password') {
-        resolve('success')
-      } else {
-        reject()
-      }
-    }, 3000)
-  })
+export const instance = axios.create({
+  withCredentials: true,
+  baseURL: 'api/',
+})
+
+export const signUpRequest = (userData: string[]) => {
+  const [login, password, image] = userData
+  return instance.post('auth/register', { login, password, image })
 }

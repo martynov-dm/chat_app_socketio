@@ -1,33 +1,35 @@
+import { SuccessAndErrorsActionTypes } from './successAndErrors.actions'
 const INITIAL_STATE = {
-  successMessage: '',
-  errorMessage: '',
+  successMessage: null as null | string,
+  errorMessage: null as null | string,
 }
 
-const authReducer = (state = INITIAL_STATE, action) => {
+export type InitialStateType = typeof INITIAL_STATE
+
+const authReducer = (
+  state = INITIAL_STATE,
+  action: SuccessAndErrorsActionTypes
+): InitialStateType => {
   switch (action.type) {
-    case AuthActionTypes.SIGN_IN_SUCCESS:
-    case AuthActionTypes.SIGN_UP_SUCCESS:
+    case 'REMOVE_SUCCESS_MESSAGE':
       return {
         ...state,
-        currentUser: action.payload,
-        error: null,
+        successMessage: null,
       }
-    case AuthActionTypes.SIGN_OUT_SUCCESS:
-      return INITIAL_STATE
-    case AuthActionTypes.AUTH_FAILURE:
+    case 'REMOVE_ERROR_MESSAGE':
       return {
         ...state,
-        error: action.payload,
+        successMessage: null,
       }
-    case AuthActionTypes.TOGGLE_AUTH_LOADING:
+    case 'ADD_SUCCESS_MESSAGE':
       return {
         ...state,
-        loading: !state.loading,
+        successMessage: action.payload,
       }
-    case AuthActionTypes.REMOVE_ERROR:
+    case 'ADD_ERROR_MESSAGE':
       return {
         ...state,
-        error: null,
+        errorMessage: action.payload,
       }
 
     default:

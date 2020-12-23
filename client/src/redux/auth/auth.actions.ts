@@ -1,27 +1,31 @@
-import { InferActionTypes, NameAndImage } from './../../types/types'
-import { NameAndPassword } from '../../types/types'
+import {
+  InferActionTypes,
+  LoginAndImage,
+  LoginAndPassword,
+} from './../../types/types'
+import { LoginPasswordImage } from '../../types/types'
 
 export type AuthActionTypes = InferActionTypes<typeof authActions>
 
 export const authActions = {
-  signUpStart: (nameAndPassword: NameAndPassword) => {
+  signUpStart: (loginPasswordAndImage: LoginPasswordImage) => {
     return {
       type: 'SIGN_UP_START',
-      payload: nameAndPassword,
+      payload: loginPasswordAndImage,
     } as const
   },
 
-  signInStart: (nameAndPassword: NameAndPassword) => {
+  signInStart: (loginAndPassword: LoginAndPassword) => {
     return {
       type: 'SIGN_IN_START',
-      payload: nameAndPassword,
+      payload: loginAndPassword,
     } as const
   },
 
-  signInSuccess: (nameAndImage: NameAndImage) => {
+  signInSuccess: (nameImagePassword: LoginAndImage) => {
     return {
       type: 'SIGN_IN_SUCCESS',
-      payload: nameAndImage,
+      payload: nameImagePassword,
     } as const
   },
 }

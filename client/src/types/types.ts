@@ -7,12 +7,18 @@ export type InferActionTypes<T> = T extends {
 
 ////////////////////////////////////////////////////////////////
 
-export interface NameAndPassword {
-  email: string
+export interface LoginPasswordImage {
+  login: string
+  password: string
+  image: null | File
+}
+
+export interface LoginAndPassword {
+  login: string
   password: string
 }
 
-export interface NameAndImage {
-  name: string
+export interface LoginAndImage {
+  login: string
   image: string
 }

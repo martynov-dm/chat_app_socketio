@@ -1,15 +1,32 @@
+import { InferActionTypes } from './../../types/types'
+
+export type SuccessAndErrorsActionTypes = InferActionTypes<
+  typeof SuccessAndErrorsActions
+>
+
 export const SuccessAndErrorsActions = {
-  apiError: (errorMessage: string) => {
+  addErrorMessage: (successMessage: string) => {
     return {
-      type: 'API_ERROR',
-      payload: errorMessage,
+      type: 'ADD_ERROR_MESSAGE',
+      payload: successMessage,
     } as const
   },
 
-  apiSuccess: (successMessage: string) => {
+  removeErrorMessage: () => {
     return {
-      type: 'API_SUCCESS',
+      type: 'REMOVE_ERROR_MESSAGE',
+    } as const
+  },
+  addSuccessMessage: (successMessage: string) => {
+    return {
+      type: 'ADD_SUCCESS_MESSAGE',
       payload: successMessage,
+    } as const
+  },
+
+  removeSuccessMessage: () => {
+    return {
+      type: 'REMOVE_SUCCESS_MESSAGE',
     } as const
   },
 }

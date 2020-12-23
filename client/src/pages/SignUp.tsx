@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import ThemeToggler from '../components/common/ThemeToggler'
 import {
   Flex,
@@ -8,29 +8,30 @@ import {
   FormLabel,
   Input,
   Button,
+  Image,
   CircularProgress,
+  IconButton,
 } from '@chakra-ui/react'
-import { userLogin } from '../api/api'
-import ErrorMessage from '../components/common/ErrorMessage'
+import { AttachmentIcon } from '@chakra-ui/icons'
+
 import { useDispatch } from 'react-redux'
 import { authActions } from '../redux/auth/auth.actions'
 
 const SignUp = () => {
-  const [email, setEmail] = useState('')
+  const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const dispatch = useDispatch()
+  const inputRef = useRef(null)
+  const [image, setFile] = useState(null as null | File)
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
     setIsLoading(true)
-
-    dispatch(authActions.signUpStart({ email, password }))
-
+    console.log(image)
+    dispatch(authActions.signUpStart({ login, password, image }))
     setIsLoading(false)
-
-    setEmail('')
+    setLogin('')
     setPassword('')
   }
 
@@ -49,6 +50,21 @@ const SignUp = () => {
             <Heading>Login</Heading>
           </Box>
           <Box my={4} textAlign='left'>
+            <Image
+              borderRadius='full'
+              boxSize='150px'
+              src='https://bit.ly/sage-adebayo'
+              alt='Segun Adebayo'
+            />
+
+            <input
+              ref={inputRef}
+              type='file'
+              onChange={(e) => {
+                setFile(e.target.files![0])
+              }}
+            />
+
             <form onSubmit={handleSubmit}>
               <FormControl isRequired>
                 <FormLabel>Email</FormLabel>
@@ -56,7 +72,7 @@ const SignUp = () => {
                   type='email'
                   placeholder='test@test.com'
                   size='lg'
-                  onChange={(event) => setEmail(event.currentTarget.value)}
+                  onChange={(event) => setLogin(event.currentTarget.value)}
                 />
               </FormControl>
               <FormControl mt={6} isRequired>

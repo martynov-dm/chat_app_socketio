@@ -20,7 +20,7 @@ const sagaMiddleware = createSagaMiddleware()
 const middlewares = [sagaMiddleware, routerMiddleware(history)]
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
-export function configureStore(preloadedState: any) {
+export function configureStore(preloadedState?: any) {
   const store = createStore(
     rootReducerWithHistory,
     preloadedState,
