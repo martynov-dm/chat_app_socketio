@@ -15,7 +15,7 @@ export function* signUp(action: AuthActionTypes) {
   const { login, password, image } = action.payload as LoginPasswordImage
 
   try {
-    const response = yield call(signUpRequest, [login, password, image])
+    const { data } = yield call(signUpRequest, [login, password, image])
   } catch (error) {}
 }
 
