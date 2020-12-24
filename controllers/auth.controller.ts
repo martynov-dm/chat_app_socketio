@@ -4,5 +4,5 @@ export const registerController = async (
   req: express.Request,
   res: express.Response
 ) => {
-  res.send('hello world')
+  console.log(req.files)
 }

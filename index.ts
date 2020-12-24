@@ -28,6 +28,7 @@ app.use(
 app.use(cookieParser())
 
 connect()
+
 app.use('/api/auth', authRoute)
 
 io.on('connect', (socket: Socket) => {

@@ -9,6 +9,7 @@
     "noImplicitAny": true,
     "sourceMap": true,
     "baseUrl": ".",
+    "skipLibCheck": true,
     "strict": true
   },
 
