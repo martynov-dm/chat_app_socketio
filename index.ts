@@ -2,9 +2,12 @@ import express from 'express'
 import { Server, Socket } from 'socket.io'
 import path from 'path'
 import http from 'http'
-import mainRouter from './routes/mainRoutes'
 import cors from 'cors'
 import bodyParser from 'body-parser'
+import cookieParser from 'cookie-parser'
+
+import authRoute from './routes/auth'
+import { connect } from './services/mongoose'
 
 const PORT = process.env.PORT || 5000
 const rooms = new Map()
@@ -19,9 +22,13 @@ const io = new Server(server, {
 
 app.use(cors())
 app.use(bodyParser.json())
+app.use(
+  express.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 })
+)
+app.use(cookieParser())
 
-app.use('/api', mainRouter)
-app.use('/api/auth', auth)
+connect()
+app.use('/api/auth', authRoute)
 
 io.on('connect', (socket: Socket) => {
   console.log('We have a new connection!!', socket)
