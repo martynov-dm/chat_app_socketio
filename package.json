@@ -36,6 +36,8 @@
     "cloudinary": "^1.23.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
+    "datauri": "^3.0.0",
+    "date-fns": "^2.16.1",
     "dotenv": "^8.2.0",
     "joi-image-extension": "^1.0.0",
     "jsonwebtoken": "^8.5.1",
