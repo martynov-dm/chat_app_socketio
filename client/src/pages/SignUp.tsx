@@ -15,12 +15,14 @@ import {
   CircularProgress,
 } from '@chakra-ui/react'
 import { useDispatch } from 'react-redux'
-import { PlusSquareIcon } from '@chakra-ui/icons'
+import ErrorMessage from '../components/common/ErrorMessage'
 
 import { authActions } from '../redux/auth/auth.actions'
 import avatarPlaceholder from '../images/avatar_placeholder.png'
 
 const SignUp = () => {
+  const [error, setError] = useState('')
+
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -30,6 +32,7 @@ const SignUp = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
+
     setIsLoading(true)
     console.log(image)
     dispatch(authActions.signUpStart({ login, password, image }))
@@ -39,7 +42,7 @@ const SignUp = () => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <ThemeToggler />
       <Flex width='full' align='center' justifyContent='center'>
         <Box
@@ -101,12 +104,10 @@ const SignUp = () => {
                   id='file'
                   className='inputfile'
                   css={css`
-                    width: 0.1px;
-                    height: 0.1px;
-                    opacity: 0;
-                    overflow: hidden;
                     position: absolute;
-                    z-index: -1;
+                    opacity: 0;
+
+                    z-index: -5;
                   `}
                   required
                   ref={inputRef}
@@ -156,7 +157,7 @@ const SignUp = () => {
           </Box>
         </Box>
       </Flex>
-    </React.Fragment>
+    </>
   )
 }
 
