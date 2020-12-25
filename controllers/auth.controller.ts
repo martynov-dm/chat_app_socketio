@@ -1,10 +1,9 @@
 import { registerValidation } from './../validation/validation'
 import { uploadPicture } from './../services/cloudinary'
-import express from 'express'
-import cloudinary from '../services/cloudinary'
+
 import User from '../models/user.model'
-import { UploadApiResponse } from 'cloudinary'
-import multer from 'multer'
+import options from '../config'
+import jwt, { Secret } from 'jsonwebtoken'
 
 export const registerController = async (req: any, res: any) => {
   const image = req.files[0] as Express.Multer.File
@@ -36,6 +35,22 @@ export const registerController = async (req: any, res: any) => {
     res.status(500).json({
       status: 'error',
       message: 'Could not register',
+    })
+  }
+}
+
+export const loginController = async (req: any, res: any) => {
+  try {
+    const user = await User.findAndValidateUser(req.body)
+    const payload = { _id: user._id }
+    const token = jwt.sign(payload, options.jwtSecret as Secret, {
+      expiresIn: '48h',
+    })
+    res.status(200).json({ status: 'ok', token })
+  } catch (error) {
+    res.status(500).json({
+      status: 'error',
+      message: error.message,
     })
   }
 }

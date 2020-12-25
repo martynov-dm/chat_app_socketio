@@ -1,16 +1,9 @@
+import { IUser, UserModel } from './user.types'
 import mongoose, { Schema, Document } from 'mongoose'
 import { differenceInMinutes } from 'date-fns'
 import bcrypt from 'bcryptjs'
 
-export interface UserInterface extends Document {
-  login: string
-  password: string
-  avatar: string
-  confirm_hash: string
-  last_seen: Date
-}
-
-const UserSchema: Schema = new mongoose.Schema<UserInterface>(
+const UserSchema: Schema = new Schema(
   {
     login: {
       type: String,
@@ -47,7 +40,7 @@ UserSchema.set('toJSON', {
   virtuals: true,
 })
 
-UserSchema.pre<UserInterface>('save', async function (next) {
+UserSchema.pre<IUser>('save', async function (next) {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
 
   if (!this.isModified('password')) {
@@ -58,6 +51,29 @@ UserSchema.pre<UserInterface>('save', async function (next) {
   return next()
 })
 
-const User = mongoose.model<UserInterface>('Users', UserSchema)
+UserSchema.methods.passwordMatches = async function (password: string) {
+  return bcrypt.compareSync(password, this.password)
+}
+
+UserSchema.statics.findAndValidateUser = async function ({
+  login,
+  password,
+}: {
+  login: string
+  password: string
+}): Promise<IUser> {
+  const user = await this.findOne({ login }).exec()
+  if (!user) {
+    throw new Error('Login not found')
+  }
+  const isPasswordOk = await user.passwordMatches(password)
+
+  if (!isPasswordOk) {
+    throw new Error('Password is not valid')
+  }
+  return user
+}
+
+const User = mongoose.model<IUser, UserModel>('Users', UserSchema)
 
 export default User

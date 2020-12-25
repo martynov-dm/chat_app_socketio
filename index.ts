@@ -1,13 +1,14 @@
 import express from 'express'
 import { Server, Socket } from 'socket.io'
-import path from 'path'
 import http from 'http'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
+import passport from 'passport'
 
 import authRoute from './routes/auth'
 import { connect } from './services/mongoose'
+import jwtStrategy from './services/passport'
 
 const PORT = process.env.PORT || 5000
 const rooms = new Map()
@@ -21,6 +22,8 @@ const io = new Server(server, {
 })
 
 app.use(cors())
+passport.initialize()
+passport.use('jwt', jwtStrategy)
 app.use(bodyParser.json())
 app.use(
   express.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 })

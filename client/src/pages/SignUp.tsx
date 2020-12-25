@@ -10,9 +10,7 @@ import {
   Button,
   Image,
   CircularProgress,
-  IconButton,
 } from '@chakra-ui/react'
-import { AttachmentIcon } from '@chakra-ui/icons'
 
 import { useDispatch } from 'react-redux'
 import { authActions } from '../redux/auth/auth.actions'

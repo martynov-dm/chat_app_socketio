@@ -1,11 +1,8 @@
 import { signUpRequest } from './../../api/api'
 import { AuthActionTypes } from './auth.actions'
 import { LoginPasswordImage } from './../../types/types'
-import { takeLatest, put, all } from 'redux-saga/effects'
+import { takeLatest, all } from 'redux-saga/effects'
 import * as Effects from 'redux-saga/effects'
-
-import { push } from 'connected-react-router'
-import { SagaIterator } from 'redux-saga'
 
 const call: any = Effects.call
 
@@ -15,7 +12,7 @@ export function* signUp(action: AuthActionTypes) {
   const { login, password, image } = action.payload as LoginPasswordImage
 
   try {
-    const { data } = yield call(signUpRequest, [login, password, image])
+    yield call(signUpRequest, [login, password, image])
   } catch (error) {}
 }
 
