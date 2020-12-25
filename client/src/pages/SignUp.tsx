@@ -1,5 +1,4 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/react'
+import { css } from '@emotion/react'
 import React, { useRef, useState } from 'react'
 import ThemeToggler from '../components/common/ThemeToggler'
 import {
@@ -11,9 +10,12 @@ import {
   Input,
   Button,
   Image,
+  Text,
+  IconButton,
   CircularProgress,
 } from '@chakra-ui/react'
 import { useDispatch } from 'react-redux'
+import { PlusSquareIcon } from '@chakra-ui/icons'
 
 import { authActions } from '../redux/auth/auth.actions'
 import avatarPlaceholder from '../images/avatar_placeholder.png'
@@ -51,29 +53,70 @@ const SignUp = () => {
             <Heading>Register</Heading>
           </Box>
           <Box my={4} textAlign='left'>
-            <Flex align='center' justifyContent='center' mb={3}>
-              <Image
-                borderRadius='full'
-                boxSize='130px'
-                src={avatarPlaceholder}
-                alt='Segun Adebayo'
-              />
-            </Flex>
-
             <form onSubmit={handleSubmit}>
-              <div css={{ background: 'red' }}>dick</div>
-
-              <input
+              <Flex
+                mx='auto'
+                boxSize='130px'
+                align='center'
+                justifyContent='center'
                 css={css`
-                  display: none;
+                  position: relative;
+                  text-align: center;
+                  cursor: pointer;
+                  transition: all 0.4s;
+                  &:hover {
+                    opacity: 0.7;
+                  }
                 `}
-                required
-                ref={inputRef}
-                type='file'
-                onChange={(e) => {
-                  setFile(e.target.files![0])
-                }}
-              />
+                mb={3}
+              >
+                <label htmlFor='file'>
+                  <Image
+                    boxShadow='md'
+                    borderRadius='full'
+                    boxSize='130px'
+                    src={avatarPlaceholder}
+                    alt='Segun Adebayo'
+                    css={css`
+                      cursor: pointer;
+                    `}
+                  />
+                  <Text
+                    fontSize='xl'
+                    css={css`
+                      font-weight: 700;
+                      position: absolute;
+                      top: 50%;
+                      left: 50%;
+                      transform: translate(-50%, -50%);
+                      color: #1a202c;
+                      cursor: pointer;
+                    `}
+                  >
+                    Add Image
+                  </Text>
+                </label>
+                <input
+                  name='file'
+                  id='file'
+                  className='inputfile'
+                  css={css`
+                    width: 0.1px;
+                    height: 0.1px;
+                    opacity: 0;
+                    overflow: hidden;
+                    position: absolute;
+                    z-index: -1;
+                  `}
+                  required
+                  ref={inputRef}
+                  type='file'
+                  onChange={(e) => {
+                    setFile(e.target.files![0])
+                  }}
+                />
+              </Flex>
+
               <FormControl mt={4} isRequired>
                 <FormLabel>Email</FormLabel>
                 <Input
