@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/react'
 import React, { useRef, useState } from 'react'
 import ThemeToggler from '../components/common/ThemeToggler'
 import {
@@ -11,9 +13,10 @@ import {
   Image,
   CircularProgress,
 } from '@chakra-ui/react'
-
 import { useDispatch } from 'react-redux'
+
 import { authActions } from '../redux/auth/auth.actions'
+import avatarPlaceholder from '../images/avatar_placeholder.png'
 
 const SignUp = () => {
   const [login, setLogin] = useState('')
@@ -34,7 +37,7 @@ const SignUp = () => {
   }
 
   return (
-    <>
+    <React.Fragment>
       <ThemeToggler />
       <Flex width='full' align='center' justifyContent='center'>
         <Box
@@ -45,26 +48,33 @@ const SignUp = () => {
           boxShadow='lg'
         >
           <Box textAlign='center'>
-            <Heading>Login</Heading>
+            <Heading>Register</Heading>
           </Box>
           <Box my={4} textAlign='left'>
-            <Image
-              borderRadius='full'
-              boxSize='150px'
-              src='https://bit.ly/sage-adebayo'
-              alt='Segun Adebayo'
-            />
-
-            <input
-              ref={inputRef}
-              type='file'
-              onChange={(e) => {
-                setFile(e.target.files![0])
-              }}
-            />
+            <Flex align='center' justifyContent='center' mb={3}>
+              <Image
+                borderRadius='full'
+                boxSize='130px'
+                src={avatarPlaceholder}
+                alt='Segun Adebayo'
+              />
+            </Flex>
 
             <form onSubmit={handleSubmit}>
-              <FormControl isRequired>
+              <div css={{ background: 'red' }}>dick</div>
+
+              <input
+                css={css`
+                  display: none;
+                `}
+                required
+                ref={inputRef}
+                type='file'
+                onChange={(e) => {
+                  setFile(e.target.files![0])
+                }}
+              />
+              <FormControl mt={4} isRequired>
                 <FormLabel>Email</FormLabel>
                 <Input
                   type='email'
@@ -84,7 +94,7 @@ const SignUp = () => {
               </FormControl>
               <Button
                 type='submit'
-                colorScheme='green'
+                colorScheme='blue'
                 variant='outline'
                 width='full'
                 mt={4}
@@ -93,17 +103,17 @@ const SignUp = () => {
                   <CircularProgress
                     size='30px'
                     isIndeterminate
-                    color='green.300'
+                    color='blue.300'
                   />
                 ) : (
-                  'Sign In'
+                  'Sign Up'
                 )}
               </Button>
             </form>
           </Box>
         </Box>
       </Flex>
-    </>
+    </React.Fragment>
   )
 }
 
