@@ -10,7 +10,7 @@ export type InferActionTypes<T> = T extends {
 export interface LoginPasswordImage {
   login: string
   password: string
-  image: null | File
+  image: string
 }
 
 export interface LoginAndPassword {
