@@ -1,17 +1,29 @@
-import {
-  InferActionTypes,
-  LoginAndImage,
-  LoginAndPassword,
-} from './../../types/types'
-import { LoginPasswordImage } from '../../types/types'
+import { InferActionTypes, LoginAndPassword } from './../../types/types'
+import { ILoginPasswordAvatar } from '../../types/types'
 
 export type AuthActionTypes = InferActionTypes<typeof authActions>
 
 export const authActions = {
-  signUpStart: (loginPasswordAndImage: LoginPasswordImage) => {
+  signUpStart: (loginPasswordAvatar: ILoginPasswordAvatar) => {
     return {
       type: 'SIGN_UP_START',
-      payload: loginPasswordAndImage,
+      payload: loginPasswordAvatar,
+    } as const
+  },
+  signUpSuccess: () => {
+    return {
+      type: 'SIGN_UP_SUCCESS',
+    } as const
+  },
+  signUpFailure: (errorMessage: string) => {
+    return {
+      type: 'SIGN_UP_FAILURE',
+      payload: errorMessage,
+    } as const
+  },
+  signUpClear: () => {
+    return {
+      type: 'SIGN_UP_CLEAR',
     } as const
   },
 
@@ -22,10 +34,10 @@ export const authActions = {
     } as const
   },
 
-  signInSuccess: (nameImagePassword: LoginAndImage) => {
-    return {
-      type: 'SIGN_IN_SUCCESS',
-      payload: nameImagePassword,
-    } as const
-  },
+  // signInSuccess: (nameImagePassword: LoginAndImage) => {
+  //   return {
+  //     type: 'SIGN_IN_SUCCESS',
+  //     payload: nameImagePassword,
+  //   } as const
+  // },
 }

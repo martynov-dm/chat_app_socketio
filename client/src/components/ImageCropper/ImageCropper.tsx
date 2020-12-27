@@ -42,8 +42,8 @@ const ImageCropper: React.FC<props> = ({
     croppedAreaPixels: IcroppedAreaPixels
   ) => {
     const croppedImage = await getCroppedImg(inputImg, croppedAreaPixels)
-    getBlob(croppedImage)
-    setFinalImage(URL.createObjectURL(croppedImage))
+    getBlob(croppedImage as Blob)
+    setFinalImage(URL.createObjectURL(croppedImage) as string)
   }
 
   return (

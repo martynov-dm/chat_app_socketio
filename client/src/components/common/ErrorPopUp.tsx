@@ -3,15 +3,20 @@ import Snackbar from '@material-ui/core/Snackbar'
 import { Alert as MuiAlert, AlertProps } from '@material-ui/lab/'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { getErrorMessage } from '../../redux/successAndErrors/successAndErrors.selectors'
-import { SuccessAndErrorsActions } from '../../redux/successAndErrors/successAndErrors.actions'
+import { authActions } from '../../redux/auth/auth.actions'
+import { selectSignUpReqError } from '../../redux/auth/auth.selectors'
 
 function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant='filled' {...props} />
 }
 
-const ErrorPopUp = () => {
-  const errMessage = useSelector(getErrorMessage)
+interface Iprops {
+  errMessage: string | null
+}
+
+const ErrorPopUp: React.FC<Iprops> = (props) => {
+  const { errMessage } = props
+
   const dispatch = useDispatch()
 
   const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
@@ -19,7 +24,7 @@ const ErrorPopUp = () => {
       return
     }
 
-    dispatch(SuccessAndErrorsActions.removeErrorMessage())
+    dispatch(authActions.signUpClear())
   }
 
   return (

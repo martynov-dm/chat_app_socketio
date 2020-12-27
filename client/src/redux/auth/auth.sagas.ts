@@ -1,7 +1,6 @@
-import { SuccessAndErrorsActions } from './../successAndErrors/successAndErrors.actions'
 import { signUpRequest } from './../../api/api'
-import { AuthActionTypes } from './auth.actions'
-import { LoginPasswordImage } from './../../types/types'
+import { AuthActionTypes, authActions } from './auth.actions'
+import { ILoginPasswordAvatar } from './../../types/types'
 import { takeLatest, all, put, delay } from 'redux-saga/effects'
 import { push } from 'connected-react-router'
 
@@ -11,17 +10,18 @@ const call: any = Effects.call
 
 export function* signIn(action: AuthActionTypes) {}
 
-export function* signUp(action: AuthActionTypes) {
-  const { login, password, image } = action.payload as LoginPasswordImage
+export function* signUp(
+  action: Extract<AuthActionTypes, { type: string; payload: any }>
+) {
+  const { login, password, avatar } = action.payload as ILoginPasswordAvatar
 
   try {
-    const { data } = yield call(signUpRequest, [login, password, image])
+    yield call(signUpRequest, [login, password, avatar])
 
-    yield put(SuccessAndErrorsActions.addSuccessMessage(data.message))
-
+    yield put(authActions.signUpSuccess())
     yield put(push('/sign-in'))
   } catch (error) {
-    yield put(SuccessAndErrorsActions.addErrorMessage(error.response.data))
+    yield put(authActions.signUpFailure(error.response.data))
   }
 }
 

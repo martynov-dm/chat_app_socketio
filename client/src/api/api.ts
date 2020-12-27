@@ -1,4 +1,4 @@
-import { LoginPasswordImage } from './../types/types'
+import { ILoginPasswordAvatar } from './../types/types'
 import axios from 'axios'
 
 export const instance = axios.create({
@@ -10,7 +10,7 @@ export const signUpRequest = ([
   login,
   password,
   image,
-]: Array<LoginPasswordImage>) => {
+]: Array<ILoginPasswordAvatar>) => {
   const data = new FormData()
   //@ts-ignore
   data.append('login', login as string)

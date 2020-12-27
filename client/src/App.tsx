@@ -17,7 +17,6 @@ const App: React.FC = () => {
           <Route exact path='/sign-in' component={SignIn} />
           <Route exact path='/sign-up' component={SignUp} />
         </Switch>
-        <ErrorPopUp />
       </ConnectedRouter>
     </ChakraProvider>
   )

@@ -23,19 +23,23 @@ import avatarPlaceholder from '../images/avatar_placeholder.png'
 
 import ImageCropper from '../components/ImageCropper/ImageCropper'
 import { authActions } from '../redux/auth/auth.actions'
-import { getErrorMessage } from '../redux/successAndErrors/successAndErrors.selectors'
+import {
+  selectSignUpReqError,
+  selectSignUpReqStatus,
+} from '../redux/auth/auth.selectors'
+import ErrorPopUp from '../components/common/ErrorPopUp'
 
 const SignUp = () => {
   const dispatch = useDispatch()
   const inputRef = useRef(null)
-  const error = useSelector(getErrorMessage)
+  const status = useSelector(selectSignUpReqStatus)
+  const errMessage = useSelector(selectSignUpReqError)
 
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
 
   const [inputImg, setInputImg] = useState('' as ArrayBuffer | string)
-  const [blob, setBlob] = useState('')
+  const [blob, setBlob] = useState(null as Blob | null)
   const [finalImage, setFinalImage] = useState('')
   const [isCropping, setIsCropping] = useState(false)
 
@@ -46,28 +50,17 @@ const SignUp = () => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
 
-    setIsLoading(true)
-
-    dispatch(authActions.signUpStart({ login, password, image: blob }))
-
-    setLogin('')
-    setPassword('')
-    setInputImg('')
-    setBlob('')
-    setFinalImage('')
-    setShowPassword(false)
-    setIsLoading(false)
+    const avatar = blob as Blob
+    dispatch(authActions.signUpStart({ login, password, avatar }))
   }
-  const getBlob = (blob: any) => {
+  const getBlob = (blob: Blob) => {
     // pass blob up from the ImageCropper component
     setBlob(blob)
   }
   const onFileInputChange = (e: React.FormEvent<HTMLInputElement>) => {
     // convert image file to base64 string
     const file = (e.target as HTMLInputElement).files![0]
-
     const reader = new FileReader()
-
     if (file) {
       reader.readAsDataURL(file)
     }
@@ -81,6 +74,14 @@ const SignUp = () => {
     )
   }
 
+  // if (status === 'succeeded') {
+  //   setLogin('')
+  //   setPassword('')
+  //   setInputImg('')
+  //   setBlob(null)
+  //   setFinalImage('')
+  //   setShowPassword(false)
+  // }
   return (
     <>
       <ThemeToggler />
@@ -238,7 +239,7 @@ const SignUp = () => {
                   width='full'
                   mt={4}
                 >
-                  {isLoading ? (
+                  {status === 'loading' ? (
                     <CircularProgress
                       size='30px'
                       isIndeterminate
@@ -254,7 +255,7 @@ const SignUp = () => {
         </Flex>
       )}
 
-      {}
+      <ErrorPopUp errMessage={errMessage} />
     </>
   )
 }

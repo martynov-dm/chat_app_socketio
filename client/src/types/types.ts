@@ -7,10 +7,10 @@ export type InferActionTypes<T> = T extends {
 
 ////////////////////////////////////////////////////////////////
 
-export interface LoginPasswordImage {
+export interface ILoginPasswordAvatar {
   login: string
   password: string
-  image: string
+  avatar: Blob
 }
 
 export interface LoginAndPassword {
