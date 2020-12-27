@@ -12,8 +12,12 @@ import {
   Image,
   Text,
   CircularProgress,
+  InputGroup,
+  InputRightElement,
+  IconButton,
 } from '@chakra-ui/react'
 import { useDispatch } from 'react-redux'
+import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 
 import avatarPlaceholder from '../images/avatar_placeholder.png'
 
@@ -21,15 +25,21 @@ import ImageCropper from '../components/ImageCropper/ImageCropper'
 import { authActions } from '../redux/auth/auth.actions'
 
 const SignUp = () => {
+  const dispatch = useDispatch()
+  const inputRef = useRef(null)
+
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const dispatch = useDispatch()
-  const inputRef = useRef(null)
+
   const [inputImg, setInputImg] = useState('' as ArrayBuffer | string)
   const [blob, setBlob] = useState('')
   const [finalImage, setFinalImage] = useState('')
   const [isCropping, setIsCropping] = useState(false)
+
+  const [showPassword, setShowPassword] = useState(false)
+
+  const handlePasswordVisibility = () => setShowPassword(!showPassword)
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
@@ -43,6 +53,7 @@ const SignUp = () => {
     setInputImg('')
     setBlob('')
     setFinalImage('')
+    setShowPassword(false)
     setIsLoading(false)
   }
   const getBlob = (blob: any) => {
@@ -113,6 +124,7 @@ const SignUp = () => {
                     <>
                       <label htmlFor='file'>
                         <Image
+                          boxShadow='md'
                           css={css`
                             cursor: pointer;
                           `}
@@ -196,13 +208,26 @@ const SignUp = () => {
                 </FormControl>
                 <FormControl mt={6} isRequired>
                   <FormLabel>Password</FormLabel>
-                  <Input
-                    value={password}
-                    type='password'
-                    placeholder='*******'
-                    size='lg'
-                    onChange={(event) => setPassword(event.currentTarget.value)}
-                  />
+                  <InputGroup>
+                    <Input
+                      value={password}
+                      type={showPassword ? 'text' : 'password'}
+                      placeholder='*******'
+                      size='lg'
+                      onChange={(event) =>
+                        setPassword(event.currentTarget.value)
+                      }
+                    />
+                    <InputRightElement width='3rem'>
+                      <IconButton
+                        mt={2}
+                        aria-label='toggle passwod visibility'
+                        size='md'
+                        onClick={handlePasswordVisibility}
+                        icon={showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                      />
+                    </InputRightElement>
+                  </InputGroup>
                 </FormControl>
                 <Button
                   type='submit'

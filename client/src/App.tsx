@@ -5,6 +5,7 @@ import Main from './pages/Main'
 import SignUp from './pages/SignUp'
 import { history } from './redux/store'
 import { ChakraProvider } from '@chakra-ui/react'
+import SignIn from './pages/SignIn'
 
 const App: React.FC = () => {
   return (
@@ -12,7 +13,7 @@ const App: React.FC = () => {
       <ConnectedRouter history={history}>
         <Switch>
           <Route exact path='/' component={Main} />
-          {/* <Route exact path='/sign-in' component={SignIn} /> */}
+          <Route exact path='/sign-in' component={SignIn} />
           <Route exact path='/sign-up' component={SignUp} />
         </Switch>
       </ConnectedRouter>
