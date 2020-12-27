@@ -14,6 +14,9 @@ declare global {
 
 export const history = createBrowserHistory()
 
+type RootReducerType = typeof rootReducerWithHistory
+export type AppStateType = ReturnType<RootReducerType>
+
 const rootReducerWithHistory = rootReducer(history)
 
 const sagaMiddleware = createSagaMiddleware()

@@ -16,17 +16,19 @@ import {
   InputRightElement,
   IconButton,
 } from '@chakra-ui/react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 
 import avatarPlaceholder from '../images/avatar_placeholder.png'
 
 import ImageCropper from '../components/ImageCropper/ImageCropper'
 import { authActions } from '../redux/auth/auth.actions'
+import { getErrorMessage } from '../redux/successAndErrors/successAndErrors.selectors'
 
 const SignUp = () => {
   const dispatch = useDispatch()
   const inputRef = useRef(null)
+  const error = useSelector(getErrorMessage)
 
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
@@ -251,6 +253,8 @@ const SignUp = () => {
           </Box>
         </Flex>
       )}
+
+      {}
     </>
   )
 }

@@ -6,7 +6,7 @@ const INITIAL_STATE = {
 
 export type InitialStateType = typeof INITIAL_STATE
 
-const authReducer = (
+const successAndErrorsReducer = (
   state = INITIAL_STATE,
   action: SuccessAndErrorsActionTypes
 ): InitialStateType => {
@@ -19,7 +19,7 @@ const authReducer = (
     case 'REMOVE_ERROR_MESSAGE':
       return {
         ...state,
-        successMessage: null,
+        errorMessage: null,
       }
     case 'ADD_SUCCESS_MESSAGE':
       return {
@@ -37,4 +37,4 @@ const authReducer = (
   }
 }
 
-export default authReducer
+export default successAndErrorsReducer
