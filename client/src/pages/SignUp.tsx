@@ -188,6 +188,7 @@ const SignUp = () => {
                 <FormControl mt={4} isRequired>
                   <FormLabel>Login</FormLabel>
                   <Input
+                    value={login}
                     placeholder='Your login'
                     size='lg'
                     onChange={(event) => setLogin(event.currentTarget.value)}
@@ -196,6 +197,7 @@ const SignUp = () => {
                 <FormControl mt={6} isRequired>
                   <FormLabel>Password</FormLabel>
                   <Input
+                    value={password}
                     type='password'
                     placeholder='*******'
                     size='lg'

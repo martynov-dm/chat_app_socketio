@@ -16,8 +16,8 @@ export const uploadPicture = (
       folder: 'chat_app_avatars',
       use_filename: true,
       public_id: login,
-      format: 'jpg',
-      eager: [{ width: 200, height: 200, crop: 'scale' }],
+      format: 'png',
+      eager: [{ width: 200, height: 200, crop: 'scale', radius: 'max' }],
     }
 
     cloudinary.uploader

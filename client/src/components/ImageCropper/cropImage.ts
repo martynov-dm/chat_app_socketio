@@ -22,6 +22,13 @@ const getCroppedImg = async (
   canvas.width = 250
   canvas.height = 250
 
+  ctx!.beginPath()
+  ctx!.arc(125, 125, 125, 0, 2 * Math.PI)
+  ctx!.closePath()
+  ctx!.fill()
+  ctx!.clip()
+  ctx!.stroke()
+
   ctx!.drawImage(
     image as any,
     crop.x,

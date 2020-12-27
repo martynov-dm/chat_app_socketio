@@ -11,16 +11,19 @@ export const signUpRequest = ([
   password,
   image,
 ]: Array<LoginPasswordImage>) => {
+  const data = new FormData()
   //@ts-ignore
-  const imageAsFile = new File([image as Blob], login)
+  data.append('login', login as string)
+  //@ts-ignore
+  data.append('password', password as string)
+  //@ts-ignore
 
-  return instance.post(
-    'auth/register',
-    { login, password, image: imageAsFile },
-    {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    }
-  )
+  data.append('image', image as Blob, 'Avatar')
+
+  return instance.post('auth/register', data, {
+    headers: {
+      //@ts-ignore
+      'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
+    },
+  })
 }
