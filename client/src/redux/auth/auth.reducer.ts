@@ -6,6 +6,10 @@ const INITIAL_STATE = {
     status: 'idle' as 'idle' | 'loading' | 'succeeded' | 'failed',
     error: null as string | null,
   },
+  signInRequest: {
+    status: 'idle' as 'idle' | 'loading' | 'succeeded' | 'failed',
+    error: null as string | null,
+  },
 }
 
 export type InitialStateType = typeof INITIAL_STATE
@@ -43,7 +47,34 @@ const authReducer = (
           error: null,
         },
       }
-
+    case 'SIGN_IN_START':
+      return {
+        ...state,
+        signInRequest: { ...state.signInRequest, status: 'loading' },
+      }
+    case 'SIGN_IN_SUCCESS':
+      return {
+        ...state,
+        signInRequest: { ...state.signInRequest, status: 'succeeded' },
+      }
+    case 'SIGN_IN_FAILURE':
+      return {
+        ...state,
+        signInRequest: {
+          ...state.signInRequest,
+          status: 'failed',
+          error: action.payload,
+        },
+      }
+    case 'SIGN_IN_CLEAR':
+      return {
+        ...state,
+        signInRequest: {
+          ...state.signInRequest,
+          status: 'idle',
+          error: null,
+        },
+      }
     default:
       return state
   }

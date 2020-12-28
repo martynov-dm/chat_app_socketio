@@ -1,3 +1,4 @@
+import { AuthActionTypes } from './../redux/auth/auth.actions'
 ////REDUX TYPES////////////////////////////////
 export type InferActionTypes<T> = T extends {
   [key: string]: (...arg: any[]) => infer U
@@ -7,13 +8,18 @@ export type InferActionTypes<T> = T extends {
 
 ////////////////////////////////////////////////////////////////
 
+export type TAuthActionsWithPayload = Extract<
+  AuthActionTypes,
+  { type: string; payload: any }
+>
+
 export interface ILoginPasswordAvatar {
   login: string
   password: string
   avatar: Blob
 }
 
-export interface LoginAndPassword {
+export interface ILoginAndPassword {
   login: string
   password: string
 }

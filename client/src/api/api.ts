@@ -27,3 +27,10 @@ export const signUpRequest = ([
     },
   })
 }
+
+export const signInRequest = ([login, password]: Array<string>) => {
+  return instance.post('auth/login', {
+    login,
+    password,
+  })
+}

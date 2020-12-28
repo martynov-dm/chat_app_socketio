@@ -8,6 +8,11 @@ export const selectSignUpReq = createSelector(
   (auth) => auth.signUpRequest
 )
 
+export const selectSignInReq = createSelector(
+  [selectAuth],
+  (auth) => auth.signInRequest
+)
+
 export const selectSignUpReqError = createSelector(
   [selectSignUpReq],
   (signUpRequest) => signUpRequest.error
@@ -16,4 +21,14 @@ export const selectSignUpReqError = createSelector(
 export const selectSignUpReqStatus = createSelector(
   [selectSignUpReq],
   (signUpRequest) => signUpRequest.status
+)
+
+export const selectSignInReqError = createSelector(
+  [selectSignInReq],
+  (signInRequest) => signInRequest.error
+)
+
+export const selectSignInReqStatus = createSelector(
+  [selectSignInReq],
+  (signInRequest) => signInRequest.status
 )

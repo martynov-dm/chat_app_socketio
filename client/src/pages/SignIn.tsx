@@ -9,27 +9,28 @@ import {
   FormLabel,
   Input,
   Button,
-  Image,
-  Text,
   CircularProgress,
   InputGroup,
   InputRightElement,
   IconButton,
 } from '@chakra-ui/react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 
-import avatarPlaceholder from '../images/avatar_placeholder.png'
-
-import ImageCropper from '../components/ImageCropper/ImageCropper'
 import { authActions } from '../redux/auth/auth.actions'
+import {
+  selectSignInReqError,
+  selectSignInReqStatus,
+} from '../redux/auth/auth.selectors'
+import ErrorPopUp from '../components/common/ErrorPopUp'
 
 const SignIn = () => {
   const dispatch = useDispatch()
+  const status = useSelector(selectSignInReqStatus)
+  const errMessage = useSelector(selectSignInReqError)
 
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
 
   const [showPassword, setShowPassword] = useState(false)
 
@@ -37,16 +38,7 @@ const SignIn = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
-
-    setIsLoading(true)
-
     dispatch(authActions.signInStart({ login, password }))
-
-    setLogin('')
-    setPassword('')
-
-    setShowPassword(false)
-    setIsLoading(false)
   }
 
   return (
@@ -75,7 +67,7 @@ const SignIn = () => {
                   onChange={(event) => setLogin(event.currentTarget.value)}
                 />
               </FormControl>
-              <FormControl mt={5} isRequired>
+              <FormControl mt={6} isRequired>
                 <FormLabel>Password</FormLabel>
                 <InputGroup>
                   <Input
@@ -103,7 +95,7 @@ const SignIn = () => {
                 width='full'
                 mt={4}
               >
-                {isLoading ? (
+                {status === 'loading' ? (
                   <CircularProgress
                     size='30px'
                     isIndeterminate
@@ -117,6 +109,8 @@ const SignIn = () => {
           </Box>
         </Box>
       </Flex>
+
+      <ErrorPopUp errMessage={errMessage} />
     </>
   )
 }

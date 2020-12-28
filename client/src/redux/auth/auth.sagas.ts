@@ -1,23 +1,32 @@
-import { signUpRequest } from './../../api/api'
-import { AuthActionTypes, authActions } from './auth.actions'
-import { ILoginPasswordAvatar } from './../../types/types'
-import { takeLatest, all, put, delay } from 'redux-saga/effects'
+import { signUpRequest, signInRequest } from './../../api/api'
+import { authActions } from './auth.actions'
+import {
+  ILoginAndPassword,
+  ILoginPasswordAvatar,
+  TAuthActionsWithPayload,
+} from './../../types/types'
+import { takeLatest, all, put } from 'redux-saga/effects'
 import { push } from 'connected-react-router'
 
 import * as Effects from 'redux-saga/effects'
 
 const call: any = Effects.call
 
-export function* signIn(action: AuthActionTypes) {}
+export function* signIn(action: TAuthActionsWithPayload) {
+  const { login, password } = action.payload as ILoginAndPassword
+  try {
+    yield call(signInRequest, [login, password])
+    yield put(authActions.signInSuccess())
+    yield put(push('/sign-in'))
+  } catch (error) {
+    yield put(authActions.signInFailure(error.response.data))
+  }
+}
 
-export function* signUp(
-  action: Extract<AuthActionTypes, { type: string; payload: any }>
-) {
+export function* signUp(action: TAuthActionsWithPayload) {
   const { login, password, avatar } = action.payload as ILoginPasswordAvatar
-
   try {
     yield call(signUpRequest, [login, password, avatar])
-
     yield put(authActions.signUpSuccess())
     yield put(push('/sign-in'))
   } catch (error) {
