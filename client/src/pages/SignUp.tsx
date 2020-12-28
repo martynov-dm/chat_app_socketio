@@ -255,7 +255,10 @@ const SignUp = () => {
         </Flex>
       )}
 
-      <ErrorPopUp errMessage={errMessage} />
+      <ErrorPopUp
+        errMessage={errMessage}
+        clearAction={authActions.signUpClear}
+      />
     </>
   )
 }

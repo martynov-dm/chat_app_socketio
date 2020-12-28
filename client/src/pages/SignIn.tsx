@@ -110,7 +110,10 @@ const SignIn = () => {
         </Box>
       </Flex>
 
-      <ErrorPopUp errMessage={errMessage} />
+      <ErrorPopUp
+        errMessage={errMessage}
+        clearAction={authActions.signInClear}
+      />
     </>
   )
 }

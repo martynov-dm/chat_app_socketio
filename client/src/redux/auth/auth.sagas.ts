@@ -15,11 +15,12 @@ const call: any = Effects.call
 export function* signIn(action: TAuthActionsWithPayload) {
   const { login, password } = action.payload as ILoginAndPassword
   try {
-    yield call(signInRequest, [login, password])
+    const { data } = yield call(signInRequest, [login, password])
+    yield sessionStorage.setItem('token', data.token)
     yield put(authActions.signInSuccess())
-    yield put(push('/sign-in'))
+    yield put(push('/'))
   } catch (error) {
-    yield put(authActions.signInFailure(error.response.data))
+    yield put(authActions.signInFailure(error.response.data.message))
   }
 }
 

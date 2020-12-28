@@ -2,9 +2,7 @@ import React from 'react'
 import Snackbar from '@material-ui/core/Snackbar'
 import { Alert as MuiAlert, AlertProps } from '@material-ui/lab/'
 
-import { useDispatch, useSelector } from 'react-redux'
-import { authActions } from '../../redux/auth/auth.actions'
-import { selectSignUpReqError } from '../../redux/auth/auth.selectors'
+import { useDispatch } from 'react-redux'
 
 function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant='filled' {...props} />
@@ -12,10 +10,11 @@ function Alert(props: AlertProps) {
 
 interface Iprops {
   errMessage: string | null
+  clearAction: () => { type: string }
 }
 
 const ErrorPopUp: React.FC<Iprops> = (props) => {
-  const { errMessage } = props
+  const { errMessage, clearAction } = props
 
   const dispatch = useDispatch()
 
@@ -24,7 +23,7 @@ const ErrorPopUp: React.FC<Iprops> = (props) => {
       return
     }
 
-    dispatch(authActions.signUpClear())
+    dispatch(clearAction())
   }
 
   return (
