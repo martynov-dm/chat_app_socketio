@@ -21,6 +21,17 @@ export const io = new Server(server, {
   },
 })
 
+io.on('connection', (socket: Socket) => {
+  socket.emit('messageFromServer', { data: 'Welcome to the socketio server' })
+  socket.on('messageToServer', (dataFromClient: any) => {
+    console.log(dataFromClient)
+  })
+  socket.on('newMessageToServer', (msg) => {
+    // console.log(msg)
+    io.emit('messageToClients', { text: msg.text })
+  })
+})
+
 app.use(cors())
 passport.initialize()
 passport.use('jwt', jwtStrategy)

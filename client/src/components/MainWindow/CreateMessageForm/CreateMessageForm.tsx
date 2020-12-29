@@ -40,7 +40,8 @@ const CreateMessageForm: React.FC = () => {
   const ws = useContext(SocketContext)
 
   const handleMessageSubmit = () => {
-    ws.connect()
+    ws.sendMessage(message)
+    setMessage('')
   }
 
   return (
@@ -55,6 +56,7 @@ const CreateMessageForm: React.FC = () => {
       <Input
         borderRadius='xl'
         width='70%'
+        value={message}
         onChange={(e) => setMessage(e.currentTarget.value)}
       />
       <RiSendPlane2Fill

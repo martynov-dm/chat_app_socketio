@@ -1,6 +1,7 @@
 import React, { createContext } from 'react'
 import socketIOClient, { Socket } from 'socket.io-client'
 import { useDispatch } from 'react-redux'
+import { messagesActions } from '../redux/messages/messages.actions'
 
 export const SocketContext = createContext(null as any)
 
@@ -13,8 +14,8 @@ export const SocketProvider = (props: Iprops) => {
   let socket: Socket
   let ws
   const dispatch = useDispatch()
-
-  const connect = () => {
+  //@ts-ignore
+  if (!socket) {
     socket = socketIOClient.io('http://localhost:5000')
     socket.connect()
     socket.on('messageFromServer', (dataFromServer: string) => {
@@ -24,12 +25,14 @@ export const SocketProvider = (props: Iprops) => {
   }
 
   const sendMessage = (message: string) => {
-    socket.emit('messsage', JSON.stringify({ message }))
-    // dispatch(updateChatLog(payload))
+    socket.emit('newMessageToServer', { text: message })
   }
 
+  socket.on('messageToClients', (msg: any) => {
+    dispatch(messagesActions.addNewMessage(msg.text))
+  })
+
   ws = {
-    connect,
     sendMessage,
   }
 

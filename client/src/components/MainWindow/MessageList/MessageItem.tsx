@@ -41,7 +41,13 @@ const MessageStyles = styled.div`
   }
 `
 
-const MessageItem = () => {
+interface Iprops {
+  message: string
+}
+
+const MessageItem = (props: Iprops) => {
+  const { message } = props
+
   return (
     <MessageStyles>
       <img
@@ -54,7 +60,7 @@ const MessageItem = () => {
           <div className='date'>2020/11/26</div>
         </div>
 
-        <span className='message'>My Message</span>
+        <span className='message'>{message}</span>
       </div>
     </MessageStyles>
   )

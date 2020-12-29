@@ -24,7 +24,6 @@ const MainWindow = () => {
         background-color: ${bgColor};
       `}
     >
-      <div>messages</div>
       <MessageList />
       <CreateMessageForm />
     </section>
