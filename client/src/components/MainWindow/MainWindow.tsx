@@ -2,7 +2,6 @@ import React from 'react'
 import { css } from '@emotion/react'
 
 import styled from 'styled-components'
-import RoomHeader from './RoomHeader/RoomHeader'
 import MessageList from './MessageList/MessageList'
 import CreateMessageForm from './CreateMessageForm/CreateMessageForm'
 import { useColorModeValue } from '@chakra-ui/react'
@@ -18,6 +17,7 @@ const MainWindow = () => {
 
         width: 100%;
         height: 100%;
+        display: flex;
         flex-direction: column;
         position: relative;
 
@@ -25,9 +25,8 @@ const MainWindow = () => {
       `}
     >
       <div>messages</div>
-      {/* <RoomHeader />
       <MessageList />
-      <CreateMessageForm /> */}
+      <CreateMessageForm />
     </section>
   )
 }

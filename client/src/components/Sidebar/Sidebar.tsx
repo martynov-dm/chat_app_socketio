@@ -2,19 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import CreateServer from './CreateServer/CreateServer'
 import RoomList from './RoomList/RoomList'
-import UserHeader from './UserHeader/UserHeader'
 import { css } from '@emotion/react'
 import { useColorModeValue } from '@chakra-ui/react'
-
-// const SidebarLayout = styled.aside`
-//   flex: none;
-//   width: 18rem;
-//   height: 100vh;
-//   display: flex;
-//   flex-direction: column;
-//   border-right: 1px solid rgba(0, 0, 0, 0.1);
-//   background: #ffffff;
-// `
+import UserMenu from './UserMenu/UserMenu'
 
 const Sidebar: React.FC = () => {
   const bgColor = useColorModeValue('#EDF2F7', '#1A202C')
@@ -28,9 +18,14 @@ const Sidebar: React.FC = () => {
         width: 100%;
 
         background-color: ${bgColor};
+
+        display: flex;
+        flex-direction: column;
       `}
     >
       <div>Sidebar</div>
+      <UserMenu />
+
       {/* <UserHeader />
       <RoomList />
       <CreateServer /> */}

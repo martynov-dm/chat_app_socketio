@@ -1,45 +1,67 @@
-import React from 'react'
-import styled from 'styled-components'
+import React, { useState } from 'react'
 import { RiSendPlane2Fill } from 'react-icons/ri'
+import {
+  Box,
+  Flex,
+  IconButton,
+  Input,
+  InputGroup,
+  InputRightElement,
+  useColorModeValue,
+} from '@chakra-ui/react'
+import { css } from '@emotion/react'
 
-const MessagesSectionLayout = styled.form`
-  display: flex;
-  align-items: center;
-  border-top: 1px solid #e0e0e0;
-  height: 3.8rem;
-  width: 100%;
+// svg {
+//   width: 2rem;
+//   height: 2rem;
+//   fill: #006eff;
+//   margin-right: 2rem;
+// }
 
-  svg {
-    width: 2rem;
-    height: 2rem;
-    fill: #006eff;
-    margin-right: 2rem;
-  }
+// button {
+//   position: relative;
+//   border: 0;
+//   background: #fff;
+//   padding: 0;
+//   cursor: pointer;
+// }
 
-  button {
-    position: relative;
-    border: 0;
-    background: #fff;
-    padding: 0;
-    cursor: pointer;
-  }
+// input:first-child {
+//   flex: 1 1 100%;
+//   padding: 1rem;
+//   border: 0;
+//   font-size: 1rem;
+// }
 
-  input:first-child {
-    flex: 1 1 100%;
-    padding: 1rem;
-    border: 0;
-    font-size: 1rem;
-  }
-`
+const handleMessageSubmit = () => {}
 
 const CreateMessageForm: React.FC = () => {
+  const bgColor = useColorModeValue('gray.200', 'gray.900')
+  const [message, setMessage] = useState('')
   return (
-    <MessagesSectionLayout>
-      <input placeholder='Type a Message...' />
-      <button type='submit'>
-        <RiSendPlane2Fill />
-      </button>
-    </MessagesSectionLayout>
+    <Flex
+      align='center'
+      justify='space-evenly'
+      mt='5'
+      h='4rem'
+      bg={bgColor}
+      boxShadow='2xl'
+    >
+      <Input
+        borderRadius='xl'
+        width='70%'
+        onChange={(e) => setMessage(e.currentTarget.value)}
+      />
+      <RiSendPlane2Fill
+        onClick={handleMessageSubmit}
+        css={css`
+          width: 1.65rem;
+          height: 1.65rem;
+
+          cursor: pointer;
+        `}
+      />
+    </Flex>
   )
 }
 
