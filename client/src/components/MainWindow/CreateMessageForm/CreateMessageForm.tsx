@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { RiSendPlane2Fill } from 'react-icons/ri'
 import {
   Box,
@@ -10,6 +10,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react'
 import { css } from '@emotion/react'
+import { SocketContext } from '../../../socket.io/socket'
 
 // svg {
 //   width: 2rem;
@@ -33,11 +34,15 @@ import { css } from '@emotion/react'
 //   font-size: 1rem;
 // }
 
-const handleMessageSubmit = () => {}
-
 const CreateMessageForm: React.FC = () => {
   const bgColor = useColorModeValue('gray.200', 'gray.900')
   const [message, setMessage] = useState('')
+  const ws = useContext(SocketContext)
+
+  const handleMessageSubmit = () => {
+    ws.connect()
+  }
+
   return (
     <Flex
       align='center'

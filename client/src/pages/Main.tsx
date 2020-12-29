@@ -5,28 +5,29 @@ import styled from 'styled-components'
 import { css } from '@emotion/react'
 import SidebarHeader from '../components/SidebarHeader/SidebarHeader'
 import ChannelHeader from '../components/ChannelHeader/ChannelHeader'
+import { SocketProvider } from '../socket.io/socket'
 
 const Main: React.FC = () => {
   return (
-    <>
-      <main
-        css={css`
-          margin: auto;
-          width: 100vw;
-          height: 100vh;
+    <main
+      css={css`
+        margin: auto;
+        width: 100vw;
+        height: 100vh;
 
-          display: grid;
-          grid-template-columns: minmax(12rem, 18%) 1fr;
-          grid-template-rows: minmax(3rem, 7%) 1fr;
-        `}
-      >
+        display: grid;
+        grid-template-columns: minmax(12rem, 18%) 1fr;
+        grid-template-rows: minmax(3rem, 7%) 1fr;
+      `}
+    >
+      <SocketProvider>
         <SidebarHeader />
         <Sidebar />
 
         <ChannelHeader />
         <MainWindow />
-      </main>
-    </>
+      </SocketProvider>
+    </main>
   )
 }
 
