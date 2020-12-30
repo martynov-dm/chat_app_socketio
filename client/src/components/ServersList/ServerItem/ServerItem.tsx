@@ -1,15 +1,25 @@
 import { Image } from '@chakra-ui/react'
 import React from 'react'
+import { css } from '@emotion/react'
 
-const ServerItem = () => {
+interface Iprops {
+  image: string
+  endpoint: string
+}
+
+const ServerItem: React.FC<Iprops> = (props) => {
+  const { image, endpoint } = props
   return (
     <Image
+      css={css`
+        cursor: pointer;
+      `}
       mt='1rem'
       borderRadius='lg'
-      boxSize='3.5rem'
+      boxSize='3rem'
       objectFit='cover'
-      src='https://bit.ly/sage-adebayo'
-      alt='Segun Adebayo'
+      src={image}
+      alt='Server Image'
     />
   )
 }

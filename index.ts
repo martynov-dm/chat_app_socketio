@@ -9,7 +9,6 @@ import passport from 'passport'
 import authRoute from './routes/auth'
 import { connect } from './services/mongoose'
 import jwtStrategy from './services/passport'
-//@ts-ignore
 import namespaces from './socket.io/data/data'
 
 const PORT = process.env.PORT || 5000
@@ -17,22 +16,6 @@ const rooms = new Map()
 
 const app = express()
 const server = http.createServer(app)
-export const io = new Server(server, {
-  cors: {
-    origin: '*',
-  },
-})
-
-io.on('connection', (socket: Socket) => {
-  socket.emit('messageFromServer', { data: 'Welcome to the socketio server' })
-  socket.on('messageToServer', (dataFromClient: any) => {
-    console.log(dataFromClient)
-  })
-  socket.on('newMessageToServer', (msg) => {
-    // console.log(msg)
-    io.emit('messageToClients', { text: msg.text })
-  })
-})
 
 app.use(cors())
 passport.initialize()
@@ -49,4 +32,27 @@ app.use('/api/auth', authRoute)
 
 server.listen(PORT, () => {
   console.log(`listening on port: ${PORT}`)
+})
+
+export const io = new Server(server, {
+  cors: {
+    origin: '*',
+  },
+})
+
+namespaces.forEach((namespace) => {
+  io.of(namespace.endpoint).on('connection', (socket: Socket) => {
+    console.log(`${socket.id} has joined ${namespace.endpoint}`)
+  })
+})
+
+io.on('connection', (socket: Socket) => {
+  const nsData = namespaces.map((ns) => {
+    return {
+      img: ns.img,
+      endpoint: ns.endpoint,
+    }
+  })
+
+  socket.emit('nsList', nsData)
 })

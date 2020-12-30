@@ -1,5 +1,3 @@
-// export type TNamespace = typeof Namespace
-
 class Namespace {
   id: number
   nsTitle: string

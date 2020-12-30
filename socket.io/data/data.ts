@@ -3,7 +3,7 @@ import Namespace from '../classes/NameSpace'
 import Room from '../classes/Room'
 
 // Set up the namespaces
-const namespaces = []
+const namespaces = [] as Namespace[]
 const wikiNs = new Namespace(
   0,
   'Wiki',
