@@ -34,7 +34,7 @@ import { SocketContext } from '../../../socket.io/socket'
 //   font-size: 1rem;
 // }
 
-const CreateMessageForm: React.FC = () => {
+const MessageInput: React.FC = () => {
   const bgColor = useColorModeValue('gray.200', 'gray.900')
   const [message, setMessage] = useState('')
   const ws = useContext(SocketContext)
@@ -72,4 +72,4 @@ const CreateMessageForm: React.FC = () => {
   )
 }
 
-export default CreateMessageForm
+export default MessageInput

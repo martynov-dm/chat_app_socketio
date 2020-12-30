@@ -1,13 +1,19 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import MainWindow from '../components/MainWindow/MainWindow'
 import Sidebar from '../components/Sidebar/Sidebar'
 import { css } from '@emotion/react'
 import SidebarHeader from '../components/SidebarHeader/SidebarHeader'
 import ChannelHeader from '../components/ChannelHeader/ChannelHeader'
-import { SocketProvider } from '../socket.io/socket'
+import { SocketContext } from '../socket.io/socket'
 import ServersList from '../components/ServersList/ServersList'
 
 const Main: React.FC = () => {
+  const ws = useContext(SocketContext)
+
+  useEffect(() => {
+    ws.initialize()
+  }, [ws])
+
   return (
     <main
       css={css`
@@ -20,15 +26,13 @@ const Main: React.FC = () => {
         grid-template-rows: minmax(3rem, 7%) 1fr;
       `}
     >
-      <SocketProvider>
-        <SidebarHeader />
-        <Sidebar />
+      <SidebarHeader />
+      <Sidebar />
 
-        <ChannelHeader />
-        <MainWindow />
+      <ChannelHeader />
+      <MainWindow />
 
-        <ServersList />
-      </SocketProvider>
+      <ServersList />
     </main>
   )
 }

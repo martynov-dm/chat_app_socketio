@@ -20,6 +20,7 @@ const ServerItem: React.FC<Iprops> = (props) => {
       objectFit='cover'
       src={image}
       alt='Server Image'
+      onClick={() => console.log(endpoint)}
     />
   )
 }

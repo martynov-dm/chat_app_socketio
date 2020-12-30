@@ -7,16 +7,19 @@ import { history } from './redux/store'
 import { ChakraProvider } from '@chakra-ui/react'
 import SignIn from './pages/SignIn'
 import ErrorPopUp from './components/common/ErrorPopUp'
+import { SocketProvider } from './socket.io/socket'
 
 const App: React.FC = () => {
   return (
     <ChakraProvider>
       <ConnectedRouter history={history}>
-        <Switch>
-          <Route exact path='/' component={Main} />
-          <Route exact path='/sign-in' component={SignIn} />
-          <Route exact path='/sign-up' component={SignUp} />
-        </Switch>
+        <SocketProvider>
+          <Switch>
+            <Route exact path='/' component={Main} />
+            <Route exact path='/sign-in' component={SignIn} />
+            <Route exact path='/sign-up' component={SignUp} />
+          </Switch>
+        </SocketProvider>
       </ConnectedRouter>
     </ChakraProvider>
   )

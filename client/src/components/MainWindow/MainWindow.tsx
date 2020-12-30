@@ -3,7 +3,7 @@ import { css } from '@emotion/react'
 
 import styled from 'styled-components'
 import MessageList from './MessageList/MessageList'
-import CreateMessageForm from './CreateMessageForm/CreateMessageForm'
+import MessageInput from './MessageInput/MessageInput'
 import { useColorModeValue } from '@chakra-ui/react'
 
 const MainWindow = () => {
@@ -25,7 +25,7 @@ const MainWindow = () => {
       `}
     >
       <MessageList />
-      <CreateMessageForm />
+      <MessageInput />
     </section>
   )
 }

@@ -41,8 +41,9 @@ export const io = new Server(server, {
 })
 
 namespaces.forEach((namespace) => {
-  io.of(namespace.endpoint).on('connection', (socket: Socket) => {
-    console.log(`${socket.id} has joined ${namespace.endpoint}`)
+  io.of(namespace.endpoint).on('connection', (nsSocket: Socket) => {
+    console.log(`${nsSocket.id} has joined ${namespace.endpoint}`)
+    nsSocket.emit('nsRoomLoad', namespace.rooms)
   })
 })
 
