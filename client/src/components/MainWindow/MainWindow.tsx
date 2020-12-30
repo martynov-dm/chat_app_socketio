@@ -12,7 +12,7 @@ const MainWindow = () => {
   return (
     <section
       css={css`
-        grid-column: 2/3;
+        grid-column: 3/4;
         grid-row: 2/3;
 
         width: 100%;

@@ -9,7 +9,7 @@ const ChannelHeader = (props: any) => {
   return (
     <header
       css={css`
-        grid-column: 2/3;
+        grid-column: 3/4;
         grid-row: 1/2;
 
         position: relative;

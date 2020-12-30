@@ -13,7 +13,7 @@ const messagesReducer = (
     case 'ADD_NEW_MESSAGE':
       return {
         ...state,
-        messages: [...state.messages, action.payload],
+        messages: [action.payload, ...state.messages],
       }
 
     default:

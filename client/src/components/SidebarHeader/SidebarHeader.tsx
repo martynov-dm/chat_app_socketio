@@ -8,7 +8,7 @@ const SidebarHeader = (props: any) => {
     <header
       css={css`
         width: 100%;
-        grid-column: 1/2;
+        grid-column: 2/3;
         grid-row: 1/2;
 
         background-color: ${bgColor};

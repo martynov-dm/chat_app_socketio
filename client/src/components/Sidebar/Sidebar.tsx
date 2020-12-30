@@ -12,7 +12,7 @@ const Sidebar: React.FC = () => {
   return (
     <aside
       css={css`
-        grid-column: 1/2;
+        grid-column: 2/3;
         grid-row: 2/3;
         height: 100%;
         width: 100%;
