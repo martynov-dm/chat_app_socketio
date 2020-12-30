@@ -3,6 +3,7 @@ import socketIOClient, { Socket } from 'socket.io-client'
 import { useDispatch } from 'react-redux'
 import { messagesActions } from '../redux/messages/messages.actions'
 import { serversActions } from '../redux/servers/servers.actions'
+import { roomsActions } from '../redux/rooms/rooms.actions'
 
 export const SocketContext = createContext(null as any)
 
@@ -27,28 +28,28 @@ export const SocketProvider = (props: Iprops) => {
 
     nsSocket = socketIOClient.io('http://localhost:5000/wiki')
     nsSocket.on('nsRoomLoad', (nsRooms: any) => {
-      console.log(nsRooms)
+      dispatch(roomsActions.addInitialRooms(nsRooms))
     })
   }
 
-  //@ts-ignore
-  if (!socket) {
-    socket = socketIOClient.io('http://localhost:5000')
-  }
-  //@ts-ignore
+  // //@ts-ignore
+  // if (!socket) {
+  //   socket = socketIOClient.io('http://localhost:5000')
+  // }
+  // //@ts-ignore
 
-  socket.on('messageFromServer', (dataFromServer: string) => {
-    console.log(dataFromServer)
-    socket.emit('messageToServer', { data: 'This is from the client' })
-  })
+  // socket.on('messageFromServer', (dataFromServer: string) => {
+  //   console.log(dataFromServer)
+  //   socket.emit('messageToServer', { data: 'This is from the client' })
+  // })
 
   const sendMessage = (message: string) => {
     socket.emit('newMessageToServer', { text: message })
   }
 
-  socket.on('messageToClients', (msg: any) => {
-    dispatch(messagesActions.addNewMessage(msg.text))
-  })
+  // socket.on('messageToClients', (msg: any) => {
+  //   dispatch(messagesActions.addNewMessage(msg.text))
+  // })
 
   ws = {
     sendMessage,

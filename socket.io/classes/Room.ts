@@ -7,8 +7,8 @@ class Room {
 
   constructor(
     roomId: number,
-    namespace: string,
     roomTitle: string,
+    namespace: string,
     isPrivate = false
   ) {
     this.roomId = roomId

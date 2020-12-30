@@ -1,20 +1,32 @@
 import React from 'react'
 import styled from 'styled-components'
 import { css } from '@emotion/react'
-import { Box, Text } from '@chakra-ui/react'
+import { Box, Flex, Text } from '@chakra-ui/react'
+import { LockIcon, Icon } from '@chakra-ui/icons'
+import { MdPublic } from 'react-icons/md'
 
-const RoomItemStyles = styled.section`
-  font-size: 1.2rem;
-  font-weight: 500;
-  color: rgba(23, 26, 42, 1);
-  margin: 1.35rem 0;
-`
+interface Iprops {
+  title: string
+  namespace: string
+  isPrivate: boolean
+}
 
-const RoomItem = () => {
+const RoomItem: React.FC<Iprops> = (props) => {
+  const { title, namespace, isPrivate } = props
   return (
-    <Box mt='1rem'>
-      <Text># Room</Text>
-    </Box>
+    <>
+      <Flex
+        mt='1rem'
+        align='center'
+        justify='evenly'
+        css={css`
+          cursor: pointer;
+        `}
+      >
+        {isPrivate ? <LockIcon /> : <Icon as={MdPublic} />}{' '}
+        <Text ml='0.7rem'>{title}</Text>
+      </Flex>
+    </>
   )
 }
 
