@@ -53,8 +53,17 @@ namespaces.forEach((namespace) => {
       ).size
       await nsSocket.emit('getUsersAmount', usersNumberInARoom)
     })
+
     nsSocket.on('newMessageToServer', (msg) => {
-      console.log(msg)
+      const fullMsg = {
+        text: msg,
+        time: Date.now(),
+        username: 'dimes',
+        avatar: 'http://via.placeholder.com/30',
+      }
+
+      const roomTitle = Array.from(nsSocket.rooms)[1]
+      io.of('/wiki').to(roomTitle).emit('messageToClients', fullMsg)
     })
   })
 })

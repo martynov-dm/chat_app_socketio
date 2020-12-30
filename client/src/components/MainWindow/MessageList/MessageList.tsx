@@ -21,7 +21,15 @@ const MessageList = () => {
       `}
     >
       {messages.map((message, index) => {
-        return <MessageItem key={index} message={message} />
+        return (
+          <MessageItem
+            key={index}
+            avatar={message.avatar}
+            username={message.username}
+            time={message.time}
+            text={message.text}
+          />
+        )
       })}
     </section>
   )

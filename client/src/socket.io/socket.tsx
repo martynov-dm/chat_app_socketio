@@ -30,9 +30,14 @@ export const SocketProvider = (props: Iprops) => {
 
   const joinNs = (endpoint: string) => {
     nsSocket = socketIOClient.io(endpoint)
+
     nsSocket.on('nsRoomLoad', (nsRooms: any) => {
       dispatch(roomsActions.updateRooms(nsRooms))
       joinRoom(nsRooms[0].roomTitle)
+    })
+
+    nsSocket.on('messageToClients', (msg: string) => {
+      dispatch(messagesActions.addNewMessage(msg))
     })
   }
 
@@ -45,7 +50,7 @@ export const SocketProvider = (props: Iprops) => {
   }
 
   const sendMessage = (message: string) => {
-    nsSocket.emit('newMessageToServer', { text: message })
+    nsSocket.emit('newMessageToServer', message)
   }
 
   ws = {
