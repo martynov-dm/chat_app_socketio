@@ -20,36 +20,33 @@ export const SocketProvider = (props: Iprops) => {
   const dispatch = useDispatch()
 
   const initialize = () => {
-    socket = socketIOClient.io('http://localhost:5000')
+    socket = socketIOClient.io('/')
 
     socket.on('nsList', (nsData: any) => {
       dispatch(serversActions.addInitialServers(nsData))
     })
+    joinNs('/wiki')
+  }
 
-    nsSocket = socketIOClient.io('http://localhost:5000/wiki')
+  const joinNs = (endpoint: string) => {
+    nsSocket = socketIOClient.io(endpoint)
     nsSocket.on('nsRoomLoad', (nsRooms: any) => {
-      dispatch(roomsActions.addInitialRooms(nsRooms))
+      dispatch(roomsActions.updateRooms(nsRooms))
+      joinRoom(nsRooms[0].roomTitle)
     })
   }
 
-  // //@ts-ignore
-  // if (!socket) {
-  //   socket = socketIOClient.io('http://localhost:5000')
-  // }
-  // //@ts-ignore
+  const joinRoom = (roomName: string) => {
+    nsSocket.emit('joinRoom', roomName)
 
-  // socket.on('messageFromServer', (dataFromServer: string) => {
-  //   console.log(dataFromServer)
-  //   socket.emit('messageToServer', { data: 'This is from the client' })
-  // })
-
-  const sendMessage = (message: string) => {
-    socket.emit('newMessageToServer', { text: message })
+    nsSocket.on('getUsersAmount', (usersInARoom: any) =>
+      dispatch(roomsActions.updatePeopleCount(usersInARoom))
+    )
   }
 
-  // socket.on('messageToClients', (msg: any) => {
-  //   dispatch(messagesActions.addNewMessage(msg.text))
-  // })
+  const sendMessage = (message: string) => {
+    nsSocket.emit('newMessageToServer', { text: message })
+  }
 
   ws = {
     sendMessage,

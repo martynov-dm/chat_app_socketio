@@ -7,3 +7,7 @@ export const selectRoomsArr = createSelector(
   [selectRooms],
   (rooms) => rooms.rooms
 )
+export const peopleInTheRoom = createSelector(
+  [selectRooms],
+  (rooms) => rooms.peopleCountInCurrentRoom
+)

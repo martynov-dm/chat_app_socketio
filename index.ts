@@ -43,7 +43,19 @@ export const io = new Server(server, {
 namespaces.forEach((namespace) => {
   io.of(namespace.endpoint).on('connection', (nsSocket: Socket) => {
     console.log(`${nsSocket.id} has joined ${namespace.endpoint}`)
+
     nsSocket.emit('nsRoomLoad', namespace.rooms)
+
+    nsSocket.on('joinRoom', async (roomToJoin) => {
+      await nsSocket.join(roomToJoin)
+      const usersNumberInARoom = await (
+        await io.of('/wiki').in(roomToJoin).allSockets()
+      ).size
+      await nsSocket.emit('getUsersAmount', usersNumberInARoom)
+    })
+    nsSocket.on('newMessageToServer', (msg) => {
+      console.log(msg)
+    })
   })
 })
 

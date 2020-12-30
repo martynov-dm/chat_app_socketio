@@ -3,10 +3,16 @@ import { InferActionTypes } from '../../types/types'
 export type RoomsActionTypes = InferActionTypes<typeof roomsActions>
 
 export const roomsActions = {
-  addInitialRooms: (roomsData: any[]) => {
+  updateRooms: (roomsData: any[]) => {
     return {
-      type: 'ADD_INITIAL_ROOMS',
+      type: 'UPDATE_ROOMS',
       payload: roomsData,
+    } as const
+  },
+  updatePeopleCount: (count: number) => {
+    return {
+      type: 'UPDATE_PEOPLE_COUNT',
+      payload: count,
     } as const
   },
 }

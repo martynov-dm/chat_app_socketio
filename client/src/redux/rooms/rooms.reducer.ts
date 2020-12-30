@@ -1,6 +1,7 @@
 import { roomsActions, RoomsActionTypes } from './rooms.actions'
 const INITIAL_STATE = {
   rooms: [] as any[],
+  peopleCountInCurrentRoom: 0,
 }
 
 export type InitialStateType = typeof INITIAL_STATE
@@ -10,10 +11,15 @@ const roomsReducer = (
   action: RoomsActionTypes
 ): InitialStateType => {
   switch (action.type) {
-    case 'ADD_INITIAL_ROOMS':
+    case 'UPDATE_ROOMS':
       return {
         ...state,
         rooms: [...state.rooms, ...action.payload],
+      }
+    case 'UPDATE_PEOPLE_COUNT':
+      return {
+        ...state,
+        peopleCountInCurrentRoom: action.payload,
       }
 
     default:

@@ -1,10 +1,15 @@
 import React from 'react'
 import { css } from '@emotion/react'
 import ThemeToggler from '../common/ThemeToggler'
-import { useColorModeValue } from '@chakra-ui/react'
+import { Flex, Text, useColorModeValue } from '@chakra-ui/react'
+import { Icon } from '@chakra-ui/react'
+import { BsFillPeopleFill } from 'react-icons/bs'
+import { useSelector } from 'react-redux'
+import { peopleInTheRoom } from '../../redux/rooms/rooms.selectors'
 
 const ChannelHeader = (props: any) => {
   const bgColor = useColorModeValue('#FFFFFF', '#2D3748')
+  const peopleCount = useSelector(peopleInTheRoom)
 
   return (
     <header
@@ -37,8 +42,13 @@ const ChannelHeader = (props: any) => {
         }
       `}
     >
-      <div>All channels</div>
+      <Text>All channels</Text>
       <ThemeToggler />
+
+      <Flex>
+        <Icon as={BsFillPeopleFill} />
+        <Text>{peopleCount}</Text>
+      </Flex>
     </header>
   )
 }
