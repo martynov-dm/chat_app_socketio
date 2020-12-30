@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import RoomItem from './RoomItem'
+import { css } from '@emotion/react'
 
 const RoomListStyles = styled.section`
   padding-left: 3.5rem;
@@ -12,14 +13,20 @@ const RoomListStyles = styled.section`
 
 const RoomList = () => {
   return (
-    <RoomListStyles>
+    <section
+      css={css`
+        display: flex;
+        flex-direction: column;
+        margin-left: 2.5rem;
+      `}
+    >
       <RoomItem />
       <RoomItem />
       <RoomItem />
       <RoomItem />
       <RoomItem />
       <RoomItem />
-    </RoomListStyles>
+    </section>
   )
 }
 

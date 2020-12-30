@@ -1,9 +1,7 @@
 import React from 'react'
-import styled from 'styled-components'
-import CreateServer from './CreateServer/CreateServer'
 import RoomList from './RoomList/RoomList'
 import { css } from '@emotion/react'
-import { useColorModeValue } from '@chakra-ui/react'
+import { Box, Heading, useColorModeValue } from '@chakra-ui/react'
 import UserMenu from './UserMenu/UserMenu'
 
 const Sidebar: React.FC = () => {
@@ -23,12 +21,15 @@ const Sidebar: React.FC = () => {
         flex-direction: column;
       `}
     >
-      <div>Sidebar</div>
-      <UserMenu />
+      <Box ml='1rem' mt='0.65rem'>
+        <Heading as='h3' size='lg'>
+          Rooms
+        </Heading>
+      </Box>
 
-      {/* <UserHeader />
       <RoomList />
-      <CreateServer /> */}
+
+      <UserMenu />
     </aside>
   )
 }

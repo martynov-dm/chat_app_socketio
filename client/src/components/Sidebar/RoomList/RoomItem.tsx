@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import { css } from '@emotion/react'
+import { Box, Text } from '@chakra-ui/react'
 
 const RoomItemStyles = styled.section`
   font-size: 1.2rem;
@@ -9,7 +11,11 @@ const RoomItemStyles = styled.section`
 `
 
 const RoomItem = () => {
-  return <RoomItemStyles># Room</RoomItemStyles>
+  return (
+    <Box mt='1rem'>
+      <Text># Room</Text>
+    </Box>
+  )
 }
 
 export default RoomItem

@@ -9,6 +9,8 @@ import passport from 'passport'
 import authRoute from './routes/auth'
 import { connect } from './services/mongoose'
 import jwtStrategy from './services/passport'
+//@ts-ignore
+import namespaces from './socket.io/data/data'
 
 const PORT = process.env.PORT || 5000
 const rooms = new Map()
