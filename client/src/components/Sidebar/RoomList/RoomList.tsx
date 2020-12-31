@@ -1,5 +1,4 @@
 import React from 'react'
-import styled from 'styled-components'
 import RoomItem from './RoomItem'
 import { css } from '@emotion/react'
 import { useSelector } from 'react-redux'

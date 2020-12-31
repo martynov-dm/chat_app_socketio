@@ -52,6 +52,12 @@ namespaces.forEach((namespace) => {
         await io.of('/wiki').in(roomToJoin).allSockets()
       ).size
       await nsSocket.emit('getUsersAmount', usersNumberInARoom)
+
+      const nsRoom = namespace.rooms.find((room) => {
+        return room.roomTitle === roomToJoin
+      })
+
+      nsSocket.emit('historyCatchUp', nsRoom.history)
     })
 
     nsSocket.on('newMessageToServer', (msg) => {
@@ -63,6 +69,13 @@ namespaces.forEach((namespace) => {
       }
 
       const roomTitle = Array.from(nsSocket.rooms)[1]
+
+      const nsRoom = namespace.rooms.find((room) => {
+        return room.roomTitle === roomTitle
+      })
+      nsRoom.addMessage(fullMsg)
+      console.log(nsRoom)
+
       io.of('/wiki').to(roomTitle).emit('messageToClients', fullMsg)
     })
   })

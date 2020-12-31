@@ -1,4 +1,4 @@
-import { roomsActions, RoomsActionTypes } from './rooms.actions'
+import { RoomsActionTypes } from './rooms.actions'
 const INITIAL_STATE = {
   rooms: [] as any[],
   peopleCountInCurrentRoom: 0,

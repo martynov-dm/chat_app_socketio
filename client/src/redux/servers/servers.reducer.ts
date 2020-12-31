@@ -1,4 +1,4 @@
-import { serversActions, ServersActionTypes } from './servers.actions'
+import { ServersActionTypes } from './servers.actions'
 const INITIAL_STATE = {
   servers: [] as any[],
 }

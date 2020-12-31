@@ -1,7 +1,6 @@
 import React from 'react'
-import styled from 'styled-components'
 import { css } from '@emotion/react'
-import { Box, Flex, Text } from '@chakra-ui/react'
+import { Flex, Text } from '@chakra-ui/react'
 import { LockIcon, Icon } from '@chakra-ui/icons'
 import { MdPublic } from 'react-icons/md'
 

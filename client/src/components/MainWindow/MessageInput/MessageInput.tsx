@@ -1,14 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { RiSendPlane2Fill } from 'react-icons/ri'
-import {
-  Box,
-  Flex,
-  IconButton,
-  Input,
-  InputGroup,
-  InputRightElement,
-  useColorModeValue,
-} from '@chakra-ui/react'
+import { Flex, Input, useColorModeValue } from '@chakra-ui/react'
 import { css } from '@emotion/react'
 import { SocketContext } from '../../../socket.io/socket'
 

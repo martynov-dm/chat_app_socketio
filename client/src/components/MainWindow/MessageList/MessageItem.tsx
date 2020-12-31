@@ -1,7 +1,6 @@
 import { Box, Image, Text } from '@chakra-ui/react'
 import { css } from '@emotion/react'
 import React from 'react'
-import styled from 'styled-components'
 
 interface Iprops {
   avatar: string

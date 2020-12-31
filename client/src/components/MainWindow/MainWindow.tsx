@@ -1,7 +1,6 @@
 import React from 'react'
 import { css } from '@emotion/react'
 
-import styled from 'styled-components'
 import MessageList from './MessageList/MessageList'
 import MessageInput from './MessageInput/MessageInput'
 import { useColorModeValue } from '@chakra-ui/react'
