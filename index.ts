@@ -48,16 +48,19 @@ namespaces.forEach((namespace) => {
 
     nsSocket.on('joinRoom', async (roomToJoin) => {
       await nsSocket.join(roomToJoin)
-      const usersNumberInARoom = await (
-        await io.of('/wiki').in(roomToJoin).allSockets()
-      ).size
-      await nsSocket.emit('getUsersAmount', usersNumberInARoom)
 
-      const nsRoom = namespace.rooms.find((room) => {
+      const usersNumberInARoom = await (
+        await io.of(namespace.endpoint).in(roomToJoin).allSockets()
+      ).size
+      const nsRoom = await namespace.rooms.find((room) => {
         return room.roomTitle === roomToJoin
       })
 
-      nsSocket.emit('historyCatchUp', nsRoom.history)
+      await nsSocket.emit('historyCatchUp', nsRoom.history)
+      await io
+        .of(namespace.endpoint)
+        .in(roomToJoin)
+        .emit('updateMembers', usersNumberInARoom)
     })
 
     nsSocket.on('newMessageToServer', (msg) => {
@@ -76,7 +79,7 @@ namespaces.forEach((namespace) => {
       nsRoom.addMessage(fullMsg)
       console.log(nsRoom)
 
-      io.of('/wiki').to(roomTitle).emit('messageToClients', fullMsg)
+      io.of(namespace.endpoint).to(roomTitle).emit('messageToClients', fullMsg)
     })
   })
 })

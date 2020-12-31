@@ -15,4 +15,10 @@ export const roomsActions = {
       payload: count,
     } as const
   },
+  updateCurrentRoomName: (roomName: string) => {
+    return {
+      type: 'UPDATE_CURRENT_ROOM_NAME',
+      payload: roomName,
+    } as const
+  },
 }

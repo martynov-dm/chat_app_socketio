@@ -9,4 +9,10 @@ export const serversActions = {
       payload: serverData,
     } as const
   },
+  updateCurrentServer: (serverEndpoint: string) => {
+    return {
+      type: 'UPDATE_CURRENT_SERVER',
+      payload: serverEndpoint,
+    } as const
+  },
 }

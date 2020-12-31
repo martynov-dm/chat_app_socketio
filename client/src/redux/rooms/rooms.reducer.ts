@@ -2,6 +2,7 @@ import { RoomsActionTypes } from './rooms.actions'
 const INITIAL_STATE = {
   rooms: [] as any[],
   peopleCountInCurrentRoom: 0,
+  currentRoomName: '',
 }
 
 export type InitialStateType = typeof INITIAL_STATE
@@ -20,6 +21,11 @@ const roomsReducer = (
       return {
         ...state,
         peopleCountInCurrentRoom: action.payload,
+      }
+    case 'UPDATE_CURRENT_ROOM_NAME':
+      return {
+        ...state,
+        currentRoomName: action.payload,
       }
 
     default:

@@ -1,6 +1,8 @@
 import { Image } from '@chakra-ui/react'
 import React from 'react'
 import { css } from '@emotion/react'
+import { useDispatch } from 'react-redux'
+import { serversActions } from '../../../redux/servers/servers.actions'
 
 interface Iprops {
   image: string
@@ -9,6 +11,8 @@ interface Iprops {
 
 const ServerItem: React.FC<Iprops> = (props) => {
   const { image, endpoint } = props
+  const dispatch = useDispatch()
+
   return (
     <Image
       css={css`
@@ -20,7 +24,7 @@ const ServerItem: React.FC<Iprops> = (props) => {
       objectFit='cover'
       src={image}
       alt='Server Image'
-      onClick={() => console.log(endpoint)}
+      onClick={() => dispatch(serversActions.updateCurrentServer(endpoint))}
     />
   )
 }

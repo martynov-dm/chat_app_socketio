@@ -43,8 +43,9 @@ export const SocketProvider = (props: Iprops) => {
 
   const joinRoom = (roomName: string) => {
     nsSocket.emit('joinRoom', roomName)
+    dispatch(roomsActions.updateCurrentRoomName(roomName))
 
-    nsSocket.on('getUsersAmount', (usersInARoom: any) =>
+    nsSocket.on('updateMembers', (usersInARoom: any) =>
       dispatch(roomsActions.updatePeopleCount(usersInARoom))
     )
 

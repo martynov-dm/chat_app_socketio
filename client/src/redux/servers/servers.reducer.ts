@@ -1,6 +1,7 @@
 import { ServersActionTypes } from './servers.actions'
 const INITIAL_STATE = {
   servers: [] as any[],
+  currentServer: '',
 }
 
 export type InitialStateType = typeof INITIAL_STATE
@@ -14,6 +15,11 @@ const serversReducer = (
       return {
         ...state,
         servers: [...state.servers, ...action.payload],
+      }
+    case 'UPDATE_CURRENT_SERVER':
+      return {
+        ...state,
+        currentServer: action.payload,
       }
 
     default:
