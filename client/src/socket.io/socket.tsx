@@ -47,6 +47,11 @@ export const SocketProvider = (props: Iprops) => {
     nsSocket.on('getUsersAmount', (usersInARoom: any) =>
       dispatch(roomsActions.updatePeopleCount(usersInARoom))
     )
+
+    nsSocket.on('historyCatchUp', (history: any) => {
+      dispatch(messagesActions.addHistory(history))
+      // console.log(history)
+    })
   }
 
   const sendMessage = (message: string) => {

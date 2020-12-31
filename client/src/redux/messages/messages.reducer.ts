@@ -13,7 +13,12 @@ const messagesReducer = (
     case 'ADD_NEW_MESSAGE':
       return {
         ...state,
-        messages: [action.payload, ...state.messages],
+        messages: [...state.messages, action.payload],
+      }
+    case 'ADD_HISTORY':
+      return {
+        ...state,
+        messages: action.payload,
       }
 
     default:

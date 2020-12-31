@@ -9,4 +9,10 @@ export const messagesActions = {
       payload: message,
     } as const
   },
+  addHistory: (history: any[]) => {
+    return {
+      type: 'ADD_HISTORY',
+      payload: history,
+    } as const
+  },
 }

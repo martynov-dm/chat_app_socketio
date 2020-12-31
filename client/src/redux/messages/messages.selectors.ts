@@ -5,5 +5,8 @@ const selectMessages = (state: AppStateType) => state.messages
 
 export const selectMessagesArr = createSelector(
   [selectMessages],
-  (messages) => messages.messages
+  (messages) => {
+    const MessagesArrCopy = [...messages.messages]
+    return MessagesArrCopy.reverse()
+  }
 )

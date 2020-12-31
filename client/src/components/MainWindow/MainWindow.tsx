@@ -13,9 +13,9 @@ const MainWindow = () => {
       css={css`
         grid-column: 3/4;
         grid-row: 2/3;
-
-        width: 100%;
         height: 100%;
+        overflow: hidden;
+        width: 100%;
         display: flex;
         flex-direction: column;
         position: relative;

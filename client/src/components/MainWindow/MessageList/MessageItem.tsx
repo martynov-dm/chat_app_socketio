@@ -19,7 +19,7 @@ const MessageItem = (props: Iprops) => {
         padding: 0.2rem;
         display: flex;
         width: 100%;
-        min-height: 3rem;
+        min-height: 4.5rem;
         align-items: center;
 
         .text {

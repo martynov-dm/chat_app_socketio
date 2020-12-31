@@ -7,6 +7,7 @@ import { selectMessagesArr } from '../../../redux/messages/messages.selectors'
 
 const MessageList = () => {
   const messages = useSelector(selectMessagesArr)
+  console.log(messages)
 
   return (
     <section
@@ -14,10 +15,10 @@ const MessageList = () => {
         padding: 1rem 1.5rem;
         display: flex;
         flex-direction: column-reverse;
+        height: 100%;
+        overflow-y: scroll;
 
-        flex-grow: 1;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
+        /* -webkit-overflow-scrolling: touch; */
       `}
     >
       {messages.map((message, index) => {
