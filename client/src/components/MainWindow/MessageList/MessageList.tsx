@@ -7,7 +7,6 @@ import { selectMessagesArr } from '../../../redux/messages/messages.selectors'
 
 const MessageList = () => {
   const messages = useSelector(selectMessagesArr)
-  console.log(messages)
 
   return (
     <section

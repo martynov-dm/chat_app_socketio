@@ -1,9 +1,10 @@
 import React, { createContext } from 'react'
 import socketIOClient, { Socket } from 'socket.io-client'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { messagesActions } from '../redux/messages/messages.actions'
 import { serversActions } from '../redux/servers/servers.actions'
 import { roomsActions } from '../redux/rooms/rooms.actions'
+import { selectCurrentServer } from '../redux/servers/servers.selectors'
 
 export const SocketContext = createContext(null as any)
 
@@ -18,50 +19,59 @@ export const SocketProvider = (props: Iprops) => {
   let ws
 
   const dispatch = useDispatch()
+  const currentServer = useSelector(selectCurrentServer)
 
   const initialize = () => {
-    socket = socketIOClient.io('/')
+    socket = socketIOClient.io('http://localhost:5000/')
 
     socket.on('nsList', (nsData: any) => {
       dispatch(serversActions.addInitialServers(nsData))
     })
-    joinNs('/wiki')
+    // if (!currentServer) {
+    //   joinNs('/wiki')
+    // } else {
+    //   joinNs(currentServer)
+    // }
   }
 
-  const joinNs = (endpoint: string) => {
-    nsSocket = socketIOClient.io(endpoint)
+  // const joinNs = (endpoint: string) => {
+  //   if (nsSocket) nsSocket.close()
 
-    nsSocket.on('nsRoomLoad', (nsRooms: any) => {
-      dispatch(roomsActions.updateRooms(nsRooms))
-      joinRoom(nsRooms[0].roomTitle)
-    })
+  //   nsSocket = socketIOClient.io(endpoint)
 
-    nsSocket.on('messageToClients', (msg: string) => {
-      dispatch(messagesActions.addNewMessage(msg))
-    })
-  }
+  //   nsSocket.on('nsRoomLoad', (nsRooms: any) => {
+  //     dispatch(roomsActions.updateRooms(nsRooms))
+  //     joinRoom(nsRooms[0].roomTitle)
+  //   })
 
-  const joinRoom = (roomName: string) => {
-    nsSocket.emit('joinRoom', roomName)
-    dispatch(roomsActions.updateCurrentRoomName(roomName))
+  //   nsSocket.on('messageToClients', (msg: string) => {
+  //     dispatch(messagesActions.addNewMessage(msg))
+  //   })
+  // }
 
-    nsSocket.on('updateMembers', (usersInARoom: any) =>
-      dispatch(roomsActions.updatePeopleCount(usersInARoom))
-    )
+  // const joinRoom = (roomName: string) => {
+  //   nsSocket.emit('joinRoom', roomName)
+  //   dispatch(roomsActions.updateCurrentRoomName(roomName))
 
-    nsSocket.on('historyCatchUp', (history: any) => {
-      dispatch(messagesActions.addHistory(history))
-      // console.log(history)
-    })
-  }
+  //   nsSocket.on('updateMembers', (usersInARoom: any) =>
+  //     dispatch(roomsActions.updatePeopleCount(usersInARoom))
+  //   )
 
-  const sendMessage = (message: string) => {
-    nsSocket.emit('newMessageToServer', message)
-  }
+  //   nsSocket.on('historyCatchUp', (history: any) => {
+  //     dispatch(messagesActions.addHistory(history))
+  //     // console.log(history)
+  //   })
+  // }
+
+  // const sendMessage = (message: string) => {
+  //   nsSocket.emit('newMessageToServer', message)
+  // }
 
   ws = {
-    sendMessage,
+    // sendMessage,
     initialize,
+    // joinNs,
+    // joinRoom,
   }
 
   return <SocketContext.Provider value={ws}>{children}</SocketContext.Provider>

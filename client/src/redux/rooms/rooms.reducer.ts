@@ -15,7 +15,7 @@ const roomsReducer = (
     case 'UPDATE_ROOMS':
       return {
         ...state,
-        rooms: [...state.rooms, ...action.payload],
+        rooms: action.payload,
       }
     case 'UPDATE_PEOPLE_COUNT':
       return {

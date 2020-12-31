@@ -14,7 +14,7 @@ const serversReducer = (
     case 'ADD_INITIAL_SERVERS':
       return {
         ...state,
-        servers: [...state.servers, ...action.payload],
+        servers: action.payload,
       }
     case 'UPDATE_CURRENT_SERVER':
       return {

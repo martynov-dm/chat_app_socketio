@@ -35,56 +35,57 @@ server.listen(PORT, () => {
 })
 
 export const io = new Server(server, {
+  cookie: false,
+  serveClient: false,
   cors: {
     origin: '*',
   },
 })
 
-namespaces.forEach((namespace) => {
-  io.of(namespace.endpoint).on('connection', (nsSocket: Socket) => {
-    console.log(`${nsSocket.id} has joined ${namespace.endpoint}`)
+// namespaces.forEach((namespace) => {
+//   io.of(namespace.endpoint).on('connection', (nsSocket: Socket) => {
+//     console.log(`${nsSocket.id} has joined ${namespace.endpoint}`)
 
-    nsSocket.emit('nsRoomLoad', namespace.rooms)
+//     nsSocket.emit('nsRoomLoad', namespace.rooms)
 
-    nsSocket.on('joinRoom', async (roomToJoin) => {
-      await nsSocket.join(roomToJoin)
+//     nsSocket.on('joinRoom', async (roomToJoin) => {
+//       const roomToLeave = Array.from(nsSocket.rooms)[1]
 
-      const usersNumberInARoom = await (
-        await io.of(namespace.endpoint).in(roomToJoin).allSockets()
-      ).size
-      const nsRoom = await namespace.rooms.find((room) => {
-        return room.roomTitle === roomToJoin
-      })
+//       nsSocket.leave(roomToLeave)
+//       updateUsersInRoom(namespace, roomToJoin)
 
-      await nsSocket.emit('historyCatchUp', nsRoom.history)
-      await io
-        .of(namespace.endpoint)
-        .in(roomToJoin)
-        .emit('updateMembers', usersNumberInARoom)
-    })
+//       await nsSocket.join(roomToJoin)
 
-    nsSocket.on('newMessageToServer', (msg) => {
-      const fullMsg = {
-        text: msg,
-        time: Date.now(),
-        username: 'dimes',
-        avatar: 'http://via.placeholder.com/30',
-      }
+//       const nsRoom = await namespace.rooms.find((room) => {
+//         return room.roomTitle === roomToJoin
+//       })
 
-      const roomTitle = Array.from(nsSocket.rooms)[1]
+//       await nsSocket.emit('historyCatchUp', nsRoom.history)
+//       updateUsersInRoom(namespace, roomToJoin)
+//     })
 
-      const nsRoom = namespace.rooms.find((room) => {
-        return room.roomTitle === roomTitle
-      })
-      nsRoom.addMessage(fullMsg)
-      console.log(nsRoom)
+//     nsSocket.on('newMessageToServer', (msg) => {
+//       const fullMsg = {
+//         text: msg,
+//         time: Date.now(),
+//         username: 'dimes',
+//         avatar: 'http://via.placeholder.com/30',
+//       }
 
-      io.of(namespace.endpoint).to(roomTitle).emit('messageToClients', fullMsg)
-    })
-  })
-})
+//       const roomTitle = Array.from(nsSocket.rooms)[1]
 
-io.on('connection', (socket: Socket) => {
+//       const nsRoom = namespace.rooms.find((room) => {
+//         return room.roomTitle === roomTitle
+//       })
+//       nsRoom.addMessage(fullMsg)
+//       console.log(nsRoom)
+
+//       io.of(namespace.endpoint).to(roomTitle).emit('messageToClients', fullMsg)
+//     })
+//   })
+// })
+
+io.of('/').on('connection', (socket: Socket) => {
   const nsData = namespaces.map((ns) => {
     return {
       img: ns.img,
@@ -94,3 +95,11 @@ io.on('connection', (socket: Socket) => {
 
   socket.emit('nsList', nsData)
 })
+
+// const updateUsersInRoom = async (namespace: any, roomToJoin: string) => {
+//   const clientsCount = await (
+//     await io.of(namespace.endpoint).in(roomToJoin).allSockets()
+//   ).size
+
+//   io.of(namespace.endpoint).in(roomToJoin).emit('updateMembers', clientsCount)
+// }

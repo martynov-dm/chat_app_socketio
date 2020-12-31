@@ -2,7 +2,7 @@
   "name": "slack-copy",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:5000",
+  "proxy": "http://localhost:5000/",
   "dependencies": {
     "@babel/core": "7.12.3",
     "@chakra-ui/icons": "^1.0.2",

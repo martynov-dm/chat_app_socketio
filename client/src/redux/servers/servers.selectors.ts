@@ -7,3 +7,8 @@ export const selectServersArr = createSelector(
   [selectServers],
   (servers) => servers.servers
 )
+
+export const selectCurrentServer = createSelector(
+  [selectServers],
+  (servers) => servers.currentServer
+)
