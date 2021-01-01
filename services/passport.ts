@@ -1,6 +1,6 @@
 import options from '../config'
 import passportJWT from 'passport-jwt'
-import User from '../models/user.model'
+import User from '../models/user/user.model'
 import { Request } from 'express'
 
 const cookieExtractor = (req: Request) => {

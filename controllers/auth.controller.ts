@@ -1,7 +1,7 @@
 import { registerValidation } from './../validation/validation'
 import { uploadPicture } from './../services/cloudinary'
 
-import User from '../models/user.model'
+import User from '../models/user/user.model'
 import options from '../config'
 import jwt, { Secret } from 'jsonwebtoken'
 
