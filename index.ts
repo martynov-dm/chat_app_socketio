@@ -1,4 +1,4 @@
-//@ts-nocheck
+import { MessageModel } from './models/message/message.model'
 import { ServerModel } from './models/server/server.model'
 import express from 'express'
 import { Server, Socket } from 'socket.io'
@@ -7,7 +7,6 @@ import cors from 'cors'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import passport from 'passport'
-import mongoose from 'mongoose'
 
 import authRoute from './routes/auth'
 import { connect } from './services/mongoose'
@@ -31,19 +30,19 @@ app.use(cookieParser())
 
 connect()
 
-// const DefaultServer = new ServerModel({
-//   title: 'General',
-//   image:
-//     'https://res.cloudinary.com/martynov-dm/image/upload/c_crop,h_200,r_max,w_200,x_25,y_20/v1609480602/server_images/Default-Icon-icon_dlbq5a.png',
-//   endpoint: '/general',
-//   isPrivate: false,
-//   rooms: [
-//     {
-//       isPrivate: false,
-//       roomTitle: 'General',
-//     },
-//   ],
-// }).save()
+const Message = new MessageModel({
+  title: 'General',
+  image:
+    'https://res.cloudinary.com/martynov-dm/image/upload/c_crop,h_200,r_max,w_200,x_25,y_20/v1609480602/server_images/Default-Icon-icon_dlbq5a.png',
+  endpoint: '/general',
+  isPrivate: false,
+  rooms: [
+    {
+      isPrivate: false,
+      roomTitle: 'General',
+    },
+  ],
+}).save()
 // const getServerAndUpdate = async () => {
 //   try {
 //     const serverM = await ServerModel.findOne({
@@ -133,7 +132,6 @@ export const io = new Server(server, {
 io.of('/general').on('connection', async (socket: Socket) => {
   //SEND SERVERS LIST AND GENERAL SERVER DATA
   const serversArr = await ServerModel.getServersArr()
-  console.log(serversArr[0].createdAt)
 
   socket.emit('serversArr', serversArr)
 

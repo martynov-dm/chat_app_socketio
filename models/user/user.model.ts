@@ -22,10 +22,6 @@ const UserSchema: Schema = new Schema(
       type: String,
       required: true,
     },
-    last_seen: {
-      type: Date,
-      default: new Date(),
-    },
   },
   {
     timestamps: true,
