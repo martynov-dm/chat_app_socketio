@@ -12,10 +12,9 @@ export interface IRoom extends Document {
 
 export const RoomSchema = new Schema(
   {
-    namespace: { type: String, required: true, max: 15, min: 2, unique: true },
     isPrivate: { type: Boolean, require: true },
     roomTitle: { type: String, require: true, max: 20, min: 1 },
-    history: [MessageSchema],
+    history: [{ type: Schema.Types.ObjectId, ref: 'Message' }],
   },
   {
     timestamps: true,

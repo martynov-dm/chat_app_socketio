@@ -27,22 +27,22 @@ export const SocketProvider = (props: Iprops) => {
     socket.on('nsList', (nsData: any) => {
       dispatch(serversActions.addInitialServers(nsData))
     })
-    if (!currentServer) {
-      joinServer('/wiki')
-    } else {
-      joinServer(currentServer)
-    }
+    // if (!currentServer) {
+    //   joinNs('/wiki')
+    // } else {
+    //   joinNs(currentServer)
+    // }
   }
 
-  const joinServer = (endpoint: string) => {
-    if (nsSocket) nsSocket.close()
+  // const joinNs = (endpoint: string) => {
+  //   if (nsSocket) nsSocket.close()
 
-    nsSocket = socketIOClient.io(endpoint)
+  //   nsSocket = socketIOClient.io(endpoint)
 
-    nsSocket.on('nsRoomLoad', (nsRooms: any) => {
-      dispatch(roomsActions.updateRooms(nsRooms))
-      joinRoom(nsRooms[0].roomTitle)
-    })
+  //   nsSocket.on('nsRoomLoad', (nsRooms: any) => {
+  //     dispatch(roomsActions.updateRooms(nsRooms))
+  //     joinRoom(nsRooms[0].roomTitle)
+  //   })
 
   //   nsSocket.on('messageToClients', (msg: string) => {
   //     dispatch(messagesActions.addNewMessage(msg))
