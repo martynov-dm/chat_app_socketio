@@ -28,3 +28,24 @@ export interface LoginAndImage {
   login: string
   image: string
 }
+
+///////////SOCKET IO TYPES //////////////////////////////////
+export interface IServerData {
+  _id: string
+  title: string
+  image: string
+  endpoint: string
+  isPrivate: boolean
+  createdAt: string
+  updatedAt: string
+  rooms: IRoomData[]
+}
+
+export interface IRoomData {
+  _id: string
+  createdAt: string
+  updatedAt: string
+  isPrivate: boolean
+  roomTitle: string
+  history: string[]
+}

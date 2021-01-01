@@ -24,7 +24,7 @@ export const ServerSchema = new Schema(
 )
 
 ServerSchema.statics.getServersArr = async function (): Promise<IServer[]> {
-  const serversList = await this.find().exec()
+  const serversList = await this.find().lean().exec()
 
   return serversList
 }

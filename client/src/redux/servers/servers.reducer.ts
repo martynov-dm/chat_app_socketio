@@ -1,6 +1,7 @@
+import { IServerData } from './../../types/types'
 import { ServersActionTypes } from './servers.actions'
 const INITIAL_STATE = {
-  servers: [] as any[],
+  servers: [] as IServerData[],
   currentServer: '',
 }
 
@@ -11,7 +12,7 @@ const serversReducer = (
   action: ServersActionTypes
 ): InitialStateType => {
   switch (action.type) {
-    case 'ADD_INITIAL_SERVERS':
+    case 'UPDATE_SERVERS':
       return {
         ...state,
         servers: action.payload,

@@ -22,7 +22,7 @@ const ServerItem: React.FC<Iprops> = (props) => {
       `}
       mt='1rem'
       borderRadius='lg'
-      boxSize='3rem'
+      boxSize='4rem'
       objectFit='cover'
       src={image}
       alt='Server Image'

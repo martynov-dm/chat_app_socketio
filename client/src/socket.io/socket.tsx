@@ -5,6 +5,7 @@ import { messagesActions } from '../redux/messages/messages.actions'
 import { serversActions } from '../redux/servers/servers.actions'
 import { roomsActions } from '../redux/rooms/rooms.actions'
 import { selectCurrentServer } from '../redux/servers/servers.selectors'
+import { IServerData } from '../types/types'
 
 export const SocketContext = createContext(null as any)
 
@@ -22,10 +23,10 @@ export const SocketProvider = (props: Iprops) => {
   const currentServer = useSelector(selectCurrentServer)
 
   const initialize = () => {
-    socket = socketIOClient.io('http://localhost:5000/')
+    socket = socketIOClient.io('http://localhost:5000/general')
 
-    socket.on('nsList', (nsData: any) => {
-      dispatch(serversActions.addInitialServers(nsData))
+    socket.on('serversArr', (serversArr: IServerData[]) => {
+      dispatch(serversActions.updateServers(serversArr))
     })
     // if (!currentServer) {
     //   joinNs('/wiki')
@@ -41,7 +42,7 @@ export const SocketProvider = (props: Iprops) => {
 
   //   nsSocket.on('nsRoomLoad', (nsRooms: any) => {
   //     dispatch(roomsActions.updateRooms(nsRooms))
-  //     joinRoom(nsRooms[0].roomTitle)
+  //     // joinRoom(nsRooms[0].roomTitle)
   //   })
 
   //   nsSocket.on('messageToClients', (msg: string) => {

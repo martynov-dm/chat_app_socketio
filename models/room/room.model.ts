@@ -4,10 +4,9 @@ import mongoose, { Schema, Document } from 'mongoose'
 import { IMessage } from 'models/message/message.model'
 
 export interface IRoom extends Document {
-  namespace: string
   isPrivate: boolean
   roomTitle: string
-  history: IMessage[]
+  history: string[]
 }
 
 export const RoomSchema = new Schema(

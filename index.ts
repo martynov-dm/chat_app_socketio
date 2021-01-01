@@ -130,15 +130,19 @@ export const io = new Server(server, {
 //   })
 // })
 
-io.of('/').on('connection', (socket: Socket) => {
-  const nsData = namespaces.map((ns) => {
-    return {
-      img: ns.img,
-      endpoint: ns.endpoint,
-    }
-  })
+io.of('/general').on('connection', async (socket: Socket) => {
+  //SEND SERVERS LIST AND GENERAL SERVER DATA
+  const serversArr = await ServerModel.getServersArr()
+  console.log(serversArr[0].createdAt)
 
-  socket.emit('nsList', nsData)
+  socket.emit('serversArr', serversArr)
+
+  // const nsData = namespaces.map((ns) => {
+  //   return {
+  //     img: ns.img,
+  //     endpoint: ns.endpoint,
+  //   }
+  // })
 })
 
 const updateUsersInRoom = async (namespace: any, roomToJoin: string) => {

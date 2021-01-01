@@ -17,8 +17,12 @@ const ServersList = () => {
         align-items: center;
       `}
     >
-      {servers.map((server, index) => (
-        <ServerItem key={index} image={server.img} endpoint={server.endpoint} />
+      {servers.map((server) => (
+        <ServerItem
+          key={server._id}
+          image={server.image}
+          endpoint={server.endpoint}
+        />
       ))}
     </aside>
   )
