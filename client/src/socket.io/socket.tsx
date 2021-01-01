@@ -27,6 +27,7 @@ export const SocketProvider = (props: Iprops) => {
 
     socket.on('serversArr', (serversArr: IServerData[]) => {
       dispatch(serversActions.updateServers(serversArr))
+      dispatch(serversActions.updateCurrentServer(serversArr[0]))
     })
     // if (!currentServer) {
     //   joinNs('/wiki')

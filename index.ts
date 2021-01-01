@@ -30,19 +30,16 @@ app.use(cookieParser())
 
 connect()
 
-const Message = new MessageModel({
-  title: 'General',
-  image:
-    'https://res.cloudinary.com/martynov-dm/image/upload/c_crop,h_200,r_max,w_200,x_25,y_20/v1609480602/server_images/Default-Icon-icon_dlbq5a.png',
-  endpoint: '/general',
-  isPrivate: false,
-  rooms: [
-    {
-      isPrivate: false,
-      roomTitle: 'General',
-    },
-  ],
-}).save()
+// {
+//   text: { type: String, required: true, max: 255 },
+//   user: { type: Schema.Types.ObjectId, ref: 'Users', require: true },
+// },
+
+// const Message = new MessageModel({
+//   text: 'test message from dimass',
+//   user: '5fe86c42b7126c7c4be323e0',
+// }).save()
+
 // const getServerAndUpdate = async () => {
 //   try {
 //     const serverM = await ServerModel.findOne({
@@ -143,10 +140,10 @@ io.of('/general').on('connection', async (socket: Socket) => {
   // })
 })
 
-const updateUsersInRoom = async (namespace: any, roomToJoin: string) => {
-  const clientsCount = await (
-    await io.of(namespace.endpoint).in(roomToJoin).allSockets()
-  ).size
+// const updateUsersInRoom = async (namespace: any, roomToJoin: string) => {
+//   const clientsCount = await (
+//     await io.of(namespace.endpoint).in(roomToJoin).allSockets()
+//   ).size
 
-  io.of(namespace.endpoint).in(roomToJoin).emit('updateMembers', clientsCount)
-}
+//   io.of(namespace.endpoint).in(roomToJoin).emit('updateMembers', clientsCount)
+// }

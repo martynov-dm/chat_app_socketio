@@ -2,7 +2,7 @@ import { IServerData } from './../../types/types'
 import { ServersActionTypes } from './servers.actions'
 const INITIAL_STATE = {
   servers: [] as IServerData[],
-  currentServer: '',
+  currentServer: {} as IServerData,
 }
 
 export type InitialStateType = typeof INITIAL_STATE

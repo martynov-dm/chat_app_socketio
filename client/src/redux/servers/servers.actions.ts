@@ -10,10 +10,10 @@ export const serversActions = {
       payload: serversArr,
     } as const
   },
-  updateCurrentServer: (serverEndpoint: string) => {
+  updateCurrentServer: (serverData: IServerData) => {
     return {
       type: 'UPDATE_CURRENT_SERVER',
-      payload: serverEndpoint,
+      payload: serverData,
     } as const
   },
 }

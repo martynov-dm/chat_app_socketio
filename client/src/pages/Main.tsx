@@ -12,7 +12,7 @@ const Main: React.FC = () => {
 
   useEffect(() => {
     ws.initialize()
-  }, [ws])
+  }, [])
 
   return (
     <main

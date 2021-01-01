@@ -2,10 +2,10 @@ import React from 'react'
 import RoomItem from './RoomItem'
 import { css } from '@emotion/react'
 import { useSelector } from 'react-redux'
-import { selectRoomsArr } from '../../../redux/rooms/rooms.selectors'
+import { selectCurrentServer } from '../../../redux/servers/servers.selectors'
 
 const RoomList = () => {
-  const rooms = useSelector(selectRoomsArr)
+  const currentServer = useSelector(selectCurrentServer)
 
   return (
     <section
@@ -15,14 +15,14 @@ const RoomList = () => {
         margin-left: 2.5rem;
       `}
     >
-      {rooms.map((room) => (
-        <RoomItem
-          key={room.roomId}
-          title={room.roomTitle}
-          namespace={room.namespace}
-          isPrivate={room.isPrivate}
-        />
-      ))}
+      {Object.keys(currentServer).length !== 0 &&
+        currentServer.rooms.map((room) => (
+          <RoomItem
+            key={room._id}
+            title={room.roomTitle}
+            isPrivate={room.isPrivate}
+          />
+        ))}
     </section>
   )
 }

@@ -7,12 +7,12 @@ import { SocketContext } from '../../../socket.io/socket'
 
 interface Iprops {
   title: string
-  namespace: string
+
   isPrivate: boolean
 }
 
 const RoomItem: React.FC<Iprops> = (props) => {
-  const { title, namespace, isPrivate } = props
+  const { title, isPrivate } = props
   const ws = useContext(SocketContext)
 
   return (
