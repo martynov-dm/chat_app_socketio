@@ -17,6 +17,7 @@ const UserSchema: Schema = new Schema(
       required: true,
       max: 1024,
       min: 6,
+      select: false,
     },
     avatar: {
       type: String,
@@ -58,7 +59,7 @@ UserSchema.statics.findAndValidateUser = async function ({
   login: string
   password: string
 }): Promise<IUser> {
-  const user = await this.findOne({ login }).exec()
+  const user = await this.findOne({ login }).select('+password').exec()
   if (!user) {
     throw new Error('Login not found')
   }

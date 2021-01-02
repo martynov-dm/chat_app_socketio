@@ -23,12 +23,17 @@ export const SocketProvider = (props: Iprops) => {
   const currentServer = useSelector(selectCurrentServer)
 
   const initialize = () => {
-    socket = socketIOClient.io('http://localhost:5000/general')
+    socket = socketIOClient.io('http://localhost:5000/test1')
 
     socket.on('serversArr', (serversArr: IServerData[]) => {
       dispatch(serversActions.updateServers(serversArr))
       dispatch(serversActions.updateCurrentServer(serversArr[0]))
     })
+
+    socket.on('currentServerData', (currentServerData: IServerData) => {
+      dispatch(serversActions.updateCurrentServer(currentServerData))
+    })
+
     // if (!currentServer) {
     //   joinNs('/wiki')
     // } else {

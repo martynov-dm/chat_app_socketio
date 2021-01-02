@@ -36,16 +36,31 @@ export interface IServerData {
   image: string
   endpoint: string
   isPrivate: boolean
-  createdAt: string
-  updatedAt: string
+
   rooms: IRoomData[]
 }
 
 export interface IRoomData {
   _id: string
-  createdAt: string
-  updatedAt: string
+
   isPrivate: boolean
   roomTitle: string
-  history: string[]
+  history: IMessage[]
+}
+
+export interface IMessage {
+  _id: string
+  createdAt: string
+  updatedAt: string
+  text: string
+  user: IUser
+}
+
+export interface IUser {
+  _id: string
+  avatar: string
+  createdAt: string
+  updatedAt: string
+  login: string
+  isOnline: boolean
 }

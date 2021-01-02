@@ -1,3 +1,4 @@
+import { ListenToSocketEndPoints } from './socket.io/socket.io'
 import { MessageModel } from './models/message/message.model'
 import { ServerModel } from './models/server/server.model'
 import express from 'express'
@@ -83,6 +84,7 @@ export const io = new Server(server, {
   },
 })
 
+ListenToSocketEndPoints(io)
 // const servers = ServerSchema.getServersArr().then((docs) => console.log(docs))
 
 // namespaces.forEach((namespace) => {
@@ -125,20 +127,6 @@ export const io = new Server(server, {
 //     })
 //   })
 // })
-
-io.of('/general').on('connection', async (socket: Socket) => {
-  //SEND SERVERS LIST AND GENERAL SERVER DATA
-  const serversArr = await ServerModel.getServersArr()
-
-  socket.emit('serversArr', serversArr)
-
-  // const nsData = namespaces.map((ns) => {
-  //   return {
-  //     img: ns.img,
-  //     endpoint: ns.endpoint,
-  //   }
-  // })
-})
 
 // const updateUsersInRoom = async (namespace: any, roomToJoin: string) => {
 //   const clientsCount = await (

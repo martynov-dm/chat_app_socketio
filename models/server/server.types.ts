@@ -10,4 +10,6 @@ export interface IServer extends Document {
 
 export interface IServerModel extends Model<IServer> {
   getServersArr(): Promise<IServer[]>
+  getEndpoints(): Promise<string[]>
+  findAndPopulateCurrentServer(endpoint: string): Promise<IServer[]>
 }
