@@ -1,18 +1,17 @@
+import { selectCurrentServer } from './../servers/servers.selectors'
 import { AppStateType } from '../store'
 import { createSelector } from 'reselect'
 
-const selectRooms = (state: AppStateType) => state.rooms
-
-export const selectRoomsArr = createSelector(
-  [selectRooms],
-  (rooms) => rooms.rooms
+export const selectCurrentRoomsArr = createSelector(
+  [selectCurrentServer],
+  (currentServer) => currentServer.rooms
 )
-export const peopleInTheRoom = createSelector(
-  [selectRooms],
-  (rooms) => rooms.peopleCountInCurrentRoom
-)
+// export const peopleInTheRoom = createSelector(
+//   [selectRooms],
+//   (rooms) => rooms.peopleCountInCurrentRoom
+// )
 
 export const selectCurrentRoomName = createSelector(
-  [selectRooms],
-  (rooms) => rooms.currentRoomName
+  [selectCurrentRoomsArr],
+  (rooms) => rooms.currentRoom
 )

@@ -1,3 +1,4 @@
+import { IRoomData } from './../../types/types'
 import { InferActionTypes } from '../../types/types'
 
 export type RoomsActionTypes = InferActionTypes<typeof roomsActions>
@@ -5,7 +6,7 @@ export type RoomsActionTypes = InferActionTypes<typeof roomsActions>
 export const roomsActions = {
   updateRooms: (roomsData: any[]) => {
     return {
-      type: 'UPDATE_ROOMS',
+      type: 'UPDATE_ROOMS_ARR',
       payload: roomsData,
     } as const
   },
@@ -15,10 +16,10 @@ export const roomsActions = {
       payload: count,
     } as const
   },
-  updateCurrentRoomName: (roomName: string) => {
+  updateCurrentRoom: (currentRoom: IRoomData) => {
     return {
-      type: 'UPDATE_CURRENT_ROOM_NAME',
-      payload: roomName,
+      type: 'UPDATE_CURRENT_ROOM',
+      payload: currentRoom,
     } as const
   },
 }

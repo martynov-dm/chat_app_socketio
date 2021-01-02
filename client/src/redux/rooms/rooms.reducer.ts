@@ -1,8 +1,9 @@
+import { IRoomData } from './../../types/types'
 import { RoomsActionTypes } from './rooms.actions'
 const INITIAL_STATE = {
-  rooms: [] as any[],
+  rooms: [] as IRoomData[],
   peopleCountInCurrentRoom: 0,
-  currentRoomName: '',
+  currentRoom: {} as IRoomData,
 }
 
 export type InitialStateType = typeof INITIAL_STATE
@@ -12,7 +13,7 @@ const roomsReducer = (
   action: RoomsActionTypes
 ): InitialStateType => {
   switch (action.type) {
-    case 'UPDATE_ROOMS':
+    case 'UPDATE_ROOMS_ARR':
       return {
         ...state,
         rooms: action.payload,
@@ -22,10 +23,10 @@ const roomsReducer = (
         ...state,
         peopleCountInCurrentRoom: action.payload,
       }
-    case 'UPDATE_CURRENT_ROOM_NAME':
+    case 'UPDATE_CURRENT_ROOM':
       return {
         ...state,
-        currentRoomName: action.payload,
+        currentRoom: action.payload,
       }
 
     default:

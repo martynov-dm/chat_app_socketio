@@ -13,6 +13,7 @@ export const RoomSchema = new Schema({
   isPrivate: { type: Boolean, require: true },
   roomTitle: { type: String, require: true, max: 20, min: 1 },
   history: [{ type: Schema.Types.ObjectId, ref: 'Message' }],
+  currentUsers: [{ type: Schema.Types.ObjectId, ref: 'Users' }],
 })
 
 export const RoomModel = mongoose.model<IRoom>('Room', RoomSchema)

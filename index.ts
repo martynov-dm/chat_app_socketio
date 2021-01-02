@@ -36,10 +36,7 @@ connect()
 //   user: { type: Schema.Types.ObjectId, ref: 'Users', require: true },
 // },
 
-// const Message = new MessageModel({
-//   text: 'test message from dimass',
-//   user: '5fe86c42b7126c7c4be323e0',
-// }).save()
+ServerModel.updateMany()
 
 // const getServerAndUpdate = async () => {
 //   try {

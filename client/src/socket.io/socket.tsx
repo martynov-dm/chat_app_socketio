@@ -1,6 +1,7 @@
 import React, { createContext } from 'react'
 import socketIOClient, { Socket } from 'socket.io-client'
 import { useDispatch, useSelector } from 'react-redux'
+
 import { messagesActions } from '../redux/messages/messages.actions'
 import { serversActions } from '../redux/servers/servers.actions'
 import { roomsActions } from '../redux/rooms/rooms.actions'
@@ -32,6 +33,7 @@ export const SocketProvider = (props: Iprops) => {
 
     socket.on('currentServerData', (currentServerData: IServerData) => {
       dispatch(serversActions.updateCurrentServer(currentServerData))
+      dispatch(roomsActions.updateCurrentRoom(currentServerData.rooms[0]))
     })
 
     // if (!currentServer) {

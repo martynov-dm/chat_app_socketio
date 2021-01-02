@@ -12,8 +12,8 @@ import {
 
 const ChannelHeader = (props: any) => {
   const bgColor = useColorModeValue('#FFFFFF', '#2D3748')
-  const peopleCount = useSelector(peopleInTheRoom)
-  const currentRoomName = useSelector(selectCurrentRoomName)
+  // const peopleCount = useSelector(peopleInTheRoom)
+  // const currentRoomName = useSelector(selectCurrentRoomName)
 
   return (
     <header
@@ -46,12 +46,12 @@ const ChannelHeader = (props: any) => {
         }
       `}
     >
-      <Text>{currentRoomName}</Text>
+      <Text>Room Name</Text>
       <ThemeToggler />
 
       <Flex>
         <Icon as={BsFillPeopleFill} />
-        <Text>{peopleCount}</Text>
+        <Text>12</Text>
       </Flex>
     </header>
   )

@@ -42,10 +42,12 @@ export interface IServerData {
 
 export interface IRoomData {
   _id: string
-
-  isPrivate: boolean
   roomTitle: string
   history: IMessage[]
+}
+
+export interface IRoomDataWithPeopleCount extends IRoomData {
+  peopleCount: number
 }
 
 export interface IMessage {
