@@ -2,9 +2,10 @@ import React from 'react'
 import { css } from '@emotion/react'
 import ServerItem from './ServerItem/ServerItem'
 import { useSelector } from 'react-redux'
+import { selectServersArr } from '../../redux/serverRoomMessage/serverRoomMessage.selectors'
 
 const ServersList = () => {
-  const servers = useSelector(selectServersArr)
+  const serversArr = useSelector(selectServersArr)
   return (
     <aside
       css={css`
@@ -16,7 +17,7 @@ const ServersList = () => {
         align-items: center;
       `}
     >
-      {servers.map((server) => (
+      {serversArr.map((server) => (
         <ServerItem
           key={server._id}
           image={server.image}

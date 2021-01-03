@@ -4,7 +4,7 @@ import { css } from '@emotion/react'
 import { useSelector } from 'react-redux'
 
 const RoomList = () => {
-  const currentRoomsArr = useSelector(selectCurrentRoomsArr)
+  // const currentRoomsArr = useSelector(selectCurrentRoomsArr)
 
   return (
     <section
@@ -14,10 +14,10 @@ const RoomList = () => {
         margin-left: 2.5rem;
       `}
     >
-      {currentRoomsArr.length !== 0 &&
+      {/* {currentRoomsArr.length !== 0 &&
         currentRoomsArr.map((room) => (
           <RoomItem key={room._id} title={room.roomTitle} />
-        ))}
+        ))} */}
     </section>
   )
 }

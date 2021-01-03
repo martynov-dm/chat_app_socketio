@@ -25,7 +25,7 @@ export const SocketProvider = (props: Iprops) => {
     socket = socketIOClient.io('http://localhost:5000/test1')
 
     socket.on('serversArr', (serversArr: IServerData[]) => {
-      dispatch(serverRoomMessageActions.updateServers(serversArr))
+      dispatch(serverRoomMessageActions.addInitialServers(serversArr))
       // dispatch(serversActions.updateCurrentServer(serversArr[0]))
     })
 

@@ -24,7 +24,7 @@ const serverRoomMessageReducer = (
   action: serverRoomMessageActionsTypes
 ): InitialStateType => {
   switch (action.type) {
-    case 'UPDATE_SERVERS':
+    case 'ADD_INITIAL_SERVERS':
       return {
         ...state,
         servers: {

@@ -4,7 +4,7 @@ import MessageItem from './MessageItem'
 import { css } from '@emotion/react'
 
 const MessageList = () => {
-  const messages = useSelector(selectMessagesArr)
+  // const messages = useSelector(selectMessagesArr)
 
   return (
     <section
@@ -18,7 +18,7 @@ const MessageList = () => {
         /* -webkit-overflow-scrolling: touch; */
       `}
     >
-      {messages.map((message, index) => {
+      {/* {messages.map((message, index) => {
         return (
           <MessageItem
             key={index}
@@ -28,7 +28,7 @@ const MessageList = () => {
             text={message.text}
           />
         )
-      })}
+      })} */}
     </section>
   )
 }

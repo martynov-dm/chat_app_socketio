@@ -6,9 +6,9 @@ export type serverRoomMessageActionsTypes = InferActionTypes<
 >
 
 export const serverRoomMessageActions = {
-  updateServersArr: (serversArr: IServerData[]) => {
+  addInitialServers: (serversArr: IServerData[]) => {
     return {
-      type: 'UPDATE_SERVERS',
+      type: 'ADD_INITIAL_SERVERS',
       payload: serversArr,
     } as const
   },
