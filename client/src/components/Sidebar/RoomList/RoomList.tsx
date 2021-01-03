@@ -2,9 +2,10 @@ import React from 'react'
 import RoomItem from './RoomItem'
 import { css } from '@emotion/react'
 import { useSelector } from 'react-redux'
+import { selectCurrentRoomsArr } from '../../../redux/serverRoomMessage/serverRoomMessage.selectors'
 
 const RoomList = () => {
-  // const currentRoomsArr = useSelector(selectCurrentRoomsArr)
+  const currentRoomsArr = useSelector(selectCurrentRoomsArr)
 
   return (
     <section
@@ -14,10 +15,10 @@ const RoomList = () => {
         margin-left: 2.5rem;
       `}
     >
-      {/* {currentRoomsArr.length !== 0 &&
+      {currentRoomsArr &&
         currentRoomsArr.map((room) => (
           <RoomItem key={room._id} title={room.roomTitle} />
-        ))} */}
+        ))}
     </section>
   )
 }

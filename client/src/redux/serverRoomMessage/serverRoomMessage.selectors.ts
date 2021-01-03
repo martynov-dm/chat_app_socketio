@@ -18,3 +18,8 @@ export const selectCurrentServer = createSelector(
   [selectServers],
   (servers) => servers.currentServer
 )
+
+export const selectCurrentRoomsArr = createSelector(
+  [selectCurrentServer],
+  (currentServer) => currentServer.rooms
+)

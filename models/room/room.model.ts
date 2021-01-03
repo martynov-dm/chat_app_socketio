@@ -32,13 +32,13 @@ RoomSchema.virtual('messages', {
   localField: '_id',
 })
 
-RoomSchema.pre(/^find/, function (next) {
-  this.populate({
-    path: 'currentUsers',
-    select: 'login avatar',
-  })
+// RoomSchema.pre(/^find/, function (next) {
+//   this.populate({
+//     path: 'currentUsers',
+//     select: 'login avatar',
+//   })
 
-  next()
-})
+//   next()
+// })
 
 export const RoomModel = mongoose.model<IRoom>('Room', RoomSchema)

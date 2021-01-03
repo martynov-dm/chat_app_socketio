@@ -32,7 +32,7 @@ const serverRoomMessageReducer = (
           serversArr: action.payload,
         },
       }
-    case 'UPDATE_CURRENT_SERVER':
+    case 'ADD_CURRENT_SERVER':
       return {
         ...state,
         servers: {

@@ -13,6 +13,7 @@ interface Iprops {
 
 export const SocketProvider = (props: Iprops) => {
   const { children } = props
+  const INITIAL_SERVER_ID = '5fef4e9ebc24d12320434c00'
 
   let socket: Socket
   // let nsSocket: Socket
@@ -29,6 +30,12 @@ export const SocketProvider = (props: Iprops) => {
       // dispatch(serversActions.updateCurrentServer(serversArr[0]))
     })
 
+    socket.emit('joinedServer', INITIAL_SERVER_ID)
+
+    socket.on('currentServerData', (currentServerData: IServerData) => {
+      dispatch(serverRoomMessageActions.addCurrentServer(currentServerData))
+      console.log(currentServerData)
+    })
     // socket.on('currentServerData', (currentServerData: IServerData) => {
     //   dispatch(serversActions.updateCurrentServer(currentServerData))
     //   dispatch(roomsActions.updateCurrentRoom(currentServerData.rooms[0]))

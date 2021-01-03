@@ -12,9 +12,9 @@ export const serverRoomMessageActions = {
       payload: serversArr,
     } as const
   },
-  updateCurrentServer: (serverData: IServerData) => {
+  addCurrentServer: (serverData: IServerData) => {
     return {
-      type: 'UPDATE_CURRENT_SERVER',
+      type: 'ADD_CURRENT_SERVER',
       payload: serverData,
     } as const
   },
