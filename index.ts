@@ -12,8 +12,6 @@ import passport from 'passport'
 import authRoute from './routes/auth'
 import { connect } from './services/mongoose'
 import jwtStrategy from './services/passport'
-import namespaces from './socket.io/data/data'
-import User from './models/user/user.model'
 
 const PORT = process.env.PORT || 5000
 
@@ -35,29 +33,6 @@ connect()
 //   text: { type: String, required: true, max: 255 },
 //   user: { type: Schema.Types.ObjectId, ref: 'Users', require: true },
 // },
-
-ServerModel.updateMany()
-
-// const getServerAndUpdate = async () => {
-//   try {
-//     const serverM = await ServerModel.findOne({
-//       _id: '5feed3ed83c1690675c727eb',
-//     })
-//     const user = await User.findOne({ _id: '5fe98afea6431e1f81e8b5e0' })
-
-//     const selectedRoom = serverM!.rooms.find(
-//       (room) => room._id == '5feed3ed83c1690675c727ec'
-//     )
-//     selectedRoom!.history.push({
-//       text: 'test message',
-//       user: user?._id,
-//     })
-//     console.log(serverM)
-//   } catch (err) {
-//     console.log(err)
-//   }
-// }
-// getServerAndUpdate()
 
 // console.log(testServer)
 
@@ -81,7 +56,32 @@ export const io = new Server(server, {
   },
 })
 
+// const Add = async () => {
+//   try {
+//     const serverM = await ServerModel.updateMany(
+//       {},
+//       {
+//         $set: {
+//           'rooms.2.currentUsers': [
+//             '5fe7820eeda91d5f5e9dadb2',
+//             '5fe98afea6431e1f81e8b5e0',
+//             '5fe8c8ed69235e35040adeb7',
+//           ],
+//         },
+//       },
+//       (error, res) => {
+//         console.log(error)
+//         console.log(res)
+//       }
+//     )
+//   } catch (err) {
+//     console.log(err)
+//   }
+// }
+// Add()
+
 ListenToSocketEndPoints(io)
+
 // const servers = ServerSchema.getServersArr().then((docs) => console.log(docs))
 
 // namespaces.forEach((namespace) => {

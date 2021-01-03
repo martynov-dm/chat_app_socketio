@@ -1,4 +1,4 @@
-import { IRoomData, IRoomDataWithPeopleCount } from './../../types/types'
+import { IRoomData } from './../../types/types'
 import { IServerData } from '../../types/types'
 import { IMessage } from '../../types/types'
 import { serverRoomMessageActionsTypes } from './serverRoomMessage.actions'
@@ -10,8 +10,7 @@ const INITIAL_STATE = {
   },
   rooms: {
     roomsArr: [] as IRoomData[],
-    currentRoom: {} as IRoomData,
-    currentRoomPeople,
+    currentRoomIndex: 0,
   },
   messages: {
     messagesArr: [] as Array<IMessage>,
@@ -49,23 +48,13 @@ const serverRoomMessageReducer = (
           roomsArr: action.payload,
         },
       }
-    case 'UPDATE_PEOPLE_COUNT':
+
+    case 'UPDATE_CURRENT_ROOM_INDEX':
       return {
         ...state,
         rooms: {
           ...state.rooms,
-          currentRoom: {
-            ...state.rooms.currentRoom,
-            peopleCount: action.payload,
-          },
-        },
-      }
-    case 'UPDATE_CURRENT_ROOM':
-      return {
-        ...state,
-        servers: {
-          ...state.servers,
-          currentServer: action.payload,
+          currentRoomIndex: action.payload,
         },
       }
 

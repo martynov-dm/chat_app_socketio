@@ -37,7 +37,7 @@ ServerSchema.statics.findAndPopulateCurrentServer = async function (
     .lean()
     .exec()
 
-  console.log(currentServer.rooms[2].history)
+  // console.log(currentServer.rooms[2].history)
 
   // currentServer.rooms[0].history.populate().exec()
 

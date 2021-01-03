@@ -7,6 +7,7 @@ export interface IRoom extends Document {
   isPrivate: boolean
   roomTitle: string
   history: string[]
+  currentUsers: string[]
 }
 
 export const RoomSchema = new Schema({

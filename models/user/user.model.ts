@@ -9,14 +9,14 @@ const UserSchema: Schema = new Schema(
       type: String,
       required: true,
       min: 2,
-      max: 255,
+      max: 15,
       unique: true,
     },
     password: {
       type: String,
       required: true,
       max: 1024,
-      min: 6,
+      min: 3,
       select: false,
     },
     avatar: {
@@ -29,17 +29,11 @@ const UserSchema: Schema = new Schema(
   }
 )
 
-UserSchema.virtual('isOnline').get(function (this: any) {
-  return differenceInMinutes(new Date(), this.last_seen) < 10
-})
-
 UserSchema.set('toJSON', {
   virtuals: true,
 })
 
 UserSchema.pre<IUser>('save', async function (next) {
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-
   if (!this.isModified('password')) {
     return next()
   }

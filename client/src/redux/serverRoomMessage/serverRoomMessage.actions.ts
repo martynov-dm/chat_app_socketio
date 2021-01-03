@@ -31,10 +31,10 @@ export const serverRoomMessageActions = {
       payload: count,
     } as const
   },
-  updateCurrentRoom: (currentRoom: IRoomData) => {
+  updateCurrentRoom: (index: number) => {
     return {
-      type: 'UPDATE_CURRENT_ROOM',
-      payload: currentRoom,
+      type: 'UPDATE_CURRENT_ROOM_INDEX',
+      payload: index,
     } as const
   },
 

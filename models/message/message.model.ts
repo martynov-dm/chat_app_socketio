@@ -8,11 +8,14 @@ export interface IMessage extends Document {
 
 export const MessageSchema = new Schema(
   {
-    text: { type: String, required: true, max: 255 },
+    text: { type: String, required: true, max: 350 },
     user: { type: Schema.Types.ObjectId, ref: 'Users', require: true },
+    room: { type: Schema.Types.ObjectId, ref: 'Room', require: true },
   },
   {
     timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   }
 )
 
