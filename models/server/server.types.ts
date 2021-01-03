@@ -5,7 +5,6 @@ export interface IServer extends Document {
   title: string
   image: string
   endpoint: string
-  rooms: IRoom[]
 }
 
 export interface IServerModel extends Model<IServer> {

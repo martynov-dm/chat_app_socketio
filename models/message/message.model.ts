@@ -1,9 +1,11 @@
+import { IRoom } from './../room/room.model'
 import { IUser } from './../user/user.types'
 import mongoose, { Schema, Document } from 'mongoose'
 
 export interface IMessage extends Document {
   text: string
   user: IUser | string | null
+  room: IRoom | string | null
 }
 
 export const MessageSchema = new Schema(
@@ -18,5 +20,13 @@ export const MessageSchema = new Schema(
     toObject: { virtuals: true },
   }
 )
+
+MessageSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'user',
+    select: 'login avatar',
+  })
+  next()
+})
 
 export const MessageModel = mongoose.model<IMessage>('Message', MessageSchema)

@@ -1,6 +1,5 @@
 import { IUser, UserModel } from './user.types'
-import mongoose, { Schema, Document } from 'mongoose'
-import { differenceInMinutes } from 'date-fns'
+import mongoose, { Schema } from 'mongoose'
 import bcrypt from 'bcryptjs'
 
 const UserSchema: Schema = new Schema(

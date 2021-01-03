@@ -1,3 +1,4 @@
+import { RoomModel } from './models/room/room.model'
 import { ListenToSocketEndPoints } from './socket.io/socket.io'
 import { MessageModel } from './models/message/message.model'
 import { ServerModel } from './models/server/server.model'
@@ -58,22 +59,12 @@ export const io = new Server(server, {
 
 // const Add = async () => {
 //   try {
-//     const serverM = await ServerModel.updateMany(
-//       {},
-//       {
-//         $set: {
-//           'rooms.2.currentUsers': [
-//             '5fe7820eeda91d5f5e9dadb2',
-//             '5fe98afea6431e1f81e8b5e0',
-//             '5fe8c8ed69235e35040adeb7',
-//           ],
-//         },
-//       },
-//       (error, res) => {
-//         console.log(error)
-//         console.log(res)
-//       }
-//     )
+//     const Message = new MessageModel({
+//       text: 'test message 2 room 1 server 2',
+//       user: '5fe8c8ed69235e35040adeb7',
+//       room: '5ff17230c48c28556231c2e8',
+//     })
+//     Message.save()
 //   } catch (err) {
 //     console.log(err)
 //   }

@@ -8,11 +8,11 @@ export const ListenToSocketEndPoints = async (io: Server) => {
       socket.emit('serversArr', serversArr)
 
       //Get and Send populated server data
-      const PopulatedCurrentServerData = await ServerModel.findAndPopulateCurrentServer(
-        server.endpoint
-      )
+      // const PopulatedCurrentServerData = await ServerModel.findAndPopulateCurrentServer(
+      //   server.endpoint
+      // )
 
-      socket.emit('currentServerData', PopulatedCurrentServerData)
+      // socket.emit('currentServerData', PopulatedCurrentServerData)
 
       // const nsData = namespaces.map((ns) => {
       //   return {

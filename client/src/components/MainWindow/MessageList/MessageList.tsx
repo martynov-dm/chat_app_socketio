@@ -3,8 +3,6 @@ import { useSelector } from 'react-redux'
 import MessageItem from './MessageItem'
 import { css } from '@emotion/react'
 
-import { selectMessagesArr } from '../../../redux/messages/messages.selectors'
-
 const MessageList = () => {
   const messages = useSelector(selectMessagesArr)
 

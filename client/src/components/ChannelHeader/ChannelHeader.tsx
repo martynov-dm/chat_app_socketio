@@ -5,10 +5,6 @@ import { Flex, Text, useColorModeValue } from '@chakra-ui/react'
 import { Icon } from '@chakra-ui/react'
 import { BsFillPeopleFill } from 'react-icons/bs'
 import { useSelector } from 'react-redux'
-import {
-  peopleInTheRoom,
-  selectCurrentRoomName,
-} from '../../redux/rooms/rooms.selectors'
 
 const ChannelHeader = (props: any) => {
   const bgColor = useColorModeValue('#FFFFFF', '#2D3748')

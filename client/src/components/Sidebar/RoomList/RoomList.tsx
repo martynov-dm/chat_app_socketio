@@ -2,7 +2,6 @@ import React from 'react'
 import RoomItem from './RoomItem'
 import { css } from '@emotion/react'
 import { useSelector } from 'react-redux'
-import { selectCurrentRoomsArr } from '../../../redux/rooms/rooms.selectors'
 
 const RoomList = () => {
   const currentRoomsArr = useSelector(selectCurrentRoomsArr)

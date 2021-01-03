@@ -2,7 +2,6 @@ import React from 'react'
 import { css } from '@emotion/react'
 import ServerItem from './ServerItem/ServerItem'
 import { useSelector } from 'react-redux'
-import { selectServersArr } from '../../redux/servers/servers.selectors'
 
 const ServersList = () => {
   const servers = useSelector(selectServersArr)
