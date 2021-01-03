@@ -32,12 +32,12 @@ export const ListenToSocketEndPoints = async (io: Server) => {
           select: 'login avatar',
         })
 
-        console.log(currentRoomData)
-
         io.of(server.endpoint)
           .to(roomId)
           .emit('currentRoomDataUpdate', currentRoomData)
       })
+
+      socket.on('newMessageToServer', async (message: string) => {})
     })
   })
 }

@@ -3,6 +3,8 @@ import { RiSendPlane2Fill } from 'react-icons/ri'
 import { Flex, Input, useColorModeValue } from '@chakra-ui/react'
 import { css } from '@emotion/react'
 import { SocketContext } from '../../../socket.io/socket'
+import { useSelector } from 'react-redux'
+import { selectUserId } from '../../../redux/auth/auth.selectors'
 
 // svg {
 //   width: 2rem;
@@ -28,11 +30,12 @@ import { SocketContext } from '../../../socket.io/socket'
 
 const MessageInput: React.FC = () => {
   const bgColor = useColorModeValue('gray.200', 'gray.900')
-  const [message, setMessage] = useState('')
   const ws = useContext(SocketContext)
+  const userId = useSelector(selectUserId)
+  const [message, setMessage] = useState('')
 
   const handleMessageSubmit = () => {
-    ws.sendMessage(message)
+    ws.sendMessage(message, userId)
     setMessage('')
   }
 

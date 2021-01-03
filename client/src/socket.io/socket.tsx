@@ -81,12 +81,12 @@ export const SocketProvider = (props: Iprops) => {
   //   })
   // }
 
-  // const sendMessage = (message: string) => {
-  //   nsSocket.emit('newMessageToServer', message)
-  // }
+  const sendMessage = (message: string, userId: string) => {
+    socket.emit('newMessageToServer', { message, userId })
+  }
 
   ws = {
-    // sendMessage,
+    sendMessage,
     initialize,
     // joinNs,
     // joinRoom,

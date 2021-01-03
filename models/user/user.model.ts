@@ -52,7 +52,9 @@ UserSchema.statics.findAndValidateUser = async function ({
   login: string
   password: string
 }): Promise<IUser> {
-  const user = await this.findOne({ login }).select('+password').exec()
+  const user = await this.findOne({ login })
+    .select('+password -__v -createdAt -updatedAt')
+    .exec()
   if (!user) {
     throw new Error('Login not found')
   }
@@ -61,7 +63,10 @@ UserSchema.statics.findAndValidateUser = async function ({
   if (!isPasswordOk) {
     throw new Error('Password is not valid')
   }
-  return user
+  const JsonUser = user.toJSON()
+  delete JsonUser.password
+
+  return JsonUser
 }
 
 const User = mongoose.model<IUser, UserModel>('Users', UserSchema)

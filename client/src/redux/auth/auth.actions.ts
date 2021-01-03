@@ -1,4 +1,4 @@
-import { InferActionTypes, ILoginAndPassword } from './../../types/types'
+import { InferActionTypes, ILoginAndPassword, IUser } from './../../types/types'
 import { ILoginPasswordAvatar } from '../../types/types'
 
 export type AuthActionTypes = InferActionTypes<typeof authActions>
@@ -32,9 +32,10 @@ export const authActions = {
       payload: loginAndPassword,
     } as const
   },
-  signInSuccess: () => {
+  signInSuccess: (user: IUser) => {
     return {
       type: 'SIGN_IN_SUCCESS',
+      payload: user,
     } as const
   },
   signInFailure: (errorMessage: string) => {

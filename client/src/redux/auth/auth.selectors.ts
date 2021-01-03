@@ -32,3 +32,10 @@ export const selectSignInReqStatus = createSelector(
   [selectSignInReq],
   (signInRequest) => signInRequest.status
 )
+
+export const selectUser = createSelector([selectAuth], (auth) => auth.userData)
+
+export const selectUserId = createSelector(
+  [selectUser],
+  (userData) => userData.id
+)

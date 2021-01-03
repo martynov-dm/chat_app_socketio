@@ -1,7 +1,11 @@
 import { AuthActionTypes } from './auth.actions'
+
 const INITIAL_STATE = {
-  userName: null as null | string,
-  userImage: null as null | string,
+  userData: {
+    login: null as null | string,
+    avatar: null as null | string,
+    id: '' as string,
+  },
   signUpRequest: {
     status: 'idle' as 'idle' | 'loading' | 'succeeded' | 'failed',
     error: null as string | null,
@@ -56,6 +60,11 @@ const authReducer = (
       return {
         ...state,
         signInRequest: { ...state.signInRequest, status: 'succeeded' },
+        userData: {
+          login: action.payload.login,
+          avatar: action.payload.avatar,
+          id: action.payload._id,
+        },
       }
     case 'SIGN_IN_FAILURE':
       return {
