@@ -3,7 +3,7 @@ import MainWindow from '../components/MainWindow/MainWindow'
 import Sidebar from '../components/Sidebar/Sidebar'
 import { css } from '@emotion/react'
 import SidebarHeader from '../components/SidebarHeader/SidebarHeader'
-import ChannelHeader from '../components/ChannelHeader/ChannelHeader'
+import RoomHeader from '../components/RoomHeader/RoomHeader'
 import { SocketContext } from '../socket.io/socket'
 import ServersList from '../components/ServersList/ServersList'
 
@@ -29,7 +29,7 @@ const Main: React.FC = () => {
       <SidebarHeader />
       <Sidebar />
 
-      <ChannelHeader />
+      <RoomHeader />
       <MainWindow />
 
       <ServersList />

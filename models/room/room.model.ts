@@ -31,7 +31,7 @@ RoomSchema.virtual('messages', {
   ref: MessageModel,
   localField: '_id',
   foreignField: 'room',
-  options: { select: 'text user' },
+  options: { select: '-__v' },
 })
 
 RoomSchema.pre(/^find/, function (next) {

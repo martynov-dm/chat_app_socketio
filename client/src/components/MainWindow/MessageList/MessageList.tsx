@@ -19,17 +19,18 @@ const MessageList = () => {
         /* -webkit-overflow-scrolling: touch; */
       `}
     >
-      {currentRoomMessages.map((message) => {
-        return (
-          <MessageItem
-            key={message._id}
-            avatar={message.user.avatar}
-            username={message.user.login}
-            time={message.time}
-            text={message.text}
-          />
-        )
-      })}
+      {currentRoomMessages &&
+        currentRoomMessages.map((message) => {
+          return (
+            <MessageItem
+              key={message._id}
+              avatar={message.user.avatar}
+              username={message.user.login}
+              time={message.createdAt}
+              text={message.text}
+            />
+          )
+        })}
     </section>
   )
 }

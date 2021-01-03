@@ -5,11 +5,15 @@ import { Flex, Text, useColorModeValue } from '@chakra-ui/react'
 import { Icon } from '@chakra-ui/react'
 import { BsFillPeopleFill } from 'react-icons/bs'
 import { useSelector } from 'react-redux'
+import {
+  selectCurrentRoomName,
+  selectCurrentRoomUserCount,
+} from '../../redux/serverRoomMessage/serverRoomMessage.selectors'
 
-const ChannelHeader = (props: any) => {
+const RoomHeader = (props: any) => {
   const bgColor = useColorModeValue('#FFFFFF', '#2D3748')
-  // const peopleCount = useSelector(peopleInTheRoom)
-  // const currentRoomName = useSelector(selectCurrentRoomName)
+  const userCount = useSelector(selectCurrentRoomUserCount)
+  const currentRoomName = useSelector(selectCurrentRoomName)
 
   return (
     <header
@@ -42,18 +46,18 @@ const ChannelHeader = (props: any) => {
         }
       `}
     >
-      <Text>Room Name</Text>
+      <Text>{currentRoomName}</Text>
       <ThemeToggler />
 
       <Flex>
         <Icon as={BsFillPeopleFill} />
-        <Text>12</Text>
+        <Text>{userCount}</Text>
       </Flex>
     </header>
   )
 }
 
-export default ChannelHeader
+export default RoomHeader
 
 // import React from 'react'
 // import styled from 'styled-components'

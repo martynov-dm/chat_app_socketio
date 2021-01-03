@@ -5,7 +5,7 @@ import React from 'react'
 interface Iprops {
   avatar: string
   username: string
-  time: Date
+  time: Date | string
   text: string
 }
 

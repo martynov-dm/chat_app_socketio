@@ -38,3 +38,13 @@ export const selectCurrentRoomMessages = createSelector(
   [selectCurrentRoom],
   (currentRoom) => currentRoom.messages
 )
+
+export const selectCurrentRoomName = createSelector(
+  [selectCurrentRoom],
+  (currentRoom) => currentRoom.roomTitle
+)
+
+export const selectCurrentRoomUserCount = createSelector(
+  [selectCurrentRoom],
+  (currentRoom) => currentRoom.userCount
+)
