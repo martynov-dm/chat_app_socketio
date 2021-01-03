@@ -4,7 +4,7 @@ const INITIAL_STATE = {
   userData: {
     login: null as null | string,
     avatar: null as null | string,
-    id: '' as string,
+    id: '5fe98afea6431e1f81e8b5e0' as string,
   },
   signUpRequest: {
     status: 'idle' as 'idle' | 'loading' | 'succeeded' | 'failed',

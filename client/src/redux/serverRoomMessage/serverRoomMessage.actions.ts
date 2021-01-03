@@ -1,4 +1,4 @@
-import { IRoomData, IServerData } from '../../types/types'
+import { IMessage, IRoomData, IServerData } from '../../types/types'
 import { InferActionTypes } from '../../types/types'
 
 export type serverRoomMessageActionsTypes = InferActionTypes<
@@ -38,7 +38,7 @@ export const serverRoomMessageActions = {
     } as const
   },
 
-  addNewMessage: (message: string) => {
+  addNewMessage: (message: IMessage) => {
     return {
       type: 'ADD_NEW_MESSAGE',
       payload: message,

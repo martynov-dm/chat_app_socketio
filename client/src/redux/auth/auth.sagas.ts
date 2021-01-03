@@ -16,7 +16,6 @@ export function* signIn(action: TAuthActionsWithPayload) {
   const { login, password } = action.payload as ILoginAndPassword
   try {
     const { data } = yield call(signInRequest, [login, password])
-    console.log(data)
 
     yield sessionStorage.setItem('token', data.token)
     yield put(authActions.signInSuccess(data.user))

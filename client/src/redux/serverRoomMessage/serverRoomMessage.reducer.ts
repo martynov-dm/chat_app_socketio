@@ -49,6 +49,17 @@ const serverRoomMessageReducer = (
           currentRoom: action.payload,
         },
       }
+    case 'ADD_NEW_MESSAGE':
+      return {
+        ...state,
+        rooms: {
+          ...state.rooms,
+          currentRoom: {
+            ...state.rooms.currentRoom,
+            messages: [...state.rooms.currentRoom.messages, action.payload],
+          },
+        },
+      }
 
     default:
       return state

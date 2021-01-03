@@ -5,6 +5,7 @@ import { css } from '@emotion/react'
 import { SocketContext } from '../../../socket.io/socket'
 import { useSelector } from 'react-redux'
 import { selectUserId } from '../../../redux/auth/auth.selectors'
+import { selectCurrentRoomId } from '../../../redux/serverRoomMessage/serverRoomMessage.selectors'
 
 // svg {
 //   width: 2rem;
@@ -32,10 +33,11 @@ const MessageInput: React.FC = () => {
   const bgColor = useColorModeValue('gray.200', 'gray.900')
   const ws = useContext(SocketContext)
   const userId = useSelector(selectUserId)
+  const roomId = useSelector(selectCurrentRoomId)
   const [message, setMessage] = useState('')
 
   const handleMessageSubmit = () => {
-    ws.sendMessage(message, userId)
+    ws.sendMessage(message, userId, roomId)
     setMessage('')
   }
 

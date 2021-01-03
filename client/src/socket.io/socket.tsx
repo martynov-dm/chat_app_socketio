@@ -2,7 +2,7 @@ import React, { createContext } from 'react'
 import socketIOClient, { Socket } from 'socket.io-client'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { IRoomData, IServerData } from '../types/types'
+import { IMessage, IRoomData, IServerData } from '../types/types'
 import { serverRoomMessageActions } from '../redux/serverRoomMessage/serverRoomMessage.actions'
 
 export const SocketContext = createContext(null as any)
@@ -81,8 +81,13 @@ export const SocketProvider = (props: Iprops) => {
   //   })
   // }
 
-  const sendMessage = (message: string, userId: string) => {
-    socket.emit('newMessageToServer', { message, userId })
+  const sendMessage = (message: string, userId: string, roomId: string) => {
+    console.log(message, userId, roomId)
+
+    socket.emit('newMessageToServer', { message, userId, roomId })
+    socket.on('savedMessage', (newMessage: IMessage) => {
+      dispatch(serverRoomMessageActions.addNewMessage(newMessage))
+    })
   }
 
   ws = {

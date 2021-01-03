@@ -48,3 +48,8 @@ export const selectCurrentRoomUserCount = createSelector(
   [selectCurrentRoom],
   (currentRoom) => currentRoom.userCount
 )
+
+export const selectCurrentRoomId = createSelector(
+  [selectCurrentRoom],
+  (currentRoom) => currentRoom._id
+)
