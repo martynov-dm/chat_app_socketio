@@ -9,7 +9,7 @@ const INITIAL_STATE = {
     currentServer: {} as IServerData,
   },
   rooms: {
-    roomsArr: [] as IRoomData[],
+    currentRoom: {} as IRoomData,
     currentRoomIndex: 0,
   },
   messages: {
@@ -40,21 +40,13 @@ const serverRoomMessageReducer = (
           currentServer: action.payload,
         },
       }
-    case 'UPDATE_ROOMS_ARR':
-      return {
-        ...state,
-        rooms: {
-          ...state.rooms,
-          roomsArr: action.payload,
-        },
-      }
 
-    case 'UPDATE_CURRENT_ROOM_INDEX':
+    case 'ADD_CURRENT_ROOM_DATA':
       return {
         ...state,
         rooms: {
           ...state.rooms,
-          currentRoomIndex: action.payload,
+          currentRoom: action.payload,
         },
       }
 

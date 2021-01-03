@@ -2,9 +2,10 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import MessageItem from './MessageItem'
 import { css } from '@emotion/react'
+import { selectCurrentRoomMessages } from '../../../redux/serverRoomMessage/serverRoomMessage.selectors'
 
 const MessageList = () => {
-  // const messages = useSelector(selectMessagesArr)
+  const currentRoomMessages = useSelector(selectCurrentRoomMessages)
 
   return (
     <section
@@ -18,17 +19,17 @@ const MessageList = () => {
         /* -webkit-overflow-scrolling: touch; */
       `}
     >
-      {/* {messages.map((message, index) => {
+      {currentRoomMessages.map((message) => {
         return (
           <MessageItem
-            key={index}
-            avatar={message.avatar}
-            username={message.username}
+            key={message._id}
+            avatar={message.user.avatar}
+            username={message.user.login}
             time={message.time}
             text={message.text}
           />
         )
-      })} */}
+      })}
     </section>
   )
 }

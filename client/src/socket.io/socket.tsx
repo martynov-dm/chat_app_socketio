@@ -2,7 +2,7 @@ import React, { createContext } from 'react'
 import socketIOClient, { Socket } from 'socket.io-client'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { IServerData } from '../types/types'
+import { IRoomData, IServerData } from '../types/types'
 import { serverRoomMessageActions } from '../redux/serverRoomMessage/serverRoomMessage.actions'
 
 export const SocketContext = createContext(null as any)
@@ -27,14 +27,18 @@ export const SocketProvider = (props: Iprops) => {
 
     socket.on('serversArr', (serversArr: IServerData[]) => {
       dispatch(serverRoomMessageActions.addInitialServers(serversArr))
-      // dispatch(serversActions.updateCurrentServer(serversArr[0]))
     })
 
-    socket.emit('joinedServer', INITIAL_SERVER_ID)
-
+    socket.emit('joinServer', INITIAL_SERVER_ID)
     socket.on('currentServerData', (currentServerData: IServerData) => {
       dispatch(serverRoomMessageActions.addCurrentServer(currentServerData))
-      console.log(currentServerData)
+
+      const roomId = currentServerData.rooms[0]._id
+      socket.emit('joinRoom', roomId)
+    })
+
+    socket.on('currentRoomDataUpdate', (currentRoomData: IRoomData) => {
+      dispatch(serverRoomMessageActions.addCurrentRoomData(currentRoomData))
     })
     // socket.on('currentServerData', (currentServerData: IServerData) => {
     //   dispatch(serversActions.updateCurrentServer(currentServerData))

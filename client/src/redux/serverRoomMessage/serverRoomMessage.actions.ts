@@ -19,10 +19,10 @@ export const serverRoomMessageActions = {
     } as const
   },
 
-  updateRooms: (roomsData: IRoomData[]) => {
+  addCurrentRoomData: (roomData: IRoomData) => {
     return {
-      type: 'UPDATE_ROOMS_ARR',
-      payload: roomsData,
+      type: 'ADD_CURRENT_ROOM_DATA',
+      payload: roomData,
     } as const
   },
   updatePeopleCount: (count: number) => {

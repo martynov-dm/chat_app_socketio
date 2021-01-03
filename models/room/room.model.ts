@@ -1,3 +1,4 @@
+import { MessageModel } from './../message/message.model'
 import { IServer } from './../server/server.types'
 import { MessageSchema } from '../message/message.model'
 import { IUser } from '../user/user.types'
@@ -27,18 +28,18 @@ RoomSchema.virtual('userCount').get(function (this: IRoom) {
 
 /// Virtual Populate
 RoomSchema.virtual('messages', {
-  ref: 'Message',
-  foreignField: 'room',
+  ref: MessageModel,
   localField: '_id',
+  foreignField: 'room',
+  options: { select: 'text user' },
 })
 
-// RoomSchema.pre(/^find/, function (next) {
-//   this.populate({
-//     path: 'currentUsers',
-//     select: 'login avatar',
-//   })
+RoomSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'messages',
+  })
 
-//   next()
-// })
+  next()
+})
 
 export const RoomModel = mongoose.model<IRoom>('Room', RoomSchema)

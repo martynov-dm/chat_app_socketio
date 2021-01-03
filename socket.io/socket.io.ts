@@ -1,3 +1,4 @@
+import { RoomModel } from './../models/room/room.model'
 import { Server, Socket } from 'socket.io'
 import { ServerModel } from '../models/server/server.model'
 
@@ -7,7 +8,7 @@ export const ListenToSocketEndPoints = async (io: Server) => {
     io.of(server.endpoint).on('connection', async (socket: Socket) => {
       socket.emit('serversArr', serversArr)
 
-      socket.on('joinedServer', async (serverId) => {
+      socket.on('joinServer', async (serverId) => {
         const currentServerData = await ServerModel.findOne(
           { _id: serverId },
           '_id title image endpoint isPrivate, rooms'
@@ -16,20 +17,26 @@ export const ListenToSocketEndPoints = async (io: Server) => {
           .lean()
 
         socket.emit('currentServerData', currentServerData)
+      })
 
-        //Get and Send populated server data
-        // const PopulatedCurrentServerData = await ServerModel.findAndPopulateCurrentServer(
-        //   server.endpoint
-        // )
+      socket.on('joinRoom', async (roomId: string) => {
+        await socket.join(roomId)
 
-        // socket.emit('currentServerData', PopulatedCurrentServerData)
+        const currentRoomData = await RoomModel.findOne(
+          {
+            _id: roomId,
+          },
+          '_id currentUsers roomTitle userCount messages'
+        ).populate({
+          path: 'currentUsers',
+          select: 'login avatar',
+        })
 
-        // const nsData = namespaces.map((ns) => {
-        //   return {
-        //     img: ns.img,
-        //     endpoint: ns.endpoint,
-        //   }
-        // })
+        console.log(currentRoomData)
+
+        io.of(server.endpoint)
+          .to(roomId)
+          .emit('currentRoomDataUpdate', currentRoomData)
       })
     })
   })

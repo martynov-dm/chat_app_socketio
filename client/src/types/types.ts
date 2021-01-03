@@ -41,10 +41,11 @@ export interface IServerData {
 }
 
 export interface IRoomData {
+  userCount: number
   _id: string
   roomTitle: string
   currentUsers: IUser[]
-  history: IMessage[]
+  messages: IMessage[]
 }
 
 export interface IMessage {

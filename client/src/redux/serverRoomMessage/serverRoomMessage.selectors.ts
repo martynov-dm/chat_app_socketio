@@ -1,11 +1,16 @@
 import { AppStateType } from '../store'
 import { createSelector } from 'reselect'
 
-const selectserverRoomMessageReducer = (state: AppStateType) =>
+const selectServerRoomMessageReducer = (state: AppStateType) =>
   state.serverRoomMessageReducer
 
+export const selectRooms = createSelector(
+  [selectServerRoomMessageReducer],
+  (serverRoomMessageReducer) => serverRoomMessageReducer.rooms
+)
+
 export const selectServers = createSelector(
-  [selectserverRoomMessageReducer],
+  [selectServerRoomMessageReducer],
   (serverRoomMessageReducer) => serverRoomMessageReducer.servers
 )
 
@@ -19,7 +24,17 @@ export const selectCurrentServer = createSelector(
   (servers) => servers.currentServer
 )
 
-export const selectCurrentRoomsArr = createSelector(
+export const selectRoomsArrFromServer = createSelector(
   [selectCurrentServer],
   (currentServer) => currentServer.rooms
+)
+
+export const selectCurrentRoom = createSelector(
+  [selectRooms],
+  (rooms) => rooms.currentRoom
+)
+
+export const selectCurrentRoomMessages = createSelector(
+  [selectCurrentRoom],
+  (currentRoom) => currentRoom.messages
 )
