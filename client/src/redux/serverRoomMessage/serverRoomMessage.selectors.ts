@@ -48,7 +48,9 @@ export const selectCurrentRoomName = createSelector(
 
 export const selectCurrentRoomUserCount = createSelector(
   [selectCurrentRoom],
-  (currentRoom) => currentRoom.userCount
+  (currentRoom) => {
+    if (currentRoom.users) return currentRoom.users.length
+  }
 )
 
 export const selectCurrentRoomId = createSelector(

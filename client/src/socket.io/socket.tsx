@@ -31,6 +31,7 @@ export const SocketProvider = (props: Iprops) => {
     })
 
     socket.emit('joinServer', INITIAL_SERVER_ID)
+
     socket.on('currentServerData', (currentServerData: IServerData) => {
       dispatch(serverRoomMessageActions.addCurrentServer(currentServerData))
 
@@ -42,7 +43,7 @@ export const SocketProvider = (props: Iprops) => {
       dispatch(serverRoomMessageActions.addNewMessage(newMessage))
     })
 
-    socket.on('currentRoomDataUpdate', (currentRoomData: IRoomData) => {
+    socket.on('currentRoomData', (currentRoomData: IRoomData) => {
       dispatch(serverRoomMessageActions.addCurrentRoomData(currentRoomData))
     })
 

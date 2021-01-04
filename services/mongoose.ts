@@ -9,7 +9,7 @@ export const connect = (mongoURL = config.mongoURL as string) => {
   }
   Mongoose.connect(mongoURL, {
     useNewUrlParser: true,
-    useFindAndModify: true,
+    useFindAndModify: false,
     useUnifiedTopology: true,
     useCreateIndex: true,
   })

@@ -11,12 +11,10 @@ export const ListenToSocketEndPoints = async (io: Server) => {
       socket.emit('serversArr', serversArr)
 
       socket.on('joinServer', async (serverId) => {
-        const currentServerData = await ServerModel.findOne(
-          { _id: serverId },
+        const currentServerData = await ServerModel.findById(
+          serverId,
           '_id title image endpoint isPrivate, rooms'
-        )
-          .populate({ path: 'rooms', select: 'roomTitle _id' })
-          .lean()
+        ).lean()
 
         socket.emit('currentServerData', currentServerData)
       })
@@ -24,29 +22,48 @@ export const ListenToSocketEndPoints = async (io: Server) => {
       socket.on(
         'joinRoom',
         async ({ roomId, userId }: { roomId: string; userId: string }) => {
-          const roomIdToLeave = Array.from(socket.rooms)[1]
-          if (roomIdToLeave) {
-            await socket.leave(roomIdToLeave)
-            await RoomModel.findByIdAndUpdate(roomIdToLeave, {
-              $pull: { currentUsers: userId },
-            })
-            io.of(server.endpoint).to(roomIdToLeave).emit('userLeft', userData)
+          const userData = await User.findById(userId).lean()
+
+          if (userData!.room) {
+            await socket.leave(userData!.room)
+            const userThatLeft = await User.findByIdAndUpdate(userId, {
+              $unset: { room: '' },
+            }).lean()
+
+            io.of(server.endpoint)
+              .to(userData!.room)
+              .emit('userLeft', userThatLeft)
           }
 
           await socket.join(roomId)
 
-          const currentRoomData = await RoomModel.findByIdAndUpdate(roomId, {
-            $addToSet: {
-              currentUsers: userId,
-            },
-          }).populate({
-            path: 'currentUsers',
-            select: 'login avatar',
-          })
+          const userThatJoined = await User.findByIdAndUpdate(userId, {
+            $set: { room: roomId },
+          }).lean()
+          io.of(server.endpoint).to(roomId).emit('userJoined', userThatJoined)
 
-          io.of(server.endpoint).to(roomId).emit('userJoined', userData)
+          const roomData = await RoomModel.findById(roomId)
+            .populate({
+              path: 'messages',
+            })
+            .populate({
+              path: 'users',
+            })
+            .lean()
 
-          socket.emit('currentRoomData')
+          console.log(roomData)
+
+          socket.emit('currentRoomData', roomData)
+          //  RoomModel.findByIdAndUpdate(roomId, {
+          //   $addToSet: {
+          //     currentUsers: userId,
+          //   },
+          // }).populate({
+          //   path: 'currentUsers',
+          //   select: 'login avatar',
+          // })
+
+          // io.of(server.endpoint).to(roomId).emit('userJoined', userData)
         }
       )
 

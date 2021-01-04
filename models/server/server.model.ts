@@ -1,7 +1,7 @@
 import { MessageModel } from './../message/message.model'
 import User from '../user/user.model'
 import mongoose, { Schema } from 'mongoose'
-import { RoomSchema } from './../room/room.model'
+import { RoomModel, RoomSchema } from './../room/room.model'
 import { IServer, IServerModel } from './server.types'
 
 export const ServerSchema: Schema = new Schema(
@@ -10,7 +10,6 @@ export const ServerSchema: Schema = new Schema(
     image: { type: String, required: true, min: 1 },
     endpoint: { type: String, required: true, unique: true, min: 1, max: 20 },
     isPrivate: { type: Boolean, require: true },
-    rooms: [{ type: Schema.Types.ObjectId, ref: 'Room' }],
   },
   {
     toJSON: { virtuals: true },
@@ -18,7 +17,14 @@ export const ServerSchema: Schema = new Schema(
   }
 )
 
-RoomSchema.pre(/^find/, function (next) {
+ServerSchema.virtual('rooms', {
+  ref: RoomModel,
+  localField: '_id',
+  foreignField: 'server',
+  options: { select: '-__v' },
+})
+
+ServerSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'rooms',
   })
