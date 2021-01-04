@@ -16,8 +16,8 @@ export const SocketProvider = (props: Iprops) => {
   const INITIAL_SERVER_ID = '5fef4e9ebc24d12320434c00'
 
   let socket: Socket
-  // let nsSocket: Socket
   let ws
+  // let nsSocket: Socket
 
   const dispatch = useDispatch()
   // const currentServer = useSelector(selectCurrentServer)
@@ -37,13 +37,14 @@ export const SocketProvider = (props: Iprops) => {
       socket.emit('joinRoom', roomId)
     })
 
+    socket.on('savedMessage', (newMessage: IMessage) => {
+      dispatch(serverRoomMessageActions.addNewMessage(newMessage))
+    })
+
     socket.on('currentRoomDataUpdate', (currentRoomData: IRoomData) => {
       dispatch(serverRoomMessageActions.addCurrentRoomData(currentRoomData))
     })
 
-    socket.on('savedMessage', (newMessage: IMessage) => {
-      dispatch(serverRoomMessageActions.addNewMessage(newMessage))
-    })
     // socket.on('currentServerData', (currentServerData: IServerData) => {
     //   dispatch(serversActions.updateCurrentServer(currentServerData))
     //   dispatch(roomsActions.updateCurrentRoom(currentServerData.rooms[0]))
@@ -71,19 +72,19 @@ export const SocketProvider = (props: Iprops) => {
   //   })
   // }
 
-  // const joinRoom = (roomName: string) => {
-  //   nsSocket.emit('joinRoom', roomName)
-  //   dispatch(roomsActions.updateCurrentRoomName(roomName))
+  const joinRoom = (roomId: string) => {
+    socket.emit('joinRoom', roomId)
+    // dispatch(roomsActions.updateCurrentRoomName(roomName))
 
-  //   nsSocket.on('updateMembers', (usersInARoom: any) =>
-  //     dispatch(roomsActions.updatePeopleCount(usersInARoom))
-  //   )
+    // socket.on('updateMembers', (usersInARoom: any) =>
+    //   dispatch(roomsActions.updatePeopleCount(usersInARoom))
+    // )
 
-  //   nsSocket.on('historyCatchUp', (history: any) => {
-  //     dispatch(messagesActions.addHistory(history))
-  //     // console.log(history)
-  //   })
-  // }
+    // socket.on('historyCatchUp', (history: any) => {
+    //   dispatch(messagesActions.addHistory(history))
+    //   // console.log(history)
+    // })
+  }
 
   const sendMessage = (message: string, userId: string, roomId: string) => {
     socket.emit('newMessageToServer', { message, userId, roomId })
@@ -93,7 +94,7 @@ export const SocketProvider = (props: Iprops) => {
     sendMessage,
     initialize,
     // joinNs,
-    // joinRoom,
+    joinRoom,
   }
 
   return <SocketContext.Provider value={ws}>{children}</SocketContext.Provider>

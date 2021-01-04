@@ -22,6 +22,9 @@ export const ListenToSocketEndPoints = async (io: Server) => {
       })
 
       socket.on('joinRoom', async (roomId: string) => {
+        const roomToLeave = Array.from(socket.rooms)[1]
+        await socket.leave(roomToLeave)
+
         await socket.join(roomId)
 
         const currentRoomData = await RoomModel.findOne(

@@ -6,17 +6,18 @@ import { SocketContext } from '../../../socket.io/socket'
 
 interface Iprops {
   title: string
+  roomId: string
 }
 
 const RoomItem: React.FC<Iprops> = (props) => {
-  const { title } = props
+  const { title, roomId } = props
   const ws = useContext(SocketContext)
 
   return (
     <>
       <Flex
         onClick={() => {
-          ws.joinRoom(title)
+          ws.joinRoom(roomId)
         }}
         mt='1rem'
         align='center'

@@ -17,7 +17,7 @@ const RoomList = () => {
     >
       {currentRoomsArr &&
         currentRoomsArr.map((room) => (
-          <RoomItem key={room._id} title={room.roomTitle} />
+          <RoomItem key={room._id} roomId={room._id} title={room.roomTitle} />
         ))}
     </section>
   )
