@@ -2,6 +2,7 @@ import { IRoomData } from './../../types/types'
 import { IServerData } from '../../types/types'
 import { IMessage } from '../../types/types'
 import { serverRoomMessageActionsTypes } from './serverRoomMessage.actions'
+import { removeUserFromArr } from './utils'
 
 const INITIAL_STATE = {
   servers: {
@@ -57,6 +58,19 @@ const serverRoomMessageReducer = (
           currentRoom: {
             ...state.rooms.currentRoom,
             messages: [...state.rooms.currentRoom.messages, action.payload],
+          },
+        },
+      }
+    case 'UPDATE_USERS':
+      console.log(state.rooms.currentRoom.users)
+
+      return {
+        ...state,
+        rooms: {
+          ...state.rooms,
+          currentRoom: {
+            ...state.rooms.currentRoom,
+            users: action.payload,
           },
         },
       }

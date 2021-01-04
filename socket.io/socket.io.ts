@@ -26,21 +26,26 @@ export const ListenToSocketEndPoints = async (io: Server) => {
 
           if (userData!.room) {
             await socket.leave(userData!.room)
-            const userThatLeft = await User.findByIdAndUpdate(userId, {
+            await User.findByIdAndUpdate(userId, {
               $unset: { room: '' },
-            }).lean()
+            })
+
+            const roomData = await RoomModel.findById(roomId)
+              .populate({
+                path: 'users',
+              })
+              .lean()
 
             io.of(server.endpoint)
               .to(userData!.room)
-              .emit('userLeft', userThatLeft)
+              .emit('usersUpdate', roomData.users)
           }
 
           await socket.join(roomId)
 
-          const userThatJoined = await User.findByIdAndUpdate(userId, {
+          await User.findByIdAndUpdate(userId, {
             $set: { room: roomId },
-          }).lean()
-          io.of(server.endpoint).to(roomId).emit('userJoined', userThatJoined)
+          })
 
           const roomData = await RoomModel.findById(roomId)
             .populate({
@@ -51,9 +56,8 @@ export const ListenToSocketEndPoints = async (io: Server) => {
             })
             .lean()
 
-          console.log(roomData)
-
           socket.emit('currentRoomData', roomData)
+          socket.to(roomId).emit('usersUpdate', roomData.users)
           //  RoomModel.findByIdAndUpdate(roomId, {
           //   $addToSet: {
           //     currentUsers: userId,
@@ -89,7 +93,10 @@ export const ListenToSocketEndPoints = async (io: Server) => {
               newMessageDoc,
               { path: 'user', model: User },
               (err, savedAndPopulatedMessage) =>
-                socket.emit('savedMessage', savedAndPopulatedMessage)
+                io
+                  .of(server.endpoint)
+                  .to(roomId)
+                  .emit('savedMessage', savedAndPopulatedMessage)
             )
           )
         }

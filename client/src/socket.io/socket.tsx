@@ -2,7 +2,7 @@ import React, { createContext } from 'react'
 import socketIOClient, { Socket } from 'socket.io-client'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { IMessage, IRoomData, IServerData } from '../types/types'
+import { IMessage, IRoomData, IServerData, IUser } from '../types/types'
 import { serverRoomMessageActions } from '../redux/serverRoomMessage/serverRoomMessage.actions'
 import { selectUserId } from '../redux/auth/auth.selectors'
 
@@ -45,6 +45,10 @@ export const SocketProvider = (props: Iprops) => {
 
     socket.on('currentRoomData', (currentRoomData: IRoomData) => {
       dispatch(serverRoomMessageActions.addCurrentRoomData(currentRoomData))
+    })
+
+    socket.on('usersUpdate', (users: IUser[]) => {
+      dispatch(serverRoomMessageActions.updateUsers(users))
     })
 
     // socket.on('currentServerData', (currentServerData: IServerData) => {

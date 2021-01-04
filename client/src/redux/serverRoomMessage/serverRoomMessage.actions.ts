@@ -1,4 +1,4 @@
-import { IMessage, IRoomData, IServerData } from '../../types/types'
+import { IMessage, IRoomData, IServerData, IUser } from '../../types/types'
 import { InferActionTypes } from '../../types/types'
 
 export type serverRoomMessageActionsTypes = InferActionTypes<
@@ -25,12 +25,7 @@ export const serverRoomMessageActions = {
       payload: roomData,
     } as const
   },
-  updatePeopleCount: (count: number) => {
-    return {
-      type: 'UPDATE_PEOPLE_COUNT',
-      payload: count,
-    } as const
-  },
+
   updateCurrentRoom: (index: number) => {
     return {
       type: 'UPDATE_CURRENT_ROOM_INDEX',
@@ -42,6 +37,13 @@ export const serverRoomMessageActions = {
     return {
       type: 'ADD_NEW_MESSAGE',
       payload: message,
+    } as const
+  },
+
+  updateUsers: (users: IUser[]) => {
+    return {
+      type: 'UPDATE_USERS',
+      payload: users,
     } as const
   },
 }
