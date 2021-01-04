@@ -1,6 +1,8 @@
 import React, { useContext } from 'react'
 import { css } from '@emotion/react'
 import { Flex, Text } from '@chakra-ui/react'
+import { useSelector } from 'react-redux'
+import { selectUserId } from '../../../redux/auth/auth.selectors'
 
 import { SocketContext } from '../../../socket.io/socket'
 

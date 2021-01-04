@@ -4,6 +4,7 @@ import { MessageSchema } from '../message/message.model'
 import { IUser } from '../user/user.types'
 import mongoose, { Schema, Document } from 'mongoose'
 import { IMessage } from 'models/message/message.model'
+import User from 'models/user/user.model'
 
 export interface IRoom extends Document {
   roomTitle: string
@@ -13,8 +14,6 @@ export interface IRoom extends Document {
 export const RoomSchema = new Schema(
   {
     roomTitle: { type: String, require: true, max: 20, min: 1 },
-
-    currentUsers: [{ type: Schema.Types.ObjectId, ref: 'Users' }],
   },
   {
     toJSON: { virtuals: true },
@@ -29,6 +28,13 @@ RoomSchema.virtual('userCount').get(function (this: IRoom) {
 /// Virtual Populate
 RoomSchema.virtual('messages', {
   ref: MessageModel,
+  localField: '_id',
+  foreignField: 'room',
+  options: { select: '-__v' },
+})
+
+RoomSchema.virtual('users', {
+  ref: User,
   localField: '_id',
   foreignField: 'room',
   options: { select: '-__v' },

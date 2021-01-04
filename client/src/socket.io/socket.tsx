@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { IMessage, IRoomData, IServerData } from '../types/types'
 import { serverRoomMessageActions } from '../redux/serverRoomMessage/serverRoomMessage.actions'
+import { selectUserId } from '../redux/auth/auth.selectors'
 
 export const SocketContext = createContext(null as any)
 
@@ -20,7 +21,7 @@ export const SocketProvider = (props: Iprops) => {
   // let nsSocket: Socket
 
   const dispatch = useDispatch()
-  // const currentServer = useSelector(selectCurrentServer)
+  const userId = useSelector(selectUserId)
 
   const initialize = () => {
     socket = socketIOClient.io('http://localhost:5000/test1')
@@ -34,7 +35,7 @@ export const SocketProvider = (props: Iprops) => {
       dispatch(serverRoomMessageActions.addCurrentServer(currentServerData))
 
       const roomId = currentServerData.rooms[0]._id
-      socket.emit('joinRoom', roomId)
+      socket.emit('joinRoom', { roomId, userId })
     })
 
     socket.on('savedMessage', (newMessage: IMessage) => {
@@ -73,7 +74,7 @@ export const SocketProvider = (props: Iprops) => {
   // }
 
   const joinRoom = (roomId: string) => {
-    socket.emit('joinRoom', roomId)
+    socket.emit('joinRoom', { roomId, userId })
     // dispatch(roomsActions.updateCurrentRoomName(roomName))
 
     // socket.on('updateMembers', (usersInARoom: any) =>

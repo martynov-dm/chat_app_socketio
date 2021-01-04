@@ -21,26 +21,34 @@ export const ListenToSocketEndPoints = async (io: Server) => {
         socket.emit('currentServerData', currentServerData)
       })
 
-      socket.on('joinRoom', async (roomId: string) => {
-        const roomToLeave = Array.from(socket.rooms)[1]
-        await socket.leave(roomToLeave)
+      socket.on(
+        'joinRoom',
+        async ({ roomId, userId }: { roomId: string; userId: string }) => {
+          const roomIdToLeave = Array.from(socket.rooms)[1]
+          if (roomIdToLeave) {
+            await socket.leave(roomIdToLeave)
+            await RoomModel.findByIdAndUpdate(roomIdToLeave, {
+              $pull: { currentUsers: userId },
+            })
+            io.of(server.endpoint).to(roomIdToLeave).emit('userLeft', userData)
+          }
 
-        await socket.join(roomId)
+          await socket.join(roomId)
 
-        const currentRoomData = await RoomModel.findOne(
-          {
-            _id: roomId,
-          },
-          '_id currentUsers roomTitle userCount messages'
-        ).populate({
-          path: 'currentUsers',
-          select: 'login avatar',
-        })
+          const currentRoomData = await RoomModel.findByIdAndUpdate(roomId, {
+            $addToSet: {
+              currentUsers: userId,
+            },
+          }).populate({
+            path: 'currentUsers',
+            select: 'login avatar',
+          })
 
-        io.of(server.endpoint)
-          .to(roomId)
-          .emit('currentRoomDataUpdate', currentRoomData)
-      })
+          io.of(server.endpoint).to(roomId).emit('userJoined', userData)
+
+          socket.emit('currentRoomData')
+        }
+      )
 
       socket.on(
         'newMessageToServer',
