@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Redirect, Route, Switch } from 'react-router-dom'
 import { ConnectedRouter } from 'connected-react-router'
 import Main from './pages/Main'
 import SignUp from './pages/SignUp'
@@ -13,11 +13,16 @@ const App: React.FC = () => {
     <ChakraProvider>
       <ConnectedRouter history={history}>
         <SocketProvider>
-          <Switch>
-            <Route exact path='/' component={Main} />
-            <Route exact path='/sign-in' component={SignIn} />
-            <Route exact path='/sign-up' component={SignUp} />
-          </Switch>
+          <Route
+            exact
+            path='/'
+            render={() => {
+              const token = sessionStorage.getItem('token')
+              return !token ? <Redirect to='/sign-in' /> : <Main />
+            }}
+          />
+          <Route exact path='/sign-in' component={SignIn} />
+          <Route exact path='/sign-up' component={SignUp} />
         </SocketProvider>
       </ConnectedRouter>
     </ChakraProvider>

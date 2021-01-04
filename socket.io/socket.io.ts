@@ -1,14 +1,24 @@
+import { Server, Socket } from 'socket.io'
+import jwt from 'jsonwebtoken'
+
 import { MessageModel } from './../models/message/message.model'
 import { RoomModel } from './../models/room/room.model'
-import { Server, Socket } from 'socket.io'
 import { ServerModel } from '../models/server/server.model'
 import User from '../models/user/user.model'
+import options from '../config'
 
 export const ListenToSocketEndPoints = async (io: Server) => {
   const serversArr = await ServerModel.getServersArr()
   serversArr.forEach((server) => {
     io.of(server.endpoint).on('connection', async (socket: Socket) => {
-      socket.emit('serversArr', serversArr)
+      socket.on('authenticate', async (token) => {
+        try {
+          await jwt.verify(token, options.jwtSecret as string)
+          socket.emit('serversArr', serversArr)
+        } catch (error) {
+          socket.emit('not signed')
+        }
+      })
 
       socket.on('joinServer', async (serverId) => {
         const currentServerData = await ServerModel.findById(

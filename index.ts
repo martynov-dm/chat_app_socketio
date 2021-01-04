@@ -1,18 +1,18 @@
-import { RoomModel } from './models/room/room.model'
-import { ListenToSocketEndPoints } from './socket.io/socket.io'
-import { MessageModel } from './models/message/message.model'
-import { ServerModel } from './models/server/server.model'
 import express from 'express'
-import { Server, Socket } from 'socket.io'
+import { Server } from 'socket.io'
 import http from 'http'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import passport from 'passport'
+import jwt from 'jsonwebtoken'
 
+import { ListenToSocketEndPoints } from './socket.io/socket.io'
 import authRoute from './routes/auth'
 import { connect } from './services/mongoose'
 import jwtStrategy from './services/passport'
+import { Handshake } from 'socket.io/dist/socket'
+import options from './config'
 
 const PORT = process.env.PORT || 5000
 
@@ -57,6 +57,29 @@ export const io = new Server(server, {
   },
 })
 
+io.use((socket, next) => {
+  //@ts-ignore
+  if (socket.handshake.query && socket.handshake.query.token) {
+    jwt.verify(
+      //@ts-ignore
+      socket.handshake.query.token,
+      //@ts-ignore
+      options.jwtSecret,
+      function (err: any, decoded: any) {
+        if (err) return next(new Error('Authentication error'))
+        //@ts-ignore
+        socket.decoded = decoded
+        next()
+      }
+    )
+  } else {
+    console.log('no auth')
+
+    next(new Error('Authentication error'))
+  }
+})
+
+ListenToSocketEndPoints(io)
 // const Add = async () => {
 //   try {
 //     const Message = new MessageModel({
@@ -70,8 +93,6 @@ export const io = new Server(server, {
 //   }
 // }
 // Add()
-
-ListenToSocketEndPoints(io)
 
 // const servers = ServerSchema.getServersArr().then((docs) => console.log(docs))
 

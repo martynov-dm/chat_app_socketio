@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { IMessage, IRoomData, IServerData, IUser } from '../types/types'
 import { serverRoomMessageActions } from '../redux/serverRoomMessage/serverRoomMessage.actions'
 import { selectUserId } from '../redux/auth/auth.selectors'
+import { push } from 'connected-react-router'
 
 export const SocketContext = createContext(null as any)
 
@@ -24,7 +25,14 @@ export const SocketProvider = (props: Iprops) => {
   const userId = useSelector(selectUserId)
 
   const initialize = () => {
+    const token = sessionStorage.getItem('token')
     socket = socketIOClient.io('http://localhost:5000/test1')
+
+    socket.emit('authenticate', token)
+
+    socket.on('not signed', () => {
+      // dispatch(push('/sign-in'))
+    })
 
     socket.on('serversArr', (serversArr: IServerData[]) => {
       dispatch(serverRoomMessageActions.addInitialServers(serversArr))
