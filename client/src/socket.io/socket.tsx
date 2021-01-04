@@ -40,6 +40,10 @@ export const SocketProvider = (props: Iprops) => {
     socket.on('currentRoomDataUpdate', (currentRoomData: IRoomData) => {
       dispatch(serverRoomMessageActions.addCurrentRoomData(currentRoomData))
     })
+
+    socket.on('savedMessage', (newMessage: IMessage) => {
+      dispatch(serverRoomMessageActions.addNewMessage(newMessage))
+    })
     // socket.on('currentServerData', (currentServerData: IServerData) => {
     //   dispatch(serversActions.updateCurrentServer(currentServerData))
     //   dispatch(roomsActions.updateCurrentRoom(currentServerData.rooms[0]))
@@ -82,12 +86,7 @@ export const SocketProvider = (props: Iprops) => {
   // }
 
   const sendMessage = (message: string, userId: string, roomId: string) => {
-    console.log(message, userId, roomId)
-
     socket.emit('newMessageToServer', { message, userId, roomId })
-    socket.on('savedMessage', (newMessage: IMessage) => {
-      dispatch(serverRoomMessageActions.addNewMessage(newMessage))
-    })
   }
 
   ws = {

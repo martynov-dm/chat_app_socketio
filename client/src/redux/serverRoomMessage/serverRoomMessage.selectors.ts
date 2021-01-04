@@ -36,7 +36,9 @@ export const selectCurrentRoom = createSelector(
 
 export const selectCurrentRoomMessages = createSelector(
   [selectCurrentRoom],
-  (currentRoom) => currentRoom.messages
+  (currentRoom) => {
+    if (currentRoom.messages) return [...currentRoom.messages].reverse()
+  }
 )
 
 export const selectCurrentRoomName = createSelector(

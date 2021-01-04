@@ -2,6 +2,7 @@ import { MessageModel } from './../models/message/message.model'
 import { RoomModel } from './../models/room/room.model'
 import { Server, Socket } from 'socket.io'
 import { ServerModel } from '../models/server/server.model'
+import User from '../models/user/user.model'
 
 export const ListenToSocketEndPoints = async (io: Server) => {
   const serversArr = await ServerModel.getServersArr()
@@ -53,9 +54,16 @@ export const ListenToSocketEndPoints = async (io: Server) => {
             text: message,
             user: userId,
             room: roomId,
-          }).save()
+          })
 
-          socket.emit('savedMessage', newMessage)
+          await newMessage.save((error, newMessageDoc) =>
+            MessageModel.populate(
+              newMessageDoc,
+              { path: 'user', model: User },
+              (err, savedAndPopulatedMessage) =>
+                socket.emit('savedMessage', savedAndPopulatedMessage)
+            )
+          )
         }
       )
     })
