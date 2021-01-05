@@ -31,7 +31,7 @@ export const SocketProvider = (props: Iprops) => {
     socket.emit('authenticate', token)
 
     socket.on('not signed', () => {
-      // dispatch(push('/sign-in'))
+      dispatch(push('/sign-in'))
     })
 
     socket.on('serversArr', (serversArr: IServerData[]) => {

@@ -32,10 +32,9 @@ export const authActions = {
       payload: loginAndPassword,
     } as const
   },
-  signInSuccess: (user: IUser) => {
+  signInSuccess: () => {
     return {
       type: 'SIGN_IN_SUCCESS',
-      payload: user,
     } as const
   },
   signInFailure: (errorMessage: string) => {

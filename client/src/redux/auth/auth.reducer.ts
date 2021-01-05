@@ -60,11 +60,6 @@ const authReducer = (
       return {
         ...state,
         signInRequest: { ...state.signInRequest, status: 'succeeded' },
-        userData: {
-          login: action.payload.login,
-          avatar: action.payload.avatar,
-          id: action.payload._id,
-        },
       }
     case 'SIGN_IN_FAILURE':
       return {
