@@ -33,12 +33,13 @@ export const ListenToSocketEndPoints = async (io: Server) => {
       })
 
       socket.on('getServerData', async (serverId) => {
-        const currentServerData = await ServerModel.findById(
+        const currentServerDataFull = await ServerModel.findById(
           serverId,
-          '_id title image endpoint isPrivate, rooms'
+          '_id title image endpoint isPrivate rooms'
         ).lean()
-
-        socket.emit('currentServerData', currentServerData)
+        const { rooms, ...serverData } = currentServerDataFull
+        socket.emit('currentServerData', serverData)
+        socket.emit('currentServerRoomsArr', rooms)
       })
 
       socket.on(
@@ -69,7 +70,7 @@ export const ListenToSocketEndPoints = async (io: Server) => {
             $set: { room: roomId },
           })
 
-          const roomData = await RoomModel.findById(roomId)
+          const roomDataFull = await RoomModel.findById(roomId)
             .populate({
               path: 'messages',
             })
@@ -77,9 +78,12 @@ export const ListenToSocketEndPoints = async (io: Server) => {
               path: 'users',
             })
             .lean()
+          const { messages, users, ...roomData } = roomDataFull
 
           socket.emit('currentRoomData', roomData)
-          socket.to(roomId).emit('usersUpdate', roomData.users)
+          socket.emit('currentRoomUsers', users)
+          socket.emit('currentRoomMessages', messages)
+          socket.to(roomId).emit('usersUpdate', users)
           //  RoomModel.findByIdAndUpdate(roomId, {
           //   $addToSet: {
           //     currentUsers: userId,

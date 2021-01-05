@@ -2,10 +2,10 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import MessageItem from './MessageItem'
 import { css } from '@emotion/react'
-import { selectCurrentRoomMessages } from '../../../redux/serverRoomMessage/serverRoomMessage.selectors'
+import { selectMessagesArr } from '../../../redux/serverRoomMessage/serverRoomMessage.selectors'
 
 const MessageList = () => {
-  const currentRoomMessages = useSelector(selectCurrentRoomMessages)
+  const currentRoomMessages = useSelector(selectMessagesArr)
 
   return (
     <section

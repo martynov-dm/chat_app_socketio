@@ -29,31 +29,37 @@ export const selectRoomsArrFromServer = createSelector(
   (currentServer) => currentServer.rooms
 )
 
-export const selectCurrentRoom = createSelector(
+export const selectCurrentRoomData = createSelector(
   [selectRooms],
-  (rooms) => rooms.currentRoom
+  (rooms) => rooms.currentRoomData
 )
 
-export const selectCurrentRoomMessages = createSelector(
-  [selectCurrentRoom],
-  (currentRoom) => {
-    if (currentRoom.messages) return [...currentRoom.messages].reverse()
+export const selectMessages = createSelector(
+  [selectServerRoomMessageReducer],
+  (serverRoomMessageReducer) => serverRoomMessageReducer.messages
+)
+
+export const selectMessagesArr = createSelector(
+  [selectMessages],
+  (messages) => {
+    if (messages.messagesArr.length !== 0)
+      return [...messages.messagesArr].reverse()
   }
 )
 
 export const selectCurrentRoomName = createSelector(
-  [selectCurrentRoom],
+  [selectCurrentRoomData],
   (currentRoom) => currentRoom.roomTitle
 )
 
 export const selectCurrentRoomUserCount = createSelector(
-  [selectCurrentRoom],
-  (currentRoom) => {
-    if (currentRoom.users) return currentRoom.users.length
+  [selectRooms],
+  (rooms) => {
+    return rooms.usersInCurrentRoom.length
   }
 )
 
 export const selectCurrentRoomId = createSelector(
-  [selectCurrentRoom],
+  [selectCurrentRoomData],
   (currentRoom) => currentRoom._id
 )

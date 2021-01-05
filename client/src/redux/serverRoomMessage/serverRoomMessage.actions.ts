@@ -18,6 +18,12 @@ export const serverRoomMessageActions = {
       payload: serverData,
     } as const
   },
+  setCurrentServerRoomsArr: (roomsArr: IRoomData[]) => {
+    return {
+      type: 'SET_CURRENT_SERVER_ROOMS_ARR',
+      payload: roomsArr,
+    } as const
+  },
 
   setCurrentRoomData: (roomData: IRoomData) => {
     return {

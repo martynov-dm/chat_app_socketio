@@ -53,8 +53,12 @@ export const SocketProvider = (props: Iprops) => {
 
     socket.on('currentServerData', (currentServerData: IServerData) => {
       dispatch(serverRoomMessageActions.setCurrentServer(currentServerData))
-
-      const roomId = currentServerData.rooms[0]._id
+    })
+    socket.on('currentServerRoomsArr', (currentServerRoomsArr: IRoomData[]) => {
+      dispatch(
+        serverRoomMessageActions.setCurrentServerRoomsArr(currentServerRoomsArr)
+      )
+      const roomId = currentServerRoomsArr[0]._id
       socket.emit('joinRoom', { roomId, userId })
     })
 
