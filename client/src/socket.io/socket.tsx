@@ -6,6 +6,7 @@ import { IMessage, IRoomData, IServerData, IUser } from '../types/types'
 import { serverRoomMessageActions } from '../redux/serverRoomMessage/serverRoomMessage.actions'
 import { selectUserId } from '../redux/auth/auth.selectors'
 import { push } from 'connected-react-router'
+import { authActions } from '../redux/auth/auth.actions'
 
 export const SocketContext = createContext(null as any)
 
@@ -30,15 +31,24 @@ export const SocketProvider = (props: Iprops) => {
 
     socket.emit('authenticate', token)
 
-    socket.on('not signed', () => {
+    socket.on('not authorized', () => {
       dispatch(push('/sign-in'))
     })
 
-    socket.on('serversArr', (serversArr: IServerData[]) => {
-      dispatch(serverRoomMessageActions.addInitialServers(serversArr))
-    })
-
-    socket.emit('joinServer', INITIAL_SERVER_ID)
+    socket.on(
+      'authorized',
+      ({
+        serversArr,
+        userData,
+      }: {
+        serversArr: IServerData[]
+        userData: IUser
+      }) => {
+        dispatch(serverRoomMessageActions.addInitialServers(serversArr))
+        dispatch(authActions.addUserData(userData))
+        socket.emit('joinServer', INITIAL_SERVER_ID)
+      }
+    )
 
     socket.on('currentServerData', (currentServerData: IServerData) => {
       dispatch(serverRoomMessageActions.addCurrentServer(currentServerData))

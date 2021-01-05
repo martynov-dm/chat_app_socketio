@@ -13,10 +13,23 @@ export const ListenToSocketEndPoints = async (io: Server) => {
     io.of(server.endpoint).on('connection', async (socket: Socket) => {
       socket.on('authenticate', async (token) => {
         try {
-          await jwt.verify(token, options.jwtSecret as string)
-          socket.emit('serversArr', serversArr)
+          const decodedData = await jwt.verify(
+            token,
+            options.jwtSecret as string
+          )
+          const userData = await User.findById(
+            //@ts-ignore
+            decodedData._id,
+            '_id login avatar room'
+          ).lean()
+          console.log(userData)
+          const initialData = {
+            serversArr,
+            userData,
+          }
+          socket.emit('authorized', initialData)
         } catch (error) {
-          socket.emit('not signed')
+          socket.emit('not authorized')
         }
       })
 

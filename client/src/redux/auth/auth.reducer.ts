@@ -2,8 +2,8 @@ import { AuthActionTypes } from './auth.actions'
 
 const INITIAL_STATE = {
   userData: {
-    login: null as null | string,
-    avatar: null as null | string,
+    login: '',
+    avatar: '',
     id: '',
   },
   signUpRequest: {
@@ -77,6 +77,15 @@ const authReducer = (
           ...state.signInRequest,
           status: 'idle',
           error: null,
+        },
+      }
+    case 'ADD_USER_DATA':
+      return {
+        ...state,
+        userData: {
+          login: action.payload.login,
+          avatar: action.payload.avatar,
+          id: action.payload._id,
         },
       }
     default:
