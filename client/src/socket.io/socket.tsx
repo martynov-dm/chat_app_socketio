@@ -20,10 +20,10 @@ export const SocketProvider = (props: Iprops) => {
 
   let socket: Socket
   let ws
+  let userId: string
   // let nsSocket: Socket
 
   const dispatch = useDispatch()
-  const userId = useSelector(selectUserId)
 
   const initialize = () => {
     const token = sessionStorage.getItem('token')
@@ -44,14 +44,15 @@ export const SocketProvider = (props: Iprops) => {
         serversArr: IServerData[]
         userData: IUser
       }) => {
-        dispatch(serverRoomMessageActions.addInitialServers(serversArr))
+        userId = userData._id
+        dispatch(serverRoomMessageActions.setInitialServers(serversArr))
         dispatch(authActions.addUserData(userData))
-        socket.emit('joinServer', INITIAL_SERVER_ID)
+        socket.emit('getServerData', INITIAL_SERVER_ID)
       }
     )
 
     socket.on('currentServerData', (currentServerData: IServerData) => {
-      dispatch(serverRoomMessageActions.addCurrentServer(currentServerData))
+      dispatch(serverRoomMessageActions.setCurrentServer(currentServerData))
 
       const roomId = currentServerData.rooms[0]._id
       socket.emit('joinRoom', { roomId, userId })
@@ -61,9 +62,22 @@ export const SocketProvider = (props: Iprops) => {
       dispatch(serverRoomMessageActions.addNewMessage(newMessage))
     })
 
-    socket.on('currentRoomData', (currentRoomData: IRoomData) => {
-      dispatch(serverRoomMessageActions.addCurrentRoomData(currentRoomData))
-    })
+    interface IRoomDataWithUsersAndMessages extends IRoomData {
+      messages: IMessage[]
+      users: IUser[]
+    }
+
+    socket.on(
+      'currentRoomData',
+      (currentRoomData: IRoomDataWithUsersAndMessages) => {
+        const { messages, users, _id, roomTitle } = currentRoomData
+        dispatch(
+          serverRoomMessageActions.setCurrentRoomData({ _id, roomTitle })
+        )
+        dispatch(serverRoomMessageActions.setMessages(messages))
+        dispatch(serverRoomMessageActions.setUsers(users))
+      }
+    )
 
     socket.on('usersUpdate', (users: IUser[]) => {
       dispatch(serverRoomMessageActions.updateUsers(users))

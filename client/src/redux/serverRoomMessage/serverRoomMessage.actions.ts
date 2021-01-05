@@ -6,30 +6,37 @@ export type serverRoomMessageActionsTypes = InferActionTypes<
 >
 
 export const serverRoomMessageActions = {
-  addInitialServers: (serversArr: IServerData[]) => {
+  setInitialServers: (serversArr: IServerData[]) => {
     return {
-      type: 'ADD_INITIAL_SERVERS',
+      type: 'SET_INITIAL_SERVERS_ARR',
       payload: serversArr,
     } as const
   },
-  addCurrentServer: (serverData: IServerData) => {
+  setCurrentServer: (serverData: IServerData) => {
     return {
-      type: 'ADD_CURRENT_SERVER',
+      type: 'SET_CURRENT_SERVER_DATA',
       payload: serverData,
     } as const
   },
 
-  addCurrentRoomData: (roomData: IRoomData) => {
+  setCurrentRoomData: (roomData: IRoomData) => {
     return {
-      type: 'ADD_CURRENT_ROOM_DATA',
+      type: 'SET_CURRENT_ROOM_DATA',
       payload: roomData,
     } as const
   },
 
-  updateCurrentRoom: (index: number) => {
+  setMessages: (messagesArr: IMessage[]) => {
     return {
-      type: 'UPDATE_CURRENT_ROOM_INDEX',
-      payload: index,
+      type: 'SET_MESSAGES',
+      payload: messagesArr,
+    } as const
+  },
+
+  setUsers: (usersArr: IUser[]) => {
+    return {
+      type: 'SET_USERS',
+      payload: usersArr,
     } as const
   },
 

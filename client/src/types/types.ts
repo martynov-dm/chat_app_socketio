@@ -43,8 +43,6 @@ export interface IServerData {
 export interface IRoomData {
   _id: string
   roomTitle: string
-  users: IUser[]
-  messages: IMessage[]
 }
 
 export interface IMessage {

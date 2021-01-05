@@ -1,4 +1,4 @@
-import { IRoomData } from './../../types/types'
+import { IRoomData, IUser } from './../../types/types'
 import { IServerData } from '../../types/types'
 import { IMessage } from '../../types/types'
 import { serverRoomMessageActionsTypes } from './serverRoomMessage.actions'
@@ -10,9 +10,11 @@ const INITIAL_STATE = {
     currentServer: {} as IServerData,
   },
   rooms: {
-    currentRoom: {} as IRoomData,
-    currentRoomIndex: 0,
+    roomsArr: [] as IRoomData[],
+    currentRoomData: {} as IRoomData,
+    usersInCurrentRoom: [] as IUser[],
   },
+
   messages: {
     messagesArr: [] as Array<IMessage>,
   },
@@ -25,7 +27,7 @@ const serverRoomMessageReducer = (
   action: serverRoomMessageActionsTypes
 ): InitialStateType => {
   switch (action.type) {
-    case 'ADD_INITIAL_SERVERS':
+    case 'SET_INITIAL_SERVERS_ARR':
       return {
         ...state,
         servers: {
@@ -33,7 +35,7 @@ const serverRoomMessageReducer = (
           serversArr: action.payload,
         },
       }
-    case 'ADD_CURRENT_SERVER':
+    case 'SET_CURRENT_SERVER_DATA':
       return {
         ...state,
         servers: {
@@ -41,37 +43,37 @@ const serverRoomMessageReducer = (
           currentServer: action.payload,
         },
       }
-
-    case 'ADD_CURRENT_ROOM_DATA':
+    case 'SET_CURRENT_ROOM_DATA':
       return {
         ...state,
         rooms: {
           ...state.rooms,
-          currentRoom: action.payload,
+          currentRoomData: action.payload,
         },
       }
+    case 'SET_MESSAGES':
+      return {
+        ...state,
+        messages: {
+          ...state.messages,
+          messagesArr: action.payload,
+        },
+      }
+
     case 'ADD_NEW_MESSAGE':
       return {
         ...state,
-        rooms: {
-          ...state.rooms,
-          currentRoom: {
-            ...state.rooms.currentRoom,
-            messages: [...state.rooms.currentRoom.messages, action.payload],
-          },
+        messages: {
+          ...state.messages,
+          messagesArr: [...state.messages.messagesArr, action.payload],
         },
       }
-    case 'UPDATE_USERS':
-      console.log(state.rooms.currentRoom.users)
-
+    case 'SET_USERS':
       return {
         ...state,
         rooms: {
           ...state.rooms,
-          currentRoom: {
-            ...state.rooms.currentRoom,
-            users: action.payload,
-          },
+          usersInCurrentRoom: action.payload,
         },
       }
 

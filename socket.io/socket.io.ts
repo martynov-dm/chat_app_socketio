@@ -22,7 +22,6 @@ export const ListenToSocketEndPoints = async (io: Server) => {
             decodedData._id,
             '_id login avatar room'
           ).lean()
-          console.log(userData)
           const initialData = {
             serversArr,
             userData,
@@ -33,7 +32,7 @@ export const ListenToSocketEndPoints = async (io: Server) => {
         }
       })
 
-      socket.on('joinServer', async (serverId) => {
+      socket.on('getServerData', async (serverId) => {
         const currentServerData = await ServerModel.findById(
           serverId,
           '_id title image endpoint isPrivate, rooms'
