@@ -43,47 +43,11 @@ export const ListenToSocketEndPoints = async (io: Server) => {
       })
 
       socket.on(
-        'joinRoom',
+        'changeRoom',
         async ({ roomId, userId }: { roomId: string; userId: string }) => {
-          const userData = await User.findById(userId).lean()
+          await leaveRoom(userId, io, server.endpoint, socket)
 
-          if (userData!.room) {
-            await socket.leave(userData!.room)
-            await User.findByIdAndUpdate(userId, {
-              $unset: { room: '' },
-            })
-
-            const roomData = await RoomModel.findById(roomId)
-              .populate({
-                path: 'users',
-              })
-              .lean()
-
-            io.of(server.endpoint)
-              .to(userData!.room)
-              .emit('usersUpdate', roomData.users)
-          }
-
-          await socket.join(roomId)
-
-          await User.findByIdAndUpdate(userId, {
-            $set: { room: roomId },
-          })
-
-          const roomDataFull = await RoomModel.findById(roomId)
-            .populate({
-              path: 'messages',
-            })
-            .populate({
-              path: 'users',
-            })
-            .lean()
-          const { messages, users, ...roomData } = roomDataFull
-
-          socket.emit('currentRoomData', roomData)
-          socket.emit('currentRoomUsers', users)
-          socket.emit('currentRoomMessages', messages)
-          socket.to(roomId).emit('usersUpdate', users)
+          await joinRoom(userId, roomId, socket)
           //  RoomModel.findByIdAndUpdate(roomId, {
           //   $addToSet: {
           //     currentUsers: userId,
@@ -129,4 +93,58 @@ export const ListenToSocketEndPoints = async (io: Server) => {
       )
     })
   })
+}
+
+const leaveRoom = async (
+  userId: string,
+  io: Server,
+  endpoint: string,
+  socket: Socket
+) => {
+  const userData = await User.findById(userId).lean()
+  if (userData!.room) {
+    await socket.leave(userData!.room.toString())
+    await User.findByIdAndUpdate(userId, {
+      $unset: { room: '' },
+    })
+
+    const roomData = await RoomModel.findById(userData!.room)
+      .populate({
+        path: 'users',
+      })
+      .lean()
+
+    await io
+      .of(endpoint)
+      .to(userData!.room.toString())
+      .emit('usersUpdate', roomData.users)
+  }
+}
+
+const joinRoom = async (
+  userId: string,
+  roomId: string,
+
+  socket: Socket
+) => {
+  await socket.join(roomId.toString())
+
+  await User.findByIdAndUpdate(userId, {
+    $set: { room: roomId },
+  })
+
+  const roomDataFull = await RoomModel.findById(roomId)
+    .populate({
+      path: 'messages',
+    })
+    .populate({
+      path: 'users',
+    })
+    .lean()
+  const { messages, users, ...roomData } = roomDataFull
+
+  await socket.emit('currentRoomData', roomData)
+  await socket.emit('currentRoomUsers', users)
+  await socket.emit('currentRoomMessages', messages)
+  await socket.to(roomId).emit('usersUpdate', users)
 }

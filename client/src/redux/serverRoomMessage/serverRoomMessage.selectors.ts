@@ -24,9 +24,9 @@ export const selectCurrentServer = createSelector(
   (servers) => servers.currentServer
 )
 
-export const selectRoomsArrFromServer = createSelector(
-  [selectCurrentServer],
-  (currentServer) => currentServer.rooms
+export const selectRoomsArr = createSelector(
+  [selectRooms],
+  (rooms) => rooms.roomsArr
 )
 
 export const selectCurrentRoomData = createSelector(
@@ -49,7 +49,7 @@ export const selectMessagesArr = createSelector(
 
 export const selectCurrentRoomName = createSelector(
   [selectCurrentRoomData],
-  (currentRoom) => currentRoom.roomTitle
+  (currentRoomData) => currentRoomData.roomTitle
 )
 
 export const selectCurrentRoomUserCount = createSelector(

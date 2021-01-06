@@ -59,32 +59,27 @@ export const SocketProvider = (props: Iprops) => {
         serverRoomMessageActions.setCurrentServerRoomsArr(currentServerRoomsArr)
       )
       const roomId = currentServerRoomsArr[0]._id
-      socket.emit('joinRoom', { roomId, userId })
+      socket.emit('changeRoom', { roomId, userId })
     })
 
     socket.on('savedMessage', (newMessage: IMessage) => {
       dispatch(serverRoomMessageActions.addNewMessage(newMessage))
     })
 
-    interface IRoomDataWithUsersAndMessages extends IRoomData {
-      messages: IMessage[]
-      users: IUser[]
-    }
+    socket.on('currentRoomData', (roomData: IRoomData) => {
+      dispatch(serverRoomMessageActions.setCurrentRoomData(roomData))
+    })
 
-    socket.on(
-      'currentRoomData',
-      (currentRoomData: IRoomDataWithUsersAndMessages) => {
-        const { messages, users, _id, roomTitle } = currentRoomData
-        dispatch(
-          serverRoomMessageActions.setCurrentRoomData({ _id, roomTitle })
-        )
-        dispatch(serverRoomMessageActions.setMessages(messages))
-        dispatch(serverRoomMessageActions.setUsers(users))
-      }
-    )
+    socket.on('currentRoomUsers', (users: IUser[]) => {
+      dispatch(serverRoomMessageActions.setUsers(users))
+    })
+
+    socket.on('currentRoomMessages', (messages: IMessage[]) => {
+      dispatch(serverRoomMessageActions.setMessages(messages))
+    })
 
     socket.on('usersUpdate', (users: IUser[]) => {
-      dispatch(serverRoomMessageActions.updateUsers(users))
+      dispatch(serverRoomMessageActions.setUsers(users))
     })
 
     // socket.on('currentServerData', (currentServerData: IServerData) => {
@@ -115,7 +110,7 @@ export const SocketProvider = (props: Iprops) => {
   // }
 
   const joinRoom = (roomId: string) => {
-    socket.emit('joinRoom', { roomId, userId })
+    socket.emit('changeRoom', { roomId, userId })
     // dispatch(roomsActions.updateCurrentRoomName(roomName))
 
     // socket.on('updateMembers', (usersInARoom: any) =>

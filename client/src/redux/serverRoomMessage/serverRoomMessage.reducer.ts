@@ -16,7 +16,7 @@ const INITIAL_STATE = {
   },
 
   messages: {
-    messagesArr: [] as Array<IMessage>,
+    messagesArr: [] as IMessage[],
   },
 }
 
