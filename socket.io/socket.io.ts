@@ -26,6 +26,8 @@ export const ListenToSocketEndPoints = async (io: Server) => {
             serversArr,
             userData,
           }
+          //@ts-ignore
+          socket['userId'] = userData._id
           socket.emit('authorized', initialData)
         } catch (error) {
           socket.emit('not authorized')
@@ -91,6 +93,11 @@ export const ListenToSocketEndPoints = async (io: Server) => {
           )
         }
       )
+
+      socket.on('disconnecting', (serverSocket: Socket) => {
+        //@ts-ignore
+        leaveRoom(socket.userId, io, server.endpoint, socket)
+      })
     })
   })
 }

@@ -39,3 +39,11 @@ export const selectUserId = createSelector(
   [selectUser],
   (userData) => userData.id
 )
+export const selectUserAvatar = createSelector(
+  [selectUser],
+  (userData) => userData.avatar
+)
+export const selectUserLogin = createSelector(
+  [selectUser],
+  (userData) => userData.login
+)
