@@ -34,9 +34,9 @@ export const ListenToSocketEndPoints = async (io: Server) => {
         }
       })
 
-      socket.on('getServerData', async (serverId) => {
-        const currentServerDataFull = await ServerModel.findById(
-          serverId,
+      socket.on('getServerData', async (serverEndpoint: string) => {
+        const currentServerDataFull = await ServerModel.findOne(
+          { endpoint: serverEndpoint },
           '_id title image endpoint isPrivate rooms'
         ).lean()
         const { rooms, ...serverData } = currentServerDataFull

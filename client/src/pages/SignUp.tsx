@@ -1,8 +1,11 @@
 import { css } from '@emotion/react'
 import React, { useRef, useState } from 'react'
 import ThemeToggler from '../components/common/ThemeToggler'
+import { Link as ReactRouterLink } from 'react-router-dom'
+
 import {
   Flex,
+  Link,
   Box,
   Heading,
   FormControl,
@@ -251,6 +254,11 @@ const SignUp = () => {
                 </Button>
               </form>
             </Box>
+            <Flex>
+              <Link mx='auto' as={ReactRouterLink} to='/sign-in'>
+                Already have an account? Sign in
+              </Link>
+            </Flex>
           </Box>
         </Flex>
       )}

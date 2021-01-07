@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import ThemeToggler from '../components/common/ThemeToggler'
+import { Link as ReactRouterLink } from 'react-router-dom'
 import {
   Flex,
   Box,
@@ -12,10 +12,12 @@ import {
   InputGroup,
   InputRightElement,
   IconButton,
+  Link,
 } from '@chakra-ui/react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 
+import ThemeToggler from '../components/common/ThemeToggler'
 import { authActions } from '../redux/auth/auth.actions'
 import {
   selectSignInReqError,
@@ -106,6 +108,11 @@ const SignIn = () => {
               </Button>
             </form>
           </Box>
+          <Flex>
+            <Link mx='auto' as={ReactRouterLink} to='/sign-up'>
+              Don't have an account? Sign Up
+            </Link>
+          </Flex>
         </Box>
       </Flex>
 

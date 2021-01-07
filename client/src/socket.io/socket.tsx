@@ -1,10 +1,9 @@
 import React, { createContext } from 'react'
 import socketIOClient, { Socket } from 'socket.io-client'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import { IMessage, IRoomData, IServerData, IUser } from '../types/types'
 import { serverRoomMessageActions } from '../redux/serverRoomMessage/serverRoomMessage.actions'
-import { selectUserId } from '../redux/auth/auth.selectors'
 import { push } from 'connected-react-router'
 import { authActions } from '../redux/auth/auth.actions'
 
@@ -16,7 +15,7 @@ interface Iprops {
 
 export const SocketProvider = (props: Iprops) => {
   const { children } = props
-  const INITIAL_SERVER_ID = '5fef4e9ebc24d12320434c00'
+  const INITIAL_SERVER_ENDPOINT = '/default'
 
   let socket: Socket
   let ws
@@ -26,31 +25,6 @@ export const SocketProvider = (props: Iprops) => {
   const dispatch = useDispatch()
 
   const initialize = () => {
-    const token = sessionStorage.getItem('token')
-    socket = socketIOClient.io('http://localhost:5000/test1')
-
-    socket.emit('authenticate', token)
-
-    socket.on('not authorized', () => {
-      dispatch(push('/sign-in'))
-    })
-
-    socket.on(
-      'authorized',
-      ({
-        serversArr,
-        userData,
-      }: {
-        serversArr: IServerData[]
-        userData: IUser
-      }) => {
-        userId = userData._id
-        dispatch(serverRoomMessageActions.setInitialServers(serversArr))
-        dispatch(authActions.addUserData(userData))
-        socket.emit('getServerData', INITIAL_SERVER_ID)
-      }
-    )
-
     socket.on('currentServerData', (currentServerData: IServerData) => {
       dispatch(serverRoomMessageActions.setCurrentServer(currentServerData))
     })
@@ -94,20 +68,37 @@ export const SocketProvider = (props: Iprops) => {
     // }
   }
 
-  // const joinNs = (endpoint: string) => {
-  //   if (nsSocket) nsSocket.close()
+  const joinServer = (endpoint = INITIAL_SERVER_ENDPOINT) => {
+    if (socket) {
+      socket.disconnect()
+      socket = socketIOClient.io(`http://localhost:5000${endpoint}`)
+    } else {
+      const token = sessionStorage.getItem('token')
+      socket = socketIOClient.io(`http://localhost:5000${endpoint}`)
 
-  //   nsSocket = socketIOClient.io(endpoint)
+      socket.emit('authenticate', token)
 
-  //   nsSocket.on('nsRoomLoad', (nsRooms: any) => {
-  //     dispatch(roomsActions.updateRooms(nsRooms))
-  //     // joinRoom(nsRooms[0].roomTitle)
-  //   })
-
-  //   nsSocket.on('messageToClients', (msg: string) => {
-  //     dispatch(messagesActions.addNewMessage(msg))
-  //   })
-  // }
+      socket.on('not authorized', () => {
+        dispatch(push('/sign-in'))
+      })
+      socket.on(
+        'authorized',
+        ({
+          serversArr,
+          userData,
+        }: {
+          serversArr: IServerData[]
+          userData: IUser
+        }) => {
+          userId = userData._id
+          dispatch(serverRoomMessageActions.setInitialServers(serversArr))
+          dispatch(authActions.addUserData(userData))
+          socket.emit('getServerData', INITIAL_SERVER_ENDPOINT)
+        }
+      )
+    }
+    initialize()
+  }
 
   const joinRoom = (roomId: string) => {
     socket.emit('changeRoom', { roomId, userId })
@@ -130,7 +121,7 @@ export const SocketProvider = (props: Iprops) => {
   ws = {
     sendMessage,
     initialize,
-    // joinNs,
+    joinServer,
     joinRoom,
   }
 

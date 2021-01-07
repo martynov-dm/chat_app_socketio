@@ -23,7 +23,7 @@ const ServerItem: React.FC<Iprops> = (props) => {
       objectFit='cover'
       src={image}
       alt='Server Image'
-      onClick={() => ws.joinNs(endpoint)}
+      onClick={() => ws.joinServer(endpoint)}
     />
   )
 }

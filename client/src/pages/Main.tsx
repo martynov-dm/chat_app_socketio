@@ -11,7 +11,7 @@ const Main: React.FC = () => {
   const ws = useContext(SocketContext)
 
   useEffect(() => {
-    ws.initialize()
+    ws.joinServer()
   }, [])
 
   return (
