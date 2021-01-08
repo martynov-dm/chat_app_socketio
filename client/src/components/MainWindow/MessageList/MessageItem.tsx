@@ -1,4 +1,4 @@
-import { Box, Heading, Image, Text } from '@chakra-ui/react'
+import { Avatar, Box, Heading, Image, Text } from '@chakra-ui/react'
 import { css } from '@emotion/react'
 import React from 'react'
 import { useSelector } from 'react-redux'
@@ -63,7 +63,7 @@ const MessageItem = (props: Iprops) => {
       `}
     >
       <Box ml='1rem'>
-        <Image width='3rem' borderRadius='50%' src={avatar} alt='ava' />
+        <Avatar width='3rem' borderRadius='50%' src={avatar} alt='ava' />
       </Box>
       <div className='text'>
         <div className='name-date'>

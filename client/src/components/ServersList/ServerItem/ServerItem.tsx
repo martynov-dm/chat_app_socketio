@@ -16,6 +16,9 @@ const ServerItem: React.FC<Iprops> = (props) => {
     <Image
       css={css`
         cursor: pointer;
+        &:hover {
+          opacity: 0.8;
+        }
       `}
       mt='1rem'
       borderRadius='lg'

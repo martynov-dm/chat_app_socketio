@@ -10,6 +10,17 @@ html {
   font-weight: 400;
 }
 
+@media only screen and (max-width: 992px) {
+  html {
+    font-size: 85%;
+  }
+}
+@media only screen and (max-width: 450px) {
+  html {
+    font-size: 75%;
+  }
+}
+
 body {
   height: 100vh;
   background: #f2f2f2;

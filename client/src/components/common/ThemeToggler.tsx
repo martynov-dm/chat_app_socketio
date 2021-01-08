@@ -1,11 +1,22 @@
 import React from 'react'
 import { useColorMode, Box, IconButton } from '@chakra-ui/react'
 import { MoonIcon, SunIcon } from '@chakra-ui/icons'
+import { css } from '@emotion/react'
 
 export default function ThemeToggler() {
   const { colorMode, toggleColorMode } = useColorMode()
   return (
-    <Box ml='auto' textAlign='right' py={4} mr={7}>
+    <Box
+      css={css`
+        &:hover {
+          opacity: 0.8;
+        }
+      `}
+      ml='auto'
+      textAlign='right'
+      py={4}
+      mr={7}
+    >
       <IconButton
         aria-label='Toggle day/night'
         icon={

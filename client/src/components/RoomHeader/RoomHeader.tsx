@@ -15,21 +15,28 @@ import {
   PopoverTrigger,
   Text,
   useColorModeValue,
+  useDisclosure,
 } from '@chakra-ui/react'
 import { Icon } from '@chakra-ui/react'
 import { BsFillPeopleFill } from 'react-icons/bs'
 import { useSelector } from 'react-redux'
+import { HamburgerIcon } from '@chakra-ui/icons'
 import {
   selectCurrentRoomName,
   selectCurrentRoomUserCount,
   selectUsersArr,
 } from '../../redux/serverRoomMessage/serverRoomMessage.selectors'
+import Drawer from '../Drawer/Drawer'
+import { useMediaQuery } from '@material-ui/core'
 
 const RoomHeader = (props: any) => {
   const bgColor = useColorModeValue('#EDF2F7', '#2D3748')
   const userCount = useSelector(selectCurrentRoomUserCount)
   const currentRoomName = useSelector(selectCurrentRoomName)
   const usersList = useSelector(selectUsersArr)
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const btnRef = React.useRef(null)
+  const isLessThan767px = useMediaQuery('(max-width: 767px)')
 
   return (
     <header
@@ -62,6 +69,33 @@ const RoomHeader = (props: any) => {
         }
       `}
     >
+      {isLessThan767px && (
+        <>
+          <Drawer
+            btnRef={btnRef}
+            isOpen={isOpen}
+            onOpen={onOpen}
+            onClose={onClose}
+          />
+          <IconButton
+            ref={btnRef}
+            onClick={onOpen}
+            ml='2rem'
+            aria-label='Toggle day/night'
+            icon={
+              <HamburgerIcon
+                w='1.6rem'
+                h='1.6rem'
+                css={css`
+                  opacity: 1;
+                `}
+              />
+            }
+            variant='ghost'
+          />
+        </>
+      )}
+
       <Heading
         as='h4'
         size='md'
@@ -79,6 +113,11 @@ const RoomHeader = (props: any) => {
       <Popover>
         <PopoverTrigger>
           <IconButton
+            css={css`
+              &:hover {
+                opacity: 0.8;
+              }
+            `}
             mr='2rem'
             aria-label='Toggle day/night'
             icon={
@@ -99,6 +138,7 @@ const RoomHeader = (props: any) => {
           {usersList.map((user) => {
             return (
               <PopoverBody
+                key={user._id}
                 css={css`
                   display: flex;
                   align-items: center;
