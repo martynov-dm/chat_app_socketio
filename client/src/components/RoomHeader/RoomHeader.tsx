@@ -2,9 +2,17 @@ import React from 'react'
 import { css } from '@emotion/react'
 import ThemeToggler from '../common/ThemeToggler'
 import {
+  Avatar,
   Flex,
   Heading,
   IconButton,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverCloseButton,
+  PopoverContent,
+  PopoverHeader,
+  PopoverTrigger,
   Text,
   useColorModeValue,
 } from '@chakra-ui/react'
@@ -14,12 +22,14 @@ import { useSelector } from 'react-redux'
 import {
   selectCurrentRoomName,
   selectCurrentRoomUserCount,
+  selectUsersArr,
 } from '../../redux/serverRoomMessage/serverRoomMessage.selectors'
 
 const RoomHeader = (props: any) => {
   const bgColor = useColorModeValue('#EDF2F7', '#2D3748')
   const userCount = useSelector(selectCurrentRoomUserCount)
   const currentRoomName = useSelector(selectCurrentRoomName)
+  const usersList = useSelector(selectUsersArr)
 
   return (
     <header
@@ -66,20 +76,43 @@ const RoomHeader = (props: any) => {
       </Heading>
       <ThemeToggler />
 
-      <Flex mr='2rem' align='center'>
-        <IconButton
-          aria-label='Toggle day/night'
-          icon={
-            <>
-              <Icon h='1.6rem' w='1.6rem' as={BsFillPeopleFill} />
-              <Text ml='0.2rem' fontSize='xl'>
-                {userCount}
-              </Text>
-            </>
-          }
-          variant='ghost'
-        />
-      </Flex>
+      <Popover>
+        <PopoverTrigger>
+          <IconButton
+            mr='2rem'
+            aria-label='Toggle day/night'
+            icon={
+              <>
+                <Icon h='1.6rem' w='1.6rem' as={BsFillPeopleFill} />
+                <Text ml='0.2rem' fontSize='xl'>
+                  {userCount}
+                </Text>
+              </>
+            }
+            variant='ghost'
+          />
+        </PopoverTrigger>
+        <PopoverContent>
+          <PopoverArrow />
+          <PopoverCloseButton />
+          <PopoverHeader>Users list</PopoverHeader>
+          {usersList.map((user) => {
+            return (
+              <PopoverBody
+                css={css`
+                  display: flex;
+                  align-items: center;
+                `}
+              >
+                <Avatar size='md' name={user.login} src={user.avatar} />
+                <Text ml='2rem' fontSize='lg'>
+                  {user.login}
+                </Text>
+              </PopoverBody>
+            )
+          })}
+        </PopoverContent>
+      </Popover>
     </header>
   )
 }

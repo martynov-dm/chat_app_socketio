@@ -14,16 +14,9 @@ const UserMenu = (props: any) => {
   const avatar = useSelector(selectUserAvatar)
 
   return (
-    <Flex
-      mt='auto'
-      shrink={1}
-      h='4rem'
-      bg={bgColor}
-      align='center'
-      justify='space-evenly'
-    >
-      <Avatar name={login} src={avatar} />
-      <Heading as='h4' size='md'>
+    <Flex mt='auto' shrink={1} h='4rem' bg={bgColor} align='center'>
+      <Avatar ml='1.5rem' name={login} src={avatar} />
+      <Heading ml='1.5rem' as='h4' size='md'>
         {login}
       </Heading>
     </Flex>

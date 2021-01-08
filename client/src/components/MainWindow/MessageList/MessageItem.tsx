@@ -21,13 +21,15 @@ const MessageItem = (props: Iprops) => {
       boxShadow='base'
       borderWidth='1px'
       borderRadius='lg'
-      maxWidth='35rem'
-      my='1rem'
+      maxWidth={{ md: '22rem', lg: '35rem' }}
+      my='0.7rem'
       css={css`
-        padding: 0.2rem;
+        padding: 0.8rem 0.3rem;
         display: flex;
         width: 100%;
-        min-height: 4.5rem;
+        height: auto;
+
+        /* min-height: 4.5rem; */
         align-self: ${currentUserLogin === username
           ? 'flex-end'
           : 'flex-start'};
@@ -41,8 +43,9 @@ const MessageItem = (props: Iprops) => {
           .message {
             line-height: 1.4rem;
             white-space: pre-wrap;
-
             font-size: 1.1rem;
+            display: inline-block;
+            word-break: break-word;
           }
 
           .name-date {

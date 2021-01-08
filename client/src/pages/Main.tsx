@@ -22,7 +22,7 @@ const Main: React.FC = () => {
         height: 100vh;
 
         display: grid;
-        grid-template-columns: minmax(5.5rem, 5%) minmax(12rem, 18%) 1fr;
+        grid-template-columns: minmax(5.5rem, 5%) minmax(14rem, 14%) 1fr;
         grid-template-rows: minmax(3rem, 7%) 1fr;
       `}
     >
