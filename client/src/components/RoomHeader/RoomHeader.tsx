@@ -1,7 +1,13 @@
 import React from 'react'
 import { css } from '@emotion/react'
 import ThemeToggler from '../common/ThemeToggler'
-import { Flex, Text, useColorModeValue } from '@chakra-ui/react'
+import {
+  Flex,
+  Heading,
+  IconButton,
+  Text,
+  useColorModeValue,
+} from '@chakra-ui/react'
 import { Icon } from '@chakra-ui/react'
 import { BsFillPeopleFill } from 'react-icons/bs'
 import { useSelector } from 'react-redux'
@@ -11,7 +17,7 @@ import {
 } from '../../redux/serverRoomMessage/serverRoomMessage.selectors'
 
 const RoomHeader = (props: any) => {
-  const bgColor = useColorModeValue('#FFFFFF', '#2D3748')
+  const bgColor = useColorModeValue('#EDF2F7', '#2D3748')
   const userCount = useSelector(selectCurrentRoomUserCount)
   const currentRoomName = useSelector(selectCurrentRoomName)
 
@@ -26,7 +32,7 @@ const RoomHeader = (props: any) => {
         height: 100%;
         display: flex;
         align-items: center;
-        justify-content: center;
+        /* justify-content: center; */
 
         z-index: 1;
 
@@ -41,17 +47,38 @@ const RoomHeader = (props: any) => {
           padding-left: 4px;
           position: absolute;
           bottom: -7px;
-          left: -4px;
+
           box-shadow: inset 0px 7px 6px -6px rgba(0, 0, 0, 0.25);
         }
       `}
     >
-      <Text>{currentRoomName}</Text>
+      <Heading
+        as='h4'
+        size='md'
+        css={css`
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        `}
+      >
+        {currentRoomName}
+      </Heading>
       <ThemeToggler />
 
-      <Flex>
-        <Icon as={BsFillPeopleFill} />
-        <Text>{userCount}</Text>
+      <Flex mr='2rem' align='center'>
+        <IconButton
+          aria-label='Toggle day/night'
+          icon={
+            <>
+              <Icon h='1.6rem' w='1.6rem' as={BsFillPeopleFill} />
+              <Text ml='0.2rem' fontSize='xl'>
+                {userCount}
+              </Text>
+            </>
+          }
+          variant='ghost'
+        />
       </Flex>
     </header>
   )

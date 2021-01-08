@@ -1,6 +1,8 @@
-import { Box, Image, Text } from '@chakra-ui/react'
+import { Box, Heading, Image, Text } from '@chakra-ui/react'
 import { css } from '@emotion/react'
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { selectUserLogin } from '../../../redux/auth/auth.selectors'
 
 interface Iprops {
   avatar: string
@@ -12,14 +14,23 @@ interface Iprops {
 const MessageItem = (props: Iprops) => {
   const { avatar, username, time, text } = props
   const convertedDate = new Date(time).toLocaleString()
+  const currentUserLogin = useSelector(selectUserLogin)
 
   return (
-    <div
+    <Box
+      boxShadow='base'
+      borderWidth='1px'
+      borderRadius='lg'
+      maxWidth='35rem'
+      my='1rem'
       css={css`
         padding: 0.2rem;
         display: flex;
         width: 100%;
         min-height: 4.5rem;
+        align-self: ${currentUserLogin === username
+          ? 'flex-end'
+          : 'flex-start'};
         align-items: center;
 
         .text {
@@ -30,35 +41,38 @@ const MessageItem = (props: Iprops) => {
           .message {
             line-height: 1.4rem;
             white-space: pre-wrap;
-            color: #171a2a;
+
             font-size: 1.1rem;
           }
 
           .name-date {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-start;
             margin-bottom: 0.3rem;
-            color: rgba(23, 26, 42, 0.7);
+
             .date {
               margin-left: 0.7rem;
+              font-size: 0.8rem;
             }
           }
         }
       `}
     >
-      <Box>
-        <Image width='2.5rem' borderRadius='50%' src={avatar} alt='ava' />
+      <Box ml='1rem'>
+        <Image width='3rem' borderRadius='50%' src={avatar} alt='ava' />
       </Box>
       <div className='text'>
         <div className='name-date'>
-          <Text className='name'>{username}</Text>
+          <Heading as='h5' size='sm' className='name'>
+            {username}
+          </Heading>
           <Text className='date'>{convertedDate}</Text>
         </div>
 
         <Text className='message'>{text}</Text>
       </div>
-    </div>
+    </Box>
   )
 }
 

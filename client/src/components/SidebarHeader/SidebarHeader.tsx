@@ -1,11 +1,11 @@
 import React from 'react'
 import { css } from '@emotion/react'
-import { Text, useColorModeValue } from '@chakra-ui/react'
+import { Heading, Text, useColorModeValue } from '@chakra-ui/react'
 import { useSelector } from 'react-redux'
 import { selectCurrentServerTitle } from '../../redux/serverRoomMessage/serverRoomMessage.selectors'
 
 const SidebarHeader = (props: any) => {
-  const bgColor = useColorModeValue('#EDF2F7', '#1A202C')
+  const bgColor = useColorModeValue('#EDF2F7', '#2D3748')
   const serverTitle = useSelector(selectCurrentServerTitle)
 
   return (
@@ -32,14 +32,16 @@ const SidebarHeader = (props: any) => {
           padding-left: 4px;
           position: absolute;
           bottom: -7px;
-          left: -4px;
+
           /* background: ${bgColor}; */
           box-shadow: inset 0px 7px 6px -6px rgba(0, 0, 0, 0.25);
         }
       `}
     >
       <div>
-        <Text>{serverTitle}</Text>
+        <Heading as='h4' size='md'>
+          {serverTitle}
+        </Heading>
       </div>
     </header>
   )

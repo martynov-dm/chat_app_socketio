@@ -1,7 +1,7 @@
-import { Avatar, Flex, Text, useColorModeValue } from '@chakra-ui/react'
+import { Avatar, Flex, Heading, useColorModeValue } from '@chakra-ui/react'
 import React from 'react'
 import { useSelector } from 'react-redux'
-// import { css } from '@emotion/react'
+import { css } from '@emotion/react'
 
 import {
   selectUserLogin,
@@ -9,20 +9,23 @@ import {
 } from '../../../redux/auth/auth.selectors'
 
 const UserMenu = (props: any) => {
-  const bgColor = useColorModeValue('gray.200', 'gray.900')
+  const bgColor = useColorModeValue('gray.200', 'gray.800')
   const login = useSelector(selectUserLogin)
   const avatar = useSelector(selectUserAvatar)
 
   return (
     <Flex
       mt='auto'
-      h='3.5rem'
+      shrink={1}
+      h='4rem'
       bg={bgColor}
       align='center'
       justify='space-evenly'
     >
       <Avatar name={login} src={avatar} />
-      <Text fontSize='md'>{login}</Text>
+      <Heading as='h4' size='md'>
+        {login}
+      </Heading>
     </Flex>
   )
 }

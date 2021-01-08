@@ -5,14 +5,14 @@ import { MoonIcon, SunIcon } from '@chakra-ui/icons'
 export default function ThemeToggler() {
   const { colorMode, toggleColorMode } = useColorMode()
   return (
-    <Box textAlign='right' py={4} mr={12}>
+    <Box ml='auto' textAlign='right' py={4} mr={7}>
       <IconButton
         aria-label='Toggle day/night'
         icon={
           colorMode === 'light' ? (
-            <MoonIcon variant='ghost' />
+            <MoonIcon w='1.5rem' h='1.5rem' variant='ghost' />
           ) : (
-            <SunIcon variant='ghost' />
+            <SunIcon w='1.5rem' h='1.5rem' variant='ghost' />
           )
         }
         onClick={toggleColorMode}

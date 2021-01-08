@@ -71,32 +71,31 @@ export const SocketProvider = (props: Iprops) => {
   const joinServer = (endpoint = INITIAL_SERVER_ENDPOINT) => {
     if (socket) {
       socket.disconnect()
-      socket = socketIOClient.io(`http://localhost:5000${endpoint}`)
-    } else {
-      const token = sessionStorage.getItem('token')
-      socket = socketIOClient.io(`http://localhost:5000${endpoint}`)
-
-      socket.emit('authenticate', token)
-
-      socket.on('not authorized', () => {
-        dispatch(push('/sign-in'))
-      })
-      socket.on(
-        'authorized',
-        ({
-          serversArr,
-          userData,
-        }: {
-          serversArr: IServerData[]
-          userData: IUser
-        }) => {
-          userId = userData._id
-          dispatch(serverRoomMessageActions.setInitialServers(serversArr))
-          dispatch(authActions.addUserData(userData))
-          socket.emit('getServerData', INITIAL_SERVER_ENDPOINT)
-        }
-      )
     }
+    const token = sessionStorage.getItem('token')
+    socket = socketIOClient.io(`http://localhost:5000${endpoint}`)
+
+    socket.emit('authenticate', token)
+
+    socket.on('not authorized', () => {
+      dispatch(push('/sign-in'))
+    })
+    socket.on(
+      'authorized',
+      ({
+        serversArr,
+        userData,
+      }: {
+        serversArr: IServerData[]
+        userData: IUser
+      }) => {
+        userId = userData._id
+        dispatch(serverRoomMessageActions.setInitialServers(serversArr))
+        dispatch(authActions.addUserData(userData))
+        socket.emit('getServerData', endpoint)
+      }
+    )
+
     initialize()
   }
 

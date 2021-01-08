@@ -30,7 +30,8 @@ import { selectCurrentRoomId } from '../../../redux/serverRoomMessage/serverRoom
 // }
 
 const MessageInput: React.FC = () => {
-  const bgColor = useColorModeValue('gray.200', 'gray.900')
+  const bgColor = useColorModeValue('gray.200', 'gray.800')
+  const inputColor = useColorModeValue('#FFFFFF', '#2D3748')
   const ws = useContext(SocketContext)
   const userId = useSelector(selectUserId)
   const roomId = useSelector(selectCurrentRoomId)
@@ -41,27 +42,35 @@ const MessageInput: React.FC = () => {
     setMessage('')
   }
 
+  const handleKeyDown = (event: any) => {
+    if (event.key === 'Enter') {
+      handleMessageSubmit()
+    }
+  }
+
   return (
     <Flex
       align='center'
-      justify='space-evenly'
-      mt='5'
+      justify='center'
+      shrink={0}
       h='4rem'
       bg={bgColor}
       boxShadow='2xl'
     >
       <Input
+        background={inputColor}
         borderRadius='xl'
         width='70%'
         value={message}
         onChange={(e) => setMessage(e.currentTarget.value)}
+        onKeyDown={handleKeyDown}
       />
       <RiSendPlane2Fill
         onClick={handleMessageSubmit}
         css={css`
           width: 1.65rem;
           height: 1.65rem;
-
+          margin-left: 2rem;
           cursor: pointer;
         `}
       />

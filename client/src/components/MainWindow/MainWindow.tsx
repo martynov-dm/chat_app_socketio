@@ -6,7 +6,7 @@ import MessageInput from './MessageInput/MessageInput'
 import { useColorModeValue } from '@chakra-ui/react'
 
 const MainWindow = () => {
-  const bgColor = useColorModeValue('#FFFFFF', '#2D3748')
+  const bgColor = useColorModeValue('#FFFFFF', '#4A5568')
 
   return (
     <section

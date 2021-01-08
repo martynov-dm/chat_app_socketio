@@ -5,7 +5,7 @@ import { Box, Heading, useColorModeValue } from '@chakra-ui/react'
 import UserMenu from './UserMenu/UserMenu'
 
 const Sidebar: React.FC = () => {
-  const bgColor = useColorModeValue('#EDF2F7', '#1A202C')
+  const bgColor = useColorModeValue('#EDF2F7', '#2D3748')
 
   return (
     <aside
