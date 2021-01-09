@@ -57,27 +57,27 @@ export const io = new Server(server, {
   },
 })
 
-io.use((socket, next) => {
-  //@ts-ignore
-  if (socket.handshake.query && socket.handshake.query.token) {
-    jwt.verify(
-      //@ts-ignore
-      socket.handshake.query.token,
-      //@ts-ignore
-      options.jwtSecret,
-      function (err: any, decoded: any) {
-        if (err) return next(new Error('Authentication error'))
-        //@ts-ignore
-        socket.decoded = decoded
-        next()
-      }
-    )
-  } else {
-    console.log('no auth')
+// io.use((socket, next) => {
+//   //@ts-ignore
+//   if (socket.handshake.query && socket.handshake.query.token) {
+//     jwt.verify(
+//       //@ts-ignore
+//       socket.handshake.query.token,
+//       //@ts-ignore
+//       options.jwtSecret,
+//       function (err: any, decoded: any) {
+//         if (err) return next(new Error('Authentication error'))
+//         //@ts-ignore
+//         socket.decoded = decoded
+//         next()
+//       }
+//     )
+//   } else {
+//     console.log('no auth')
 
-    next(new Error('Authentication error'))
-  }
-})
+//     next(new Error('Authentication error'))
+//   }
+// })
 
 ListenToSocketEndPoints(io)
 // const Add = async () => {

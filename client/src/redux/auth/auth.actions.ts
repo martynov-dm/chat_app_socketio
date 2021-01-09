@@ -48,9 +48,9 @@ export const authActions = {
       type: 'SIGN_IN_CLEAR',
     } as const
   },
-  addUserData: (userData: IUser) => {
+  setUserData: (userData: IUser) => {
     return {
-      type: 'ADD_USER_DATA',
+      type: 'SET_USER_DATA',
       payload: userData,
     } as const
   },

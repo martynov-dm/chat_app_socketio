@@ -5,6 +5,8 @@ const INITIAL_STATE = {
     login: '',
     avatar: '',
     id: '',
+    currentRoomId: '',
+    currentServerEndpoint: '',
   },
   signUpRequest: {
     status: 'idle' as 'idle' | 'loading' | 'succeeded' | 'failed',
@@ -79,13 +81,15 @@ const authReducer = (
           error: null,
         },
       }
-    case 'ADD_USER_DATA':
+    case 'SET_USER_DATA':
       return {
         ...state,
         userData: {
           login: action.payload.login,
           avatar: action.payload.avatar,
           id: action.payload._id,
+          currentRoomId: action.payload.currentRoomId,
+          currentServerEndpoint: action.payload.currentServerEndpoint,
         },
       }
     default:

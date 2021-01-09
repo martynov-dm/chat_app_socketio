@@ -22,7 +22,8 @@ const UserSchema: Schema = new Schema(
       type: String,
       required: true,
     },
-    room: { type: Schema.Types.ObjectId, ref: 'Room' },
+    currentRoomId: { type: Schema.Types.ObjectId, ref: 'Room' },
+    currentServerEndpoint: { type: String },
   },
   {
     timestamps: true,

@@ -1,3 +1,4 @@
+import { IUser } from './../models/user/user.types'
 import { Server, Socket } from 'socket.io'
 import jwt from 'jsonwebtoken'
 
@@ -7,61 +8,69 @@ import { ServerModel } from '../models/server/server.model'
 import User from '../models/user/user.model'
 import options from '../config'
 
+let userData: IUser
 export const ListenToSocketEndPoints = async (io: Server) => {
   const serversArr = await ServerModel.getServersArr()
+
+  io.of('/').on('connection', async (socket: Socket) => {
+    socket.on('authenticate', async (token: string) => {
+      try {
+        const decodedData = await jwt.verify(token, options.jwtSecret as string)
+        userData = await User.findById(
+          //@ts-ignore
+          decodedData._id,
+          '_id login avatar currentRoomId currentServerEndpoint'
+        ).lean()
+        const initialData = {
+          serversArr,
+          userData,
+        }
+        // //@ts-ignore
+        // socket['userData'] = userData
+        // console.log(socket.id)
+
+        socket.emit('authorized', initialData)
+      } catch (error) {
+        socket.emit('not authorized')
+      }
+    })
+  })
+
   serversArr.forEach((server) => {
     io.of(server.endpoint).on('connection', async (socket: Socket) => {
-      socket.on('authenticate', async (token) => {
-        try {
-          const decodedData = await jwt.verify(
-            token,
-            options.jwtSecret as string
-          )
-          const userData = await User.findById(
-            //@ts-ignore
-            decodedData._id,
-            '_id login avatar room'
-          ).lean()
-          const initialData = {
-            serversArr,
-            userData,
-          }
-          //@ts-ignore
-          socket['userId'] = userData._id
-          socket.emit('authorized', initialData)
-        } catch (error) {
-          socket.emit('not authorized')
-        }
+      const currentServerDataFull = await ServerModel.findOne(
+        { endpoint: server.endpoint },
+        '_id title image endpoint isPrivate rooms'
+      ).lean()
+      const { rooms, ...serverData } = currentServerDataFull
+
+      socket.emit('currentServerData', serverData)
+      socket.emit('currentServerRoomsArr', rooms)
+
+      socket.on('enterInitialRoom', async (roomId: string) => {
+        // await leaveRoom(userId, io, server.endpoint, socket)
+        //@ts-ignore
+        socket['userData'] = userData
+        joinRoom(userData._id, roomId, socket, server.endpoint, io)
+
+        //  RoomModel.findByIdAndUpdate(roomId, {
+        //   $addToSet: {
+        //     currentUsers: userId,
+        //   },
+        // }).populate({
+        //   path: 'currentUsers',
+        //   select: 'login avatar',
+        // })
+
+        // io.of(server.endpoint).to(roomId).emit('userJoined', userData)
       })
 
-      socket.on('getServerData', async (serverEndpoint: string) => {
-        const currentServerDataFull = await ServerModel.findOne(
-          { endpoint: serverEndpoint },
-          '_id title image endpoint isPrivate rooms'
-        ).lean()
-        const { rooms, ...serverData } = currentServerDataFull
-        socket.emit('currentServerData', serverData)
-        socket.emit('currentServerRoomsArr', rooms)
+      socket.on('changeRoom', async ({ oldRoomId, newRoomId }) => {
+        // await leaveRoom(userId, io, server.endpoint, socket)
+        joinRoom(userData._id, newRoomId, socket, server.endpoint, io)
+        //@ts-ignore
+        leaveRoom(userData._id, io, server.endpoint, socket)
       })
-
-      socket.on(
-        'changeRoom',
-        async ({ roomId, userId }: { roomId: string; userId: string }) => {
-          await leaveRoom(userId, io, server.endpoint, socket)
-
-          await joinRoom(userId, roomId, socket)
-          //  RoomModel.findByIdAndUpdate(roomId, {
-          //   $addToSet: {
-          //     currentUsers: userId,
-          //   },
-          // }).populate({
-          //   path: 'currentUsers',
-          //   select: 'login avatar',
-          // })
-
-          // io.of(server.endpoint).to(roomId).emit('userJoined', userData)
-        }
-      )
 
       socket.on(
         'newMessageToServer',
@@ -104,54 +113,56 @@ export const ListenToSocketEndPoints = async (io: Server) => {
 
 const leaveRoom = async (
   userId: string,
+  oldRoomId: string,
   io: Server,
   endpoint: string,
   socket: Socket
 ) => {
-  const userData = await User.findById(userId).lean()
-  if (userData!.room) {
-    await socket.leave(userData!.room.toString())
-    await User.findByIdAndUpdate(userId, {
-      $unset: { room: '' },
+  await socket.leave(oldRoomId.toString())
+
+  const roomData = await RoomModel.findById(userData!.currentRoomId)
+    .populate({
+      path: 'users',
     })
+    .lean()
 
-    const roomData = await RoomModel.findById(userData!.room)
-      .populate({
-        path: 'users',
-      })
-      .lean()
+  const list = await io.of(endpoint).in(oldRoomId).sockets
+  //@ts-ignore
+  const users = Array.from(list.values()).map((item) => item.userData)
 
-    await io
-      .of(endpoint)
-      .to(userData!.room.toString())
-      .emit('usersUpdate', roomData.users)
-  }
+  await io
+    .of(endpoint)
+    .to(userData.currentRoomId.toString())
+    .emit('usersUpdate', users)
 }
 
 const joinRoom = async (
   userId: string,
   roomId: string,
-
-  socket: Socket
+  socket: Socket,
+  endpoint: string,
+  io: Server
 ) => {
-  await socket.join(roomId.toString())
-
-  await User.findByIdAndUpdate(userId, {
-    $set: { room: roomId },
-  })
-
   const roomDataFull = await RoomModel.findById(roomId)
     .populate({
       path: 'messages',
     })
-    .populate({
-      path: 'users',
-    })
     .lean()
-  const { messages, users, ...roomData } = roomDataFull
+  const { messages, ...roomData } = roomDataFull
 
   await socket.emit('currentRoomData', roomData)
-  await socket.emit('currentRoomUsers', users)
   await socket.emit('currentRoomMessages', messages)
+
+  await socket.join(roomId.toString())
+
+  const list = await io.of(endpoint).in(roomId).sockets
+  //@ts-ignore
+  const users = Array.from(list.values()).map((item) => item.userData)
+
+  await socket.emit('usersUpdate', users)
   await socket.to(roomId).emit('usersUpdate', users)
+
+  userData = (await User.findByIdAndUpdate(userId, {
+    $set: { currentRoomId: roomId },
+  })) as IUser
 }

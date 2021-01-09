@@ -1,11 +1,12 @@
 import React, { createContext } from 'react'
 import socketIOClient, { Socket } from 'socket.io-client'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { push } from 'connected-react-router'
 
 import { IMessage, IRoomData, IServerData, IUser } from '../types/types'
 import { serverRoomMessageActions } from '../redux/serverRoomMessage/serverRoomMessage.actions'
-import { push } from 'connected-react-router'
 import { authActions } from '../redux/auth/auth.actions'
+import { selectUserCurrentRoomId } from '../redux/auth/auth.selectors'
 
 export const SocketContext = createContext(null as any)
 
@@ -13,27 +14,32 @@ interface Iprops {
   children: React.ReactNode
 }
 
+let socket: Socket
+let ws
+let userId: string
+
 export const SocketProvider = (props: Iprops) => {
   const { children } = props
   const INITIAL_SERVER_ENDPOINT = '/default'
 
-  let socket: Socket
-  let ws
-  let userId: string
   // let nsSocket: Socket
 
   const dispatch = useDispatch()
+  const userCurrentRoomId = useSelector(selectUserCurrentRoomId)
 
   const initialize = () => {
     socket.on('currentServerData', (currentServerData: IServerData) => {
       dispatch(serverRoomMessageActions.setCurrentServer(currentServerData))
     })
+
     socket.on('currentServerRoomsArr', (currentServerRoomsArr: IRoomData[]) => {
       dispatch(
         serverRoomMessageActions.setCurrentServerRoomsArr(currentServerRoomsArr)
       )
-      const roomId = currentServerRoomsArr[0]._id
-      socket.emit('changeRoom', { roomId, userId })
+
+      const roomId = userCurrentRoomId || currentServerRoomsArr[0]._id
+
+      socket.emit('enterInitialRoom', roomId)
     })
 
     socket.on('savedMessage', (newMessage: IMessage) => {
@@ -44,16 +50,12 @@ export const SocketProvider = (props: Iprops) => {
       dispatch(serverRoomMessageActions.setCurrentRoomData(roomData))
     })
 
-    socket.on('currentRoomUsers', (users: IUser[]) => {
+    socket.on('usersUpdate', (users: IUser[]) => {
       dispatch(serverRoomMessageActions.setUsers(users))
     })
 
     socket.on('currentRoomMessages', (messages: IMessage[]) => {
       dispatch(serverRoomMessageActions.setMessages(messages))
-    })
-
-    socket.on('usersUpdate', (users: IUser[]) => {
-      dispatch(serverRoomMessageActions.setUsers(users))
     })
 
     // socket.on('currentServerData', (currentServerData: IServerData) => {
@@ -68,18 +70,11 @@ export const SocketProvider = (props: Iprops) => {
     // }
   }
 
-  const joinServer = (endpoint = INITIAL_SERVER_ENDPOINT) => {
-    if (socket) {
-      socket.disconnect()
-    }
+  const auth = () => {
     const token = sessionStorage.getItem('token')
-    socket = socketIOClient.io(`http://localhost:5000${endpoint}`)
-
+    socket = socketIOClient.io('http://localhost:5000/')
     socket.emit('authenticate', token)
 
-    socket.on('not authorized', () => {
-      dispatch(push('/sign-in'))
-    })
     socket.on(
       'authorized',
       ({
@@ -90,17 +85,33 @@ export const SocketProvider = (props: Iprops) => {
         userData: IUser
       }) => {
         userId = userData._id
-        dispatch(serverRoomMessageActions.setInitialServers(serversArr))
-        dispatch(authActions.addUserData(userData))
-        socket.emit('getServerData', endpoint)
+        dispatch(serverRoomMessageActions.setServersArr(serversArr))
+        dispatch(authActions.setUserData(userData))
+
+        const endpoint =
+          userData.currentServerEndpoint || INITIAL_SERVER_ENDPOINT
+
+        joinServer(endpoint)
       }
     )
+
+    socket.on('not authorized', () => {
+      dispatch(push('/sign-in'))
+    })
+  }
+
+  const joinServer = (endpoint: string) => {
+    // if (socket) {
+    //   socket.disconnect()
+    // }
+
+    socket = socketIOClient.io(`http://localhost:5000${endpoint}`)
 
     initialize()
   }
 
-  const joinRoom = (roomId: string) => {
-    socket.emit('changeRoom', { roomId, userId })
+  const joinRoom = (newRoomId: string) => {
+    socket.emit('changeRoom', { userCurrentRoomId, newRoomId })
     // dispatch(roomsActions.updateCurrentRoomName(roomName))
 
     // socket.on('updateMembers', (usersInARoom: any) =>
@@ -122,6 +133,7 @@ export const SocketProvider = (props: Iprops) => {
     initialize,
     joinServer,
     joinRoom,
+    auth,
   }
 
   return <SocketContext.Provider value={ws}>{children}</SocketContext.Provider>

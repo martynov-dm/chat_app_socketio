@@ -59,5 +59,6 @@ export interface IUser {
   createdAt: string
   updatedAt: string
   login: string
-  isOnline: boolean
+  currentRoomId: string
+  currentServerEndpoint: string
 }

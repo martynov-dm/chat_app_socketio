@@ -15,7 +15,7 @@ const Main: React.FC = () => {
     md: 'minmax(5.5rem, 5%) minmax(14rem, 14%) 1fr',
   })
   useEffect(() => {
-    ws.joinServer()
+    ws.auth()
   }, [])
 
   return (

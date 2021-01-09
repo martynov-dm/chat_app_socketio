@@ -6,7 +6,7 @@ export type serverRoomMessageActionsTypes = InferActionTypes<
 >
 
 export const serverRoomMessageActions = {
-  setInitialServers: (serversArr: IServerData[]) => {
+  setServersArr: (serversArr: IServerData[]) => {
     return {
       type: 'SET_INITIAL_SERVERS_ARR',
       payload: serversArr,

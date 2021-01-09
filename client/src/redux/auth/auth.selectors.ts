@@ -47,3 +47,7 @@ export const selectUserLogin = createSelector(
   [selectUser],
   (userData) => userData.login
 )
+export const selectUserCurrentRoomId = createSelector(
+  [selectUser],
+  (userData) => userData.currentRoomId
+)

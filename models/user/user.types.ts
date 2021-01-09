@@ -4,9 +4,10 @@ export interface IUser extends Document {
   login: string
   password: string
   avatar: string
-  room: string
+  currentRoomId: string
   confirm_hash: string
   last_seen: Date
+  currentServerEndpoint: string
 
   passwordMatches(): Promise<boolean>
 }
