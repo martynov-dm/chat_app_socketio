@@ -6,7 +6,6 @@ import { push } from 'connected-react-router'
 import { IMessage, IRoomData, IServerData, IUser } from '../types/types'
 import { serverRoomMessageActions } from '../redux/serverRoomMessage/serverRoomMessage.actions'
 import { authActions } from '../redux/auth/auth.actions'
-import { selectUserCurrentRoomId } from '../redux/auth/auth.selectors'
 
 export const SocketContext = createContext(null as any)
 
@@ -16,7 +15,7 @@ interface Iprops {
 
 let socket: Socket
 let ws
-let userId: string
+let userDataFromServer: IUser
 
 export const SocketProvider = (props: Iprops) => {
   const { children } = props
@@ -25,7 +24,6 @@ export const SocketProvider = (props: Iprops) => {
   // let nsSocket: Socket
 
   const dispatch = useDispatch()
-  const userCurrentRoomId = useSelector(selectUserCurrentRoomId)
 
   const initialize = () => {
     socket.on('currentServerData', (currentServerData: IServerData) => {
@@ -36,10 +34,6 @@ export const SocketProvider = (props: Iprops) => {
       dispatch(
         serverRoomMessageActions.setCurrentServerRoomsArr(currentServerRoomsArr)
       )
-
-      const roomId = userCurrentRoomId || currentServerRoomsArr[0]._id
-
-      socket.emit('enterInitialRoom', roomId)
     })
 
     socket.on('savedMessage', (newMessage: IMessage) => {
@@ -55,6 +49,7 @@ export const SocketProvider = (props: Iprops) => {
     })
 
     socket.on('currentRoomMessages', (messages: IMessage[]) => {
+      console.log(messages)
       dispatch(serverRoomMessageActions.setMessages(messages))
     })
 
@@ -84,7 +79,7 @@ export const SocketProvider = (props: Iprops) => {
         serversArr: IServerData[]
         userData: IUser
       }) => {
-        userId = userData._id
+        userDataFromServer = userData
         dispatch(serverRoomMessageActions.setServersArr(serversArr))
         dispatch(authActions.setUserData(userData))
 
@@ -101,9 +96,9 @@ export const SocketProvider = (props: Iprops) => {
   }
 
   const joinServer = (endpoint: string) => {
-    // if (socket) {
-    //   socket.disconnect()
-    // }
+    if (socket) {
+      socket.disconnect()
+    }
 
     socket = socketIOClient.io(`http://localhost:5000${endpoint}`)
 
@@ -111,7 +106,11 @@ export const SocketProvider = (props: Iprops) => {
   }
 
   const joinRoom = (newRoomId: string) => {
-    socket.emit('changeRoom', { userCurrentRoomId, newRoomId })
+    socket.emit(
+      'changeRoom',
+
+      newRoomId
+    )
     // dispatch(roomsActions.updateCurrentRoomName(roomName))
 
     // socket.on('updateMembers', (usersInARoom: any) =>

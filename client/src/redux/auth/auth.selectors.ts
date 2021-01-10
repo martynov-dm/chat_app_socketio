@@ -49,5 +49,9 @@ export const selectUserLogin = createSelector(
 )
 export const selectUserCurrentRoomId = createSelector(
   [selectUser],
-  (userData) => userData.currentRoomId
+  (userData) => {
+    console.log('selector ', userData.currentRoomId)
+
+    return userData.currentRoomId
+  }
 )
