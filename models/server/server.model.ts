@@ -10,6 +10,7 @@ export const ServerSchema: Schema = new Schema(
     image: { type: String, required: true, min: 1 },
     endpoint: { type: String, required: true, unique: true, min: 1, max: 20 },
     isPrivate: { type: Boolean, require: true },
+    type: { type: String, require: true },
   },
   {
     toJSON: { virtuals: true },

@@ -13,7 +13,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react'
 import { css } from '@emotion/react'
-import React from 'react'
+import React, { RefObject } from 'react'
 import { useSelector } from 'react-redux'
 
 import ServerItem from '../../components/ServersList/ServerItem/ServerItem'
@@ -29,10 +29,10 @@ import {
 import RoomItem from '../Sidebar/RoomList/RoomItem'
 
 interface Iprops {
-  btnRef: any
-  isOpen: any
-  onOpen: any
-  onClose: any
+  btnRef: React.RefObject<HTMLElement>
+  isOpen: boolean
+  onOpen: () => void
+  onClose: () => void
 }
 
 const DrawerComponent = (props: Iprops) => {

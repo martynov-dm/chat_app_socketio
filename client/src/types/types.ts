@@ -35,7 +35,7 @@ export interface IServerData {
   title: string
   image: string
   endpoint: string
-  isPrivate: boolean
+  type: string
 
   rooms: IRoomData[]
 }

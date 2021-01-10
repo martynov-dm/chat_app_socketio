@@ -29,9 +29,6 @@ export const ListenToSocketEndPoints = async (io: Server) => {
           serversArr,
           userData,
         }
-        // //@ts-ignore
-        // socket['userData'] = userData
-        // console.log(socket.id)
 
         socket.emit('authorized', initialData)
       } catch (error) {
@@ -44,7 +41,7 @@ export const ListenToSocketEndPoints = async (io: Server) => {
     io.of(server.endpoint).on('connection', async (socket: Socket) => {
       const currentServerDataFull = await ServerModel.findOne(
         { endpoint: server.endpoint },
-        '_id title image endpoint isPrivate rooms'
+        '_id title image endpoint type rooms'
       ).lean()
       const { rooms, ...serverData } = currentServerDataFull
 

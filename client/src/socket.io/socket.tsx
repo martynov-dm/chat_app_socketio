@@ -49,7 +49,6 @@ export const SocketProvider = (props: Iprops) => {
     })
 
     socket.on('currentRoomMessages', (messages: IMessage[]) => {
-      console.log(messages)
       dispatch(serverRoomMessageActions.setMessages(messages))
     })
 
