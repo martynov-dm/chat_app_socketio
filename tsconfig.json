@@ -6,11 +6,11 @@
     "outDir": "./build",
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "sourceMap": true,
     "baseUrl": ".",
     "skipLibCheck": true,
-    "strict": true
+    "strict": false
   },
 
   "exclude": ["client/**/*", "build/**/*", "node_modules"]
