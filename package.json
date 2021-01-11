@@ -10,7 +10,7 @@
     "server": "nodemon index.ts",
     "build": "cd client && npm run build",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
-    "compile": "tsc --project ./",
+    "compile": "tsc -b ./",
     "start": "yarn compile && node build/index.js",
     "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
   },
