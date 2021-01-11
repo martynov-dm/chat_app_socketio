@@ -12,7 +12,7 @@ const Main: React.FC = () => {
   const ws = useContext(SocketContext)
   const variant = useBreakpointValue({
     base: '0 0 1fr',
-    md: 'minmax(5.5rem, 5%) minmax(14rem, 14%) 1fr',
+    md: 'minmax(5.5rem, 5%) minmax(17rem, 14%) 1fr',
   })
   useEffect(() => {
     ws.auth()

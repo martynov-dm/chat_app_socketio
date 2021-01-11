@@ -52,6 +52,12 @@ export const serverRoomMessageActions = {
       payload: message,
     } as const
   },
+  addNewRoom: (room: IRoomData) => {
+    return {
+      type: 'ADD_NEW_ROOM',
+      payload: room,
+    } as const
+  },
 
   updateUsers: (users: IUser[]) => {
     return {

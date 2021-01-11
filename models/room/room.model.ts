@@ -14,7 +14,7 @@ export interface IRoom extends Document {
 export const RoomSchema = new Schema(
   {
     roomTitle: { type: String, require: true, max: 20, min: 1 },
-    server: { type: Schema.Types.ObjectId, ref: 'Server' },
+    server: { type: Schema.Types.ObjectId, ref: 'Server', required: true },
   },
   {
     toJSON: { virtuals: true },

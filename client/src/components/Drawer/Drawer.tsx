@@ -9,12 +9,15 @@ import {
   DrawerOverlay,
   Flex,
   Heading,
+  Icon,
+  IconButton,
   useColorModeValue,
   useDisclosure,
 } from '@chakra-ui/react'
 import { css } from '@emotion/react'
 import React, { RefObject } from 'react'
 import { useSelector } from 'react-redux'
+import { CgAddR } from 'react-icons/cg'
 
 import ServerItem from '../../components/ServersList/ServerItem/ServerItem'
 import {
@@ -25,8 +28,10 @@ import {
   selectCurrentServerTitle,
   selectServersArr,
   selectRoomsArr,
+  selectCurrentServerType,
 } from '../../redux/serverRoomMessage/serverRoomMessage.selectors'
 import RoomItem from '../Sidebar/RoomList/RoomItem'
+import Modal from '../common/Modal'
 
 interface Iprops {
   btnRef: React.RefObject<HTMLElement>
@@ -45,6 +50,16 @@ const DrawerComponent = (props: Iprops) => {
   const currentRoomsArr = useSelector(selectRoomsArr)
   const login = useSelector(selectUserLogin)
   const avatar = useSelector(selectUserAvatar)
+
+  const serverType = useSelector(selectCurrentServerType)
+  const {
+    isOpen: isModalOpen,
+    onOpen: onModalOpen,
+    onClose: onModalClose,
+  } = useDisclosure()
+  const initialRef = React.useRef(null)
+  const finalRef = React.useRef(null)
+
   return (
     <>
       <Drawer
@@ -90,6 +105,28 @@ const DrawerComponent = (props: Iprops) => {
                 {serverTitle}
               </Heading>
 
+              {serverType === 'public' && (
+                <>
+                  <IconButton
+                    mt='1rem'
+                    mx='auto'
+                    width='5rem'
+                    onClick={onModalOpen}
+                    ref={finalRef}
+                    aria-label='Search database'
+                    icon={<Icon w='1.6rem' h='1.6rem' as={CgAddR} />}
+                  />
+
+                  <Modal
+                    initialRef={initialRef}
+                    finalRef={finalRef}
+                    isOpen={isModalOpen}
+                    onOpen={onModalOpen}
+                    onClose={onModalClose}
+                  />
+                </>
+              )}
+
               <div
                 css={css`
                   width: 95%;
@@ -124,8 +161,6 @@ const DrawerComponent = (props: Iprops) => {
             </div>
 
             {/* <DrawerHeader>Create your account</DrawerHeader> */}
-
-            {/* <DrawerBody>dick - content</DrawerBody> */}
 
             {/* <DrawerFooter>footer</DrawerFooter> */}
           </DrawerContent>

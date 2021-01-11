@@ -51,6 +51,9 @@ export const SocketProvider = (props: Iprops) => {
     socket.on('currentRoomMessages', (messages: IMessage[]) => {
       dispatch(serverRoomMessageActions.setMessages(messages))
     })
+    socket.on('addRoom', (room: IRoomData) => {
+      dispatch(serverRoomMessageActions.addNewRoom(room))
+    })
 
     // socket.on('currentServerData', (currentServerData: IServerData) => {
     //   dispatch(serversActions.updateCurrentServer(currentServerData))
@@ -126,12 +129,18 @@ export const SocketProvider = (props: Iprops) => {
     socket.emit('newMessageToServer', { message, userId, roomId })
   }
 
+  const addRoom = (roomName: string) => {
+    socket.emit('addRoom', roomName)
+    console.log(roomName)
+  }
+
   ws = {
     sendMessage,
     initialize,
     joinServer,
     joinRoom,
     auth,
+    addRoom,
   }
 
   return <SocketContext.Provider value={ws}>{children}</SocketContext.Provider>

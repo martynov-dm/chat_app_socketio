@@ -95,6 +95,16 @@ export const ListenToSocketEndPoints = async (io: Server) => {
         leaveRoom(currentRoomId, io, server.endpoint, socket)
       })
 
+      socket.on('addRoom', async (newRoomTitle: string) => {
+        const newRoom = new RoomModel({
+          roomTitle: newRoomTitle,
+          server: server._id,
+        })
+        newRoom.save((err, doc) => {
+          io.of(server.endpoint).emit('addRoom', doc)
+        })
+      })
+
       socket.on(
         'newMessageToServer',
         async ({

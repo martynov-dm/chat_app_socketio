@@ -11,6 +11,8 @@ import {
   ModalHeader,
   ModalOverlay,
 } from '@chakra-ui/react'
+import { useContext, useState } from 'react'
+import { SocketContext } from '../../socket.io/socket'
 
 interface IProps {
   initialRef: React.RefObject<HTMLInputElement>
@@ -22,6 +24,14 @@ interface IProps {
 
 const Modal: React.FC<IProps> = (props) => {
   const { initialRef, finalRef, isOpen, onClose } = props
+  const [groupName, setGroupName] = useState('')
+  const ws = useContext(SocketContext)
+
+  const handleSave = () => {
+    ws.addRoom(groupName)
+    setGroupName('')
+    onClose()
+  }
 
   return (
     <>
@@ -33,17 +43,23 @@ const Modal: React.FC<IProps> = (props) => {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Create your account</ModalHeader>
+          <ModalHeader>Create new room</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <FormControl>
-              <FormLabel>First name</FormLabel>
-              <Input ref={initialRef} placeholder='First name' />
+              <FormLabel>Room name</FormLabel>
+              <Input
+                onChange={(e) => setGroupName(e.currentTarget.value)}
+                ref={initialRef}
+                placeholder='Room name'
+                value={groupName}
+                maxLength={20}
+              />
             </FormControl>
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme='blue' mr={3}>
+            <Button onClick={handleSave} colorScheme='blue' mr={3}>
               Save
             </Button>
             <Button onClick={onClose}>Cancel</Button>

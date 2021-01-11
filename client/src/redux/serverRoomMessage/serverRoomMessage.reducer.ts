@@ -51,6 +51,14 @@ const serverRoomMessageReducer = (
           roomsArr: action.payload,
         },
       }
+    case 'ADD_NEW_ROOM':
+      return {
+        ...state,
+        rooms: {
+          ...state.rooms,
+          roomsArr: [...state.rooms.roomsArr, action.payload],
+        },
+      }
     case 'SET_CURRENT_ROOM_DATA':
       return {
         ...state,

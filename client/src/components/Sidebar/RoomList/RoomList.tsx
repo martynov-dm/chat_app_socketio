@@ -15,6 +15,9 @@ const RoomList = () => {
         flex-direction: column;
         margin-left: 2rem;
         margin-top: 1rem;
+        width: 85%;
+        height: 70vh;
+        overflow-y: auto;
       `}
     >
       {currentRoomsArr &&
