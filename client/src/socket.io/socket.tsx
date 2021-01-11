@@ -68,7 +68,7 @@ export const SocketProvider = (props: Iprops) => {
 
   const auth = () => {
     const token = sessionStorage.getItem('token')
-    socket = socketIOClient.io('http://localhost:5000/')
+    socket = socketIOClient.io('/')
     socket.emit('authenticate', token)
 
     socket.on(
@@ -100,7 +100,7 @@ export const SocketProvider = (props: Iprops) => {
       socket.disconnect()
     }
 
-    socket = socketIOClient.io(`http://localhost:5000${endpoint}`)
+    socket = socketIOClient.io(`${endpoint}`)
 
     initialize()
   }

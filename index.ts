@@ -5,6 +5,8 @@ import cors from 'cors'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import passport from 'passport'
+import serveStatic from 'serve-static'
+import path from 'path'
 
 import { ListenToSocketEndPoints } from './socket.io/socket.io'
 import authRoute from './routes/auth'
@@ -24,6 +26,10 @@ app.use(
   express.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 })
 )
 app.use(cookieParser())
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(serveStatic(__dirname + '/client/build'))
+}
 
 connect()
 
