@@ -1282,7 +1282,7 @@
     "@chakra-ui/icon" "1.0.2"
     "@chakra-ui/utils" "1.0.2"
 
-"@chakra-ui/hooks@1.0.2":
+"@chakra-ui/hooks@1.0.2", "@chakra-ui/hooks@^1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@chakra-ui/hooks/-/hooks-1.0.2.tgz#7497b8e9a317d8289d2099bf1fa4c5b9d1c1e8f3"
   integrity sha512-YDLzpa778C/bwrbky+svqN9zplK2ayZqEIOC9TNRFvtN3u8bfn2iWWnrmk4Qad8BNxpAaJOeN8QxkrP+REuDiQ==
