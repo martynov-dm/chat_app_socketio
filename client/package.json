@@ -1,5 +1,5 @@
 {
-  "name": "slack-copy",
+  "name": "awesome-chatroom-app",
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:5000/",
