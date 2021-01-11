@@ -3,7 +3,6 @@ import RoomItem from './RoomItem'
 import { css } from '@emotion/react'
 import { useSelector } from 'react-redux'
 import { selectRoomsArr } from '../../../redux/serverRoomMessage/serverRoomMessage.selectors'
-import { useColorModeValue } from '@chakra-ui/react'
 
 const RoomList = () => {
   const currentRoomsArr = useSelector(selectRoomsArr)

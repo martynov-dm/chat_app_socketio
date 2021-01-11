@@ -1,6 +1,6 @@
 import React, { createContext } from 'react'
 import socketIOClient, { Socket } from 'socket.io-client'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { push } from 'connected-react-router'
 
 import { IMessage, IRoomData, IServerData, IUser } from '../types/types'
@@ -15,7 +15,6 @@ interface Iprops {
 
 let socket: Socket
 let ws
-let userDataFromServer: IUser
 
 export const SocketProvider = (props: Iprops) => {
   const { children } = props
@@ -81,7 +80,6 @@ export const SocketProvider = (props: Iprops) => {
         serversArr: IServerData[]
         userData: IUser
       }) => {
-        userDataFromServer = userData
         dispatch(serverRoomMessageActions.setServersArr(serversArr))
         dispatch(authActions.setUserData(userData))
 

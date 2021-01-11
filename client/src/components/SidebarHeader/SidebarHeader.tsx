@@ -1,6 +1,6 @@
 import React from 'react'
 import { css } from '@emotion/react'
-import { Heading, Text, useColorModeValue } from '@chakra-ui/react'
+import { Heading, useColorModeValue } from '@chakra-ui/react'
 import { useSelector } from 'react-redux'
 import { selectCurrentServerTitle } from '../../redux/serverRoomMessage/serverRoomMessage.selectors'
 

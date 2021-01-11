@@ -74,21 +74,6 @@ export const ListenToSocketEndPoints = async (io: Server) => {
         joinRoom(userData._id, initialRoomId, socket, server.endpoint, io)
       }
 
-      // socket.on('enterInitialRoom', async (roomId: string) => {
-      // await leaveRoom(userId, io, server.endpoint, socket)
-
-      //  RoomModel.findByIdAndUpdate(roomId, {
-      //   $addToSet: {
-      //     currentUsers: userId,
-      //   },
-      // }).populate({
-      //   path: 'currentUsers',
-      //   select: 'login avatar',
-      // })
-
-      // io.of(server.endpoint).to(roomId).emit('userJoined', userData)
-      // })
-
       socket.on('changeRoom', async (newRoomId: string) => {
         const currentRoomId = userData.currentRoomId
         joinRoom(userData._id, newRoomId, socket, server.endpoint, io)
@@ -156,8 +141,6 @@ export const ListenToSocketEndPoints = async (io: Server) => {
           .of(server.endpoint)
           .in(userData.currentRoomId.toString())
           .emit('usersUpdate', usersArr)
-
-        //@ts-ignore
       })
     })
   })

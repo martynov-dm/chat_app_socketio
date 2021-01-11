@@ -1,4 +1,4 @@
-import { Avatar, Box, Heading, Image, Text } from '@chakra-ui/react'
+import { Avatar, Box, Heading, Text } from '@chakra-ui/react'
 import { css } from '@emotion/react'
 import React from 'react'
 import { useSelector } from 'react-redux'

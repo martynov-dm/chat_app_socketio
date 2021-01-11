@@ -1,11 +1,9 @@
 import React, { useContext } from 'react'
 import { css } from '@emotion/react'
 import { Flex, Text, useColorModeValue } from '@chakra-ui/react'
-import { useSelector } from 'react-redux'
 import { FaSlackHash } from 'react-icons/fa'
 import { Icon } from '@chakra-ui/react'
 
-import { selectUserId } from '../../../redux/auth/auth.selectors'
 import { SocketContext } from '../../../socket.io/socket'
 
 interface Iprops {
@@ -17,7 +15,6 @@ const RoomItem: React.FC<Iprops> = (props) => {
   const { title, roomId } = props
   const ws = useContext(SocketContext)
   const hoverColor = useColorModeValue('#F7FAFC', '#4A5568')
-  // const bgColor = useColorModeValue('#EDF2F7', '#2D3748')
   return (
     <>
       <Flex

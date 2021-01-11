@@ -1,7 +1,6 @@
 import { Avatar, Flex, Heading, useColorModeValue } from '@chakra-ui/react'
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { css } from '@emotion/react'
 
 import {
   selectUserLogin,

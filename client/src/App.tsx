@@ -1,5 +1,5 @@
 import React from 'react'
-import { Redirect, Route, Switch } from 'react-router-dom'
+import { Redirect, Route } from 'react-router-dom'
 import { ConnectedRouter } from 'connected-react-router'
 import Main from './pages/Main'
 import SignUp from './pages/SignUp'

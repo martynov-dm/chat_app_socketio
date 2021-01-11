@@ -16,7 +16,7 @@ const Main: React.FC = () => {
   })
   useEffect(() => {
     ws.auth()
-  }, [])
+  }, [ws])
 
   return (
     <main

@@ -2,7 +2,6 @@ import { IRoomData, IUser } from './../../types/types'
 import { IServerData } from '../../types/types'
 import { IMessage } from '../../types/types'
 import { serverRoomMessageActionsTypes } from './serverRoomMessage.actions'
-import { removeUserFromArr } from './utils'
 
 const INITIAL_STATE = {
   servers: {

@@ -1,11 +1,8 @@
 import {
   Avatar,
   Drawer,
-  DrawerBody,
   DrawerCloseButton,
   DrawerContent,
-  DrawerFooter,
-  DrawerHeader,
   DrawerOverlay,
   Flex,
   Heading,
@@ -15,7 +12,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react'
 import { css } from '@emotion/react'
-import React, { RefObject } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
 import { CgAddR } from 'react-icons/cg'
 
