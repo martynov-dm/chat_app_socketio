@@ -28,7 +28,8 @@ app.use(
 app.use(cookieParser())
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(serveStatic(__dirname + '../client/build'))
+  app.use(express.static(path.join(__dirname, './../client/build')))
+  console.log(path.join(__dirname, './../client/build'))
 }
 
 connect()
