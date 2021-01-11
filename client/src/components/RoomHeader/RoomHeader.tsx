@@ -160,7 +160,7 @@ const RoomHeader = (props: any) => {
 export default RoomHeader
 
 // import React from 'react'
-// import styled from 'styled-components'
+
 // import { BsFillPeopleFill } from 'react-icons/bs'
 // import { css } from '@emotion/react'
 // import ThemeToggler from '../../common/ThemeToggler'
