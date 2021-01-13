@@ -3,7 +3,6 @@ import { css } from '@emotion/react'
 import ThemeToggler from '../common/ThemeToggler'
 import {
   Avatar,
-  Flex,
   Heading,
   IconButton,
   Popover,

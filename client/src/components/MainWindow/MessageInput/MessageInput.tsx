@@ -38,6 +38,10 @@ const MessageInput: React.FC = () => {
   const [message, setMessage] = useState('')
 
   const handleMessageSubmit = () => {
+    if (!message) {
+      alert('Put some text!!')
+      return
+    }
     ws.sendMessage(message, userId, roomId)
     setMessage('')
   }

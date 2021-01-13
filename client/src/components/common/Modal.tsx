@@ -28,6 +28,11 @@ const Modal: React.FC<IProps> = (props) => {
   const ws = useContext(SocketContext)
 
   const handleSave = () => {
+    if (!groupName) {
+      alert('Put some text!!')
+      return
+    }
+
     ws.addRoom(groupName)
     setGroupName('')
     onClose()

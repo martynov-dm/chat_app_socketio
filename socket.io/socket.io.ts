@@ -137,10 +137,15 @@ export const ListenToSocketEndPoints = async (io: Server) => {
             io.of(server.endpoint).sockets.get(socket)!.userData
         )
 
+        const filteredUsersArr = usersArr.filter(
+          (user, index, thisArray) =>
+            thisArray.findIndex((user2) => user2._id === user._id) === index
+        )
+
         await io
           .of(server.endpoint)
           .in(userData.currentRoomId.toString())
-          .emit('usersUpdate', usersArr)
+          .emit('usersUpdate', filteredUsersArr)
       })
     })
   })
@@ -164,10 +169,15 @@ const leaveRoom = async (
       io.of(endpoint).sockets.get(socket)!.userData
   )
 
+  const filteredUsersArr = usersArr.filter(
+    (user, index, thisArray) =>
+      thisArray.findIndex((user2) => user2._id === user._id) === index
+  )
+
   await io
     .of(endpoint)
     .to(userData.currentRoomId.toString())
-    .emit('usersUpdate', usersArr)
+    .emit('usersUpdate', filteredUsersArr)
 }
 
 const joinRoom = async (
@@ -200,8 +210,13 @@ const joinRoom = async (
       io.of(endpoint).sockets.get(socket)!.userData
   )
 
-  await socket.emit('usersUpdate', usersArr)
-  await socket.to(roomId.toString()).emit('usersUpdate', usersArr)
+  const filteredUsersArr = usersArr.filter(
+    (user, index, thisArray) =>
+      thisArray.findIndex((user2) => user2._id === user._id) === index
+  )
+
+  await socket.emit('usersUpdate', filteredUsersArr)
+  await socket.to(roomId.toString()).emit('usersUpdate', filteredUsersArr)
 
   await User.findByIdAndUpdate(
     userId,
