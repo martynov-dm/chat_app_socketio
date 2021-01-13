@@ -108,10 +108,11 @@ const ListenToSocketEndPoints = (io) => __awaiter(void 0, void 0, void 0, functi
                 const usersArr = SocketsInRoomArr.map((socket) => 
                 //@ts-ignore
                 io.of(server.endpoint).sockets.get(socket).userData);
+                const filteredUsersArr = usersArr.filter((user, index, thisArray) => thisArray.findIndex((user2) => user2._id === user._id) === index);
                 yield io
                     .of(server.endpoint)
                     .in(userData.currentRoomId.toString())
-                    .emit('usersUpdate', usersArr);
+                    .emit('usersUpdate', filteredUsersArr);
             }));
         }));
     });
@@ -123,10 +124,11 @@ const leaveRoom = (oldRoomId, io, endpoint, socket) => __awaiter(void 0, void 0,
     const usersArr = SocketsInRoomArr.map((socket) => 
     //@ts-ignore
     io.of(endpoint).sockets.get(socket).userData);
+    const filteredUsersArr = usersArr.filter((user, index, thisArray) => thisArray.findIndex((user2) => user2._id === user._id) === index);
     yield io
         .of(endpoint)
         .to(userData.currentRoomId.toString())
-        .emit('usersUpdate', usersArr);
+        .emit('usersUpdate', filteredUsersArr);
 });
 const joinRoom = (userId, roomId, socket, endpoint, io) => __awaiter(void 0, void 0, void 0, function* () {
     const roomDataFull = yield room_model_1.RoomModel.findById(roomId)
@@ -142,8 +144,9 @@ const joinRoom = (userId, roomId, socket, endpoint, io) => __awaiter(void 0, voi
     const usersArr = SocketsInRoomArr.map((socket) => 
     //@ts-ignore
     io.of(endpoint).sockets.get(socket).userData);
-    yield socket.emit('usersUpdate', usersArr);
-    yield socket.to(roomId.toString()).emit('usersUpdate', usersArr);
+    const filteredUsersArr = usersArr.filter((user, index, thisArray) => thisArray.findIndex((user2) => user2._id === user._id) === index);
+    yield socket.emit('usersUpdate', filteredUsersArr);
+    yield socket.to(roomId.toString()).emit('usersUpdate', filteredUsersArr);
     yield user_model_1.default.findByIdAndUpdate(userId, {
         $set: { currentRoomId: roomId },
     }, { new: true }, (err, user) => {
