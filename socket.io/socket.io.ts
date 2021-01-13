@@ -139,7 +139,7 @@ export const ListenToSocketEndPoints = async (io: Server) => {
 
         const filteredUsersArr = usersArr.filter(
           (user, index, thisArray) =>
-            thisArray.findIndex((user2) => user2._id === user._id) === index
+            thisArray.findIndex((user2) => user2.login === user.login) === index
         )
 
         await io
@@ -171,7 +171,7 @@ const leaveRoom = async (
 
   const filteredUsersArr = usersArr.filter(
     (user, index, thisArray) =>
-      thisArray.findIndex((user2) => user2._id === user._id) === index
+      thisArray.findIndex((user2) => user2.login === user.login) === index
   )
 
   await io
@@ -210,10 +210,14 @@ const joinRoom = async (
       io.of(endpoint).sockets.get(socket)!.userData
   )
 
+  console.log('bef filter', usersArr)
+
   const filteredUsersArr = usersArr.filter(
     (user, index, thisArray) =>
-      thisArray.findIndex((user2) => user2._id === user._id) === index
+      thisArray.findIndex((user2) => user2.login === user.login) === index
   )
+
+  console.log('after filter', filteredUsersArr)
 
   await socket.emit('usersUpdate', filteredUsersArr)
   await socket.to(roomId.toString()).emit('usersUpdate', filteredUsersArr)

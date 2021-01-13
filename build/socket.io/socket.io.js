@@ -108,7 +108,7 @@ const ListenToSocketEndPoints = (io) => __awaiter(void 0, void 0, void 0, functi
                 const usersArr = SocketsInRoomArr.map((socket) => 
                 //@ts-ignore
                 io.of(server.endpoint).sockets.get(socket).userData);
-                const filteredUsersArr = usersArr.filter((user, index, thisArray) => thisArray.findIndex((user2) => user2._id === user._id) === index);
+                const filteredUsersArr = usersArr.filter((user, index, thisArray) => thisArray.findIndex((user2) => user2.login === user.login) === index);
                 yield io
                     .of(server.endpoint)
                     .in(userData.currentRoomId.toString())
@@ -124,7 +124,7 @@ const leaveRoom = (oldRoomId, io, endpoint, socket) => __awaiter(void 0, void 0,
     const usersArr = SocketsInRoomArr.map((socket) => 
     //@ts-ignore
     io.of(endpoint).sockets.get(socket).userData);
-    const filteredUsersArr = usersArr.filter((user, index, thisArray) => thisArray.findIndex((user2) => user2._id === user._id) === index);
+    const filteredUsersArr = usersArr.filter((user, index, thisArray) => thisArray.findIndex((user2) => user2.login === user.login) === index);
     yield io
         .of(endpoint)
         .to(userData.currentRoomId.toString())
@@ -144,7 +144,9 @@ const joinRoom = (userId, roomId, socket, endpoint, io) => __awaiter(void 0, voi
     const usersArr = SocketsInRoomArr.map((socket) => 
     //@ts-ignore
     io.of(endpoint).sockets.get(socket).userData);
-    const filteredUsersArr = usersArr.filter((user, index, thisArray) => thisArray.findIndex((user2) => user2._id === user._id) === index);
+    console.log('bef filter', usersArr);
+    const filteredUsersArr = usersArr.filter((user, index, thisArray) => thisArray.findIndex((user2) => user2.login === user.login) === index);
+    console.log('after filter', filteredUsersArr);
     yield socket.emit('usersUpdate', filteredUsersArr);
     yield socket.to(roomId.toString()).emit('usersUpdate', filteredUsersArr);
     yield user_model_1.default.findByIdAndUpdate(userId, {
