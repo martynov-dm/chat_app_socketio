@@ -29,6 +29,7 @@ app.use(express_1.default.urlencoded({ limit: '50mb', extended: true, parameterL
 app.use(cookie_parser_1.default());
 if (process.env.NODE_ENV === 'production') {
     app.use(express_1.default.static(path_1.default.join(__dirname, './../client/build')));
+    app.use('/sign-in', express_1.default.static(path_1.default.join(__dirname, './../client/build')));
 }
 mongoose_1.connect();
 app.use('/api/auth', auth_1.default);
