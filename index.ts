@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser'
 import passport from 'passport'
 import serveStatic from 'serve-static'
 import path from 'path'
+import compression from 'compression'
 
 import { ListenToSocketEndPoints } from './socket.io/socket.io'
 import authRoute from './routes/auth'
@@ -19,6 +20,7 @@ const app = express()
 const server = http.createServer(app)
 
 app.use(cors())
+app.use(compression())
 passport.initialize()
 passport.use('jwt', jwtStrategy)
 app.use(bodyParser.json())
