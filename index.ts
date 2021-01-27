@@ -30,8 +30,9 @@ app.use(
 app.use(cookieParser())
 
 if (process.env.NODE_ENV === 'production') {
-  app.use('/*', express.static(path.join(__dirname, './../client/build')))
-  // app.use('/sign-in', express.static(path.join(__dirname, './../client/build')))
+  app.use(express.static(path.join(__dirname, './../client/build')))
+  app.use('/sign-in', express.static(path.join(__dirname, './../client/build')))
+  app.use('/sign-up', express.static(path.join(__dirname, './../client/build')))
 }
 
 connect()
