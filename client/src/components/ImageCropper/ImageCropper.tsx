@@ -11,11 +11,11 @@ import {
   Button,
 } from '@chakra-ui/react'
 
-interface props {
-  getBlob: (blob: any) => void
+interface IProps {
+  getBlob: (blob: Blob) => void
   inputImg: ArrayBuffer | string
   setIsCropping: (isCoping: boolean) => void
-  setFinalImage: (image: any) => void
+  setFinalImage: (imageURL: string) => void
 }
 
 export interface IcroppedAreaPixels {
@@ -25,7 +25,7 @@ export interface IcroppedAreaPixels {
   y: number
 }
 
-const ImageCropper: React.FC<props> = ({
+const ImageCropper: React.FC<IProps> = ({
   getBlob,
   inputImg,
   setIsCropping,
@@ -41,7 +41,10 @@ const ImageCropper: React.FC<props> = ({
     _: any,
     croppedAreaPixels: IcroppedAreaPixels
   ) => {
-    const croppedImage = await getCroppedImg(inputImg, croppedAreaPixels)
+    const croppedImage = await getCroppedImg(
+      inputImg as string,
+      croppedAreaPixels
+    )
     getBlob(croppedImage as Blob)
     setFinalImage(URL.createObjectURL(croppedImage) as string)
   }

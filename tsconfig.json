@@ -2,16 +2,21 @@
   "compilerOptions": {
     "target": "es6",
     "module": "commonjs",
-    "rootDir": "./",
-    "outDir": "./build",
+    "rootDir": "./server",
+    "outDir": "./server/build",
+    "sourceMap": true,
+    /* Strict Type-Checking Options */
+    "strict": true,
+    "noImplicitAny": true,
+    /* Module Resolution Options */
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "noImplicitAny": true,
-    "sourceMap": true,
     "baseUrl": ".",
+    /* Advanced Options */
     "skipLibCheck": true,
-    "strict": false
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true
   },
 
-  "exclude": ["client/**/*", "build/**/*", "node_modules"]
+  "exclude": ["client/**/*", "server/build/**", "node_modules"]
 }

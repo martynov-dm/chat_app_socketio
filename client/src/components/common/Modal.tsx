@@ -13,6 +13,7 @@ import {
 } from '@chakra-ui/react'
 import { useContext, useState } from 'react'
 import { SocketContext } from '../../socket.io/socket'
+import React from 'react'
 
 interface IProps {
   initialRef: React.RefObject<HTMLInputElement>

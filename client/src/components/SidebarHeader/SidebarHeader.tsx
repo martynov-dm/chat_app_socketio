@@ -4,7 +4,7 @@ import { Heading, useColorModeValue } from '@chakra-ui/react'
 import { useSelector } from 'react-redux'
 import { selectCurrentServerTitle } from '../../redux/serverRoomMessage/serverRoomMessage.selectors'
 
-const SidebarHeader = (props: any) => {
+const SidebarHeader = () => {
   const bgColor = useColorModeValue('#EDF2F7', '#2D3748')
   const serverTitle = useSelector(selectCurrentServerTitle)
 

@@ -7,7 +7,7 @@ import {
   selectUserAvatar,
 } from '../../../redux/auth/auth.selectors'
 
-const UserMenu = (props: any) => {
+const UserMenu = () => {
   const bgColor = useColorModeValue('gray.200', 'gray.800')
   const login = useSelector(selectUserLogin)
   const avatar = useSelector(selectUserAvatar)

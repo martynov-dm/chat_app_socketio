@@ -5,12 +5,8 @@ import {
   ILoginPasswordAvatar,
   TAuthActionsWithPayload,
 } from './../../types/types'
-import { takeLatest, all, put } from 'redux-saga/effects'
+import { takeLatest, all, put, call } from 'redux-saga/effects'
 import { push } from 'connected-react-router'
-
-import * as Effects from 'redux-saga/effects'
-
-const call: any = Effects.call
 
 export function* signIn(action: TAuthActionsWithPayload) {
   const { login, password } = action.payload as ILoginAndPassword

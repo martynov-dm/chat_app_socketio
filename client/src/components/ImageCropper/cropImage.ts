@@ -1,6 +1,6 @@
 import { IcroppedAreaPixels } from './ImageCropper'
 
-const createImage = (url: any) =>
+const createImage = (url: string) =>
   new Promise((resolve, reject) => {
     const image = new Image()
     image.addEventListener('load', () => resolve(image))
@@ -9,10 +9,7 @@ const createImage = (url: any) =>
     image.src = url
   })
 
-const getCroppedImg = async (
-  imageSrc: ArrayBuffer | string,
-  crop: IcroppedAreaPixels
-) => {
+const getCroppedImg = async (imageSrc: string, crop: IcroppedAreaPixels) => {
   const image = await createImage(imageSrc)
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')
@@ -30,7 +27,7 @@ const getCroppedImg = async (
   ctx!.stroke()
 
   ctx!.drawImage(
-    image as any,
+    image as HTMLImageElement,
     crop.x,
     crop.y,
     crop.width,

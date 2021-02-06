@@ -1,7 +1,7 @@
 import { AuthActionTypes } from './../redux/auth/auth.actions'
 ////REDUX TYPES////////////////////////////////
 export type InferActionTypes<T> = T extends {
-  [key: string]: (...arg: any[]) => infer U
+  [key: string]: (...arg: any) => infer U
 }
   ? U
   : never

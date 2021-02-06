@@ -5,7 +5,7 @@ export const removeUserFromArr = (oldArray: IUser[], user: IUser) => {
     (userInOldArr) => userInOldArr._id == user._id
   )
 
-  let newArray = oldArray.slice()
+  const newArray = oldArray.slice()
   newArray.splice(index, 1)
   return newArray
 }

@@ -28,7 +28,7 @@ import {
 import Drawer from '../Drawer/Drawer'
 import { useMediaQuery } from '@material-ui/core'
 
-const RoomHeader = (props: any) => {
+const RoomHeader = () => {
   const bgColor = useColorModeValue('#EDF2F7', '#2D3748')
   const userCount = useSelector(selectCurrentRoomUserCount)
   const currentRoomName = useSelector(selectCurrentRoomName)

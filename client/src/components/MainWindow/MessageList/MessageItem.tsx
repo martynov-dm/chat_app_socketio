@@ -67,9 +67,10 @@ const MessageItem = (props: Iprops) => {
       </Box>
       <div className='text'>
         <div className='name-date'>
-          <Heading as='h5' size='sm' className='name'>
+          <Heading isTruncated maxWidth='8rem' as='h5' size='sm'>
             {username}
           </Heading>
+
           <Text className='date'>{convertedDate}</Text>
         </div>
 

@@ -7,28 +7,6 @@ import { useSelector } from 'react-redux'
 import { selectUserId } from '../../../redux/auth/auth.selectors'
 import { selectCurrentRoomId } from '../../../redux/serverRoomMessage/serverRoomMessage.selectors'
 
-// svg {
-//   width: 2rem;
-//   height: 2rem;
-//   fill: #006eff;
-//   margin-right: 2rem;
-// }
-
-// button {
-//   position: relative;
-//   border: 0;
-//   background: #fff;
-//   padding: 0;
-//   cursor: pointer;
-// }
-
-// input:first-child {
-//   flex: 1 1 100%;
-//   padding: 1rem;
-//   border: 0;
-//   font-size: 1rem;
-// }
-
 const MessageInput: React.FC = () => {
   const bgColor = useColorModeValue('gray.200', 'gray.800')
   const inputColor = useColorModeValue('#FFFFFF', '#2D3748')
@@ -46,7 +24,7 @@ const MessageInput: React.FC = () => {
     setMessage('')
   }
 
-  const handleKeyDown = (event: any) => {
+  const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
       handleMessageSubmit()
     }
