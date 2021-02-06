@@ -11,8 +11,9 @@
     "server": "nodemon server/index.ts",
     "build": "cd client && npm run build",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
+    "postinstall": "tsc",
     "start": "node server/build/index.js",
-    "postinstall": "tsc"
+    "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
