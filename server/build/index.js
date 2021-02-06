@@ -27,10 +27,12 @@ passport_1.default.use('jwt', passport_2.default);
 app.use(body_parser_1.default.json());
 app.use(express_1.default.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
 app.use(cookie_parser_1.default());
-app.use(express_1.default.static(path_1.default.resolve('client/dist')));
-app.get('/*', function (req, res) {
-    res.redirect('/');
-});
+if (process.env.NODE_ENV === 'production') {
+    app.use(express_1.default.static(path_1.default.resolve('client/dist')));
+    app.get('/*', function (req, res) {
+        res.redirect('/');
+    });
+}
 mongoose_1.connect();
 app.use('/api/auth', auth_1.default);
 server.listen(PORT, () => {

@@ -30,7 +30,7 @@ const room_model_1 = require("./../models/room/room.model");
 const server_model_1 = require("../models/server/server.model");
 const user_model_1 = __importDefault(require("../models/user/user.model"));
 const config_1 = __importDefault(require("../config"));
-let userData;
+let userData = {};
 const ListenToSocketEndPoints = (io) => __awaiter(void 0, void 0, void 0, function* () {
     const serversArr = yield server_model_1.ServerModel.getServersArr();
     io.of('/').on('connection', (socket) => __awaiter(void 0, void 0, void 0, function* () {
