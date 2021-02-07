@@ -26,5 +26,6 @@ module.exports = {
         regenerator: true,
       },
     ],
+    '@babel/plugin-syntax-dynamic-import',
   ],
 }

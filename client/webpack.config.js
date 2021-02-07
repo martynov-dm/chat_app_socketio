@@ -13,7 +13,11 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 module.exports = {
-  entry: './src/index.tsx',
+  entry: [
+    'core-js/modules/es.promise',
+    'core-js/modules/es.array.iterator',
+    path.resolve(__dirname, 'src/index.tsx'),
+  ],
 
   mode: mode,
   target: target,
@@ -21,6 +25,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     assetModuleFilename: 'images/[hash][ext]',
+    filename: '[name].bundle.js',
     publicPath: '/',
   },
 
@@ -31,7 +36,7 @@ module.exports = {
         type: 'asset',
       },
       {
-        test: /\.(s[ac]|c)ss$/i,
+        test: /\.css/i,
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
@@ -39,7 +44,6 @@ module.exports = {
           },
           'css-loader',
           'postcss-loader',
-          'sass-loader',
         ],
       },
       {
@@ -87,6 +91,12 @@ module.exports = {
         target: 'http://localhost:5000',
         ws: true,
       },
+    },
+  },
+
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
     },
   },
 }

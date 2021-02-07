@@ -163,7 +163,7 @@ const SignUp = () => {
                           borderRadius='full'
                           boxSize='130px'
                           src={avatarPlaceholder}
-                          alt='Segun Adebayo'
+                          alt='Add Image'
                           css={css`
                             cursor: pointer;
                           `}
