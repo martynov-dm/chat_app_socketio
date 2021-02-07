@@ -80,4 +80,4 @@ const MessageItem = (props: Iprops) => {
   )
 }
 
-export default MessageItem
+export default React.memo(MessageItem)

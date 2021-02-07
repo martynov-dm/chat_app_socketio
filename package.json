@@ -6,6 +6,7 @@
   "engines": {
     "node": "14.15.1"
   },
+  "sideEffects": false,
   "scripts": {
     "client": "cd client && yarn start",
     "server": "nodemon server/index.ts",

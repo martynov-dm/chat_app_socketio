@@ -64,4 +64,4 @@ const MessageInput: React.FC = () => {
   )
 }
 
-export default MessageInput
+export default React.memo(MessageInput)

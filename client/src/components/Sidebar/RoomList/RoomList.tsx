@@ -27,4 +27,4 @@ const RoomList = () => {
   )
 }
 
-export default RoomList
+export default React.memo(RoomList)

@@ -3,7 +3,7 @@ import { useColorMode, Box, IconButton } from '@chakra-ui/react'
 import { MoonIcon, SunIcon } from '@chakra-ui/icons'
 import { css } from '@emotion/react'
 
-export default function ThemeToggler() {
+export default React.memo(function ThemeToggler() {
   const { colorMode, toggleColorMode } = useColorMode()
   return (
     <Box
@@ -31,4 +31,4 @@ export default function ThemeToggler() {
       />
     </Box>
   )
-}
+})
