@@ -3,6 +3,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const WorkboxPlugin = require('workbox-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 let mode = 'development'
 let target = 'web'
@@ -62,12 +64,25 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/index.html',
       favicon: './public/favicon.ico',
+      title: 'Progressive Web Application',
     }),
     new ForkTsCheckerWebpackPlugin({
       async: false,
       eslint: {
         files: './src/**/*.{ts,tsx,js,jsx}',
       },
+    }),
+    new WorkboxPlugin.GenerateSW({
+      // these options encourage the ServiceWorkers to get in there fast
+      // and not allow any straggling "old" SWs to hang around
+      clientsClaim: true,
+      skipWaiting: true,
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'public/images', to: 'images' },
+        { from: 'public/manifest.json', to: 'manifest' },
+      ],
     }),
   ],
 
@@ -81,7 +96,7 @@ module.exports = {
     contentBase: path.join(__dirname, 'dist'),
     hot: true,
     compress: true,
-    port: 9000,
+    port: 8080,
     host: '0.0.0.0',
     useLocalIp: true,
 
