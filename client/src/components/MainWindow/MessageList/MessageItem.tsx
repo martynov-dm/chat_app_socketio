@@ -18,11 +18,11 @@ const MessageItem = (props: Iprops) => {
 
   return (
     <Box
-      boxShadow='base'
-      borderWidth='1px'
-      borderRadius='lg'
+      boxShadow="base"
+      borderWidth="1px"
+      borderRadius="lg"
       maxWidth={{ md: '22rem', lg: '35rem' }}
-      my='0.7rem'
+      my="0.7rem"
       css={css`
         padding: 0.8rem 0.3rem;
         display: flex;
@@ -62,19 +62,24 @@ const MessageItem = (props: Iprops) => {
         }
       `}
     >
-      <Box ml='1rem'>
-        <Avatar width='3rem' borderRadius='50%' src={avatar} alt='ava' />
+      <Box ml="1rem">
+        <Avatar
+          width="3rem"
+          borderRadius="50%"
+          src={avatar}
+          name="user image"
+        />
       </Box>
-      <div className='text'>
-        <div className='name-date'>
-          <Heading isTruncated maxWidth='8rem' as='h5' size='sm'>
+      <div className="text">
+        <div className="name-date">
+          <Heading isTruncated maxWidth="8rem" as="h5" size="sm">
             {username}
           </Heading>
 
-          <Text className='date'>{convertedDate}</Text>
+          <Text className="date">{convertedDate}</Text>
         </div>
 
-        <Text className='message'>{text}</Text>
+        <Text className="message">{text}</Text>
       </div>
     </Box>
   )
