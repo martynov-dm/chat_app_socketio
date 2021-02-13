@@ -63,7 +63,7 @@ module.exports = {
     new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
       template: './src/index.html',
-      favicon: './public/favicon.ico',
+      favicon: './public/images/favicon.ico',
       title: 'Progressive Web Application',
     }),
     new ForkTsCheckerWebpackPlugin({
