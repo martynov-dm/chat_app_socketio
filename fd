@@ -1,0 +1,12 @@
+user.email=d.martynov@dev.userstory.ru
+user.name=Dmitrii
+core.repositoryformatversion=0
+core.filemode=true
+core.bare=false
+core.logallrefupdates=true
+remote.origin.url=git@github.com:martynov-dm/chat_app_socketio.git
+remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+branch.master.remote=origin
+branch.master.merge=refs/heads/master
+remote.heroku.url=https://git.heroku.com/awesome-chatroom-app.git
+remote.heroku.fetch=+refs/heads/*:refs/remotes/heroku/*
