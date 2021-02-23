@@ -7,14 +7,15 @@ const SpinnerSuspense = () => {
   return (
     <>
       <ThemeToggler />
-      <Box w='100%' h='100%' position='relative'>
+      <Box w="100%" h="100%" position="relative">
         <Spinner
           ml={50}
-          thickness='5px'
-          speed='0.65s'
-          emptyColor='gray.200'
-          color='blue.200'
-          size='xl'
+          thickness="5px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="blue.200"
+          size="xl"
+          data-testid="spinner"
           css={css`
             position: absolute;
             top: 25%;

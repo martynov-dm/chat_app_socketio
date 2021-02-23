@@ -1,8 +1,6 @@
 import { css } from '@emotion/react'
 import React, { useRef, useState } from 'react'
-import ThemeToggler from '../components/common/ThemeToggler'
 import { Link as ReactRouterLink } from 'react-router-dom'
-
 import {
   Flex,
   Link,
@@ -21,9 +19,8 @@ import {
 } from '@chakra-ui/react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
-
+import ThemeToggler from '../components/common/ThemeToggler'
 import avatarPlaceholder from '../images/avatar_placeholder.png'
-
 import ImageCropper from '../components/ImageCropper/ImageCropper'
 import { authActions } from '../redux/auth/auth.actions'
 import {
@@ -40,12 +37,10 @@ const SignUp = () => {
 
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
-
   const [inputImg, setInputImg] = useState('' as ArrayBuffer | string)
   const [blob, setBlob] = useState(null as Blob | null)
   const [finalImage, setFinalImage] = useState('')
   const [isCropping, setIsCropping] = useState(false)
-
   const [showPassword, setShowPassword] = useState(false)
 
   const handlePasswordVisibility = () => setShowPassword(!showPassword)
@@ -77,14 +72,6 @@ const SignUp = () => {
     )
   }
 
-  // if (status === 'succeeded') {
-  //   setLogin('')
-  //   setPassword('')
-  //   setInputImg('')
-  //   setBlob(null)
-  //   setFinalImage('')
-  //   setShowPassword(false)
-  // }
   return (
     <>
       <ThemeToggler />
@@ -97,24 +84,24 @@ const SignUp = () => {
           inputImg={inputImg}
         />
       ) : (
-        <Flex width='full' align='center' justifyContent='center'>
+        <Flex width="full" align="center" justifyContent="center">
           <Box
             p={8}
-            maxWidth='500px'
+            maxWidth="500px"
             borderWidth={1}
             borderRadius={8}
-            boxShadow='lg'
+            boxShadow="lg"
           >
-            <Box textAlign='center'>
+            <Box textAlign="center">
               <Heading>Register</Heading>
             </Box>
-            <Box my={4} textAlign='left'>
+            <Box my={4} textAlign="left">
               <form onSubmit={handleSubmit}>
                 <Flex
-                  mx='auto'
-                  boxSize='130px'
-                  align='center'
-                  justifyContent='center'
+                  mx="auto"
+                  boxSize="130px"
+                  align="center"
+                  justifyContent="center"
                   css={css`
                     position: relative;
                     text-align: center;
@@ -128,48 +115,47 @@ const SignUp = () => {
                 >
                   {blob ? (
                     <>
-                      <label htmlFor='file'>
+                      <label htmlFor="file">
                         <Image
-                          boxShadow='md'
+                          boxShadow="md"
                           css={css`
                             cursor: pointer;
                           `}
-                          boxSize='130px'
+                          boxSize="130px"
                           src={finalImage as string}
-                          borderRadius='full'
+                          borderRadius="full"
                         />
                       </label>
                       <input
-                        name='file'
-                        accept='image/*'
-                        id='file'
-                        className='inputfile'
+                        name="file"
+                        accept="image/*"
+                        id="file"
+                        className="inputfile"
                         css={css`
                           position: absolute;
                           opacity: 0;
-
                           z-index: -5;
                         `}
                         ref={inputRef}
-                        type='file'
+                        type="file"
                         onChange={onFileInputChange}
                       />
                     </>
                   ) : (
                     <>
-                      <label htmlFor='file'>
+                      <label htmlFor="file">
                         <Image
-                          boxShadow='md'
-                          borderRadius='full'
-                          boxSize='130px'
+                          boxShadow="md"
+                          borderRadius="full"
+                          boxSize="130px"
                           src={avatarPlaceholder}
-                          alt='Add Image'
+                          alt="Add Image"
                           css={css`
                             cursor: pointer;
                           `}
                         />
                         <Text
-                          fontSize='xl'
+                          fontSize="xl"
                           css={css`
                             font-weight: 700;
                             position: absolute;
@@ -184,19 +170,18 @@ const SignUp = () => {
                         </Text>
                       </label>
                       <input
-                        name='file'
-                        accept='image/*'
-                        id='file'
-                        className='inputfile'
+                        name="file"
+                        accept="image/*"
+                        id="file"
+                        className="inputfile"
                         css={css`
                           position: absolute;
                           opacity: 0;
-
                           z-index: -5;
                         `}
                         required
                         ref={inputRef}
-                        type='file'
+                        type="file"
                         onChange={onFileInputChange}
                       />
                     </>
@@ -207,8 +192,8 @@ const SignUp = () => {
                   <FormLabel>Login</FormLabel>
                   <Input
                     value={login}
-                    placeholder='Your login'
-                    size='lg'
+                    placeholder="Your login"
+                    size="lg"
                     onChange={(event) => setLogin(event.currentTarget.value)}
                   />
                 </FormControl>
@@ -218,17 +203,17 @@ const SignUp = () => {
                     <Input
                       value={password}
                       type={showPassword ? 'text' : 'password'}
-                      placeholder='*******'
-                      size='lg'
+                      placeholder="*******"
+                      size="lg"
                       onChange={(event) =>
                         setPassword(event.currentTarget.value)
                       }
                     />
-                    <InputRightElement width='3rem'>
+                    <InputRightElement width="3rem">
                       <IconButton
                         mt={2}
-                        aria-label='toggle passwod visibility'
-                        size='md'
+                        aria-label="toggle passwod visibility"
+                        size="md"
                         onClick={handlePasswordVisibility}
                         icon={showPassword ? <ViewIcon /> : <ViewOffIcon />}
                       />
@@ -236,17 +221,17 @@ const SignUp = () => {
                   </InputGroup>
                 </FormControl>
                 <Button
-                  type='submit'
-                  colorScheme='blue'
-                  variant='outline'
-                  width='full'
+                  type="submit"
+                  colorScheme="blue"
+                  variant="outline"
+                  width="full"
                   mt={4}
                 >
                   {status === 'loading' ? (
                     <CircularProgress
-                      size='30px'
+                      size="30px"
                       isIndeterminate
-                      color='blue.300'
+                      color="blue.300"
                     />
                   ) : (
                     'Sign Up'
@@ -255,7 +240,7 @@ const SignUp = () => {
               </form>
             </Box>
             <Flex>
-              <Link mx='auto' as={ReactRouterLink} to='/sign-in'>
+              <Link mx="auto" as={ReactRouterLink} to="/sign-in">
                 Already have an account? Sign in
               </Link>
             </Flex>

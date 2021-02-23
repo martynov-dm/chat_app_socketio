@@ -15,26 +15,24 @@ const Main = lazy(() => import('./pages/Main'))
 const App: React.FC = () => {
   return (
     <ChakraProvider>
-      <ConnectedRouter history={history}>
-        <SocketProvider>
-          <ErrorBoundary>
-            <Suspense fallback={<SpinnerSuspense />}>
-              <Switch>
-                <Route
-                  exact
-                  path='/'
-                  render={() => {
-                    const token = sessionStorage.getItem('token')
-                    return !token ? <Redirect to='/sign-in' /> : <Main />
-                  }}
-                />
-                <Route exact path='/sign-in' component={SignIn} />
-                <Route exact path='/sign-up' component={SignUp} />
-              </Switch>
-            </Suspense>
-          </ErrorBoundary>
-        </SocketProvider>
-      </ConnectedRouter>
+      <SocketProvider>
+        <ErrorBoundary>
+          <Suspense fallback={<SpinnerSuspense />}>
+            <Switch>
+              <Route
+                exact
+                path="/"
+                render={() => {
+                  const token = sessionStorage.getItem('token')
+                  return !token ? <Redirect to="/sign-in" /> : <Main />
+                }}
+              />
+              <Route exact path="/sign-in" component={SignIn} />
+              <Route exact path="/sign-up" component={SignUp} />
+            </Switch>
+          </Suspense>
+        </ErrorBoundary>
+      </SocketProvider>
     </ChakraProvider>
   )
 }
